@@ -9,6 +9,17 @@ const RULE = "#D8C898";
 const WHITE = "#FFFFFF";
 const DARK = "#1A1612";
 
+// ── Mobile hook ──────────────────────────────────────────────────────────────
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const h = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", h);
+    return () => window.removeEventListener("resize", h);
+  }, []);
+  return isMobile;
+}
+
 function Logo({ light }) {
   const c = light ? WHITE : TERRA;
   const sc = light ? "rgba(255,255,255,0.4)" : CREAM;
@@ -38,6 +49,8 @@ function Logo({ light }) {
 function Nav({ page, setPage }) {
   const links = ["Home", "Services", "Portfolio", "Contact"];
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 40);
@@ -46,48 +59,101 @@ function Nav({ page, setPage }) {
   }, []);
 
   const isHome = page === "Home";
-  const bg = isHome && !scrolled ? "transparent" : WHITE;
-  const borderColor = isHome && !scrolled ? "transparent" : RULE;
+  const bg = (isHome && !scrolled && !menuOpen) ? "transparent" : WHITE;
+  const borderColor = (isHome && !scrolled && !menuOpen) ? "transparent" : RULE;
+  const light = isHome && !scrolled && !menuOpen;
 
   return (
-    <nav style={{
-      position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-      background: bg, borderBottom: `1px solid ${borderColor}`,
-      padding: "0 48px", height: "64px",
-      display: "flex", alignItems: "center", justifyContent: "space-between",
-      transition: "background 0.3s, border-color 0.3s",
-    }}>
-      <div onClick={() => setPage("Home")}><Logo light={isHome && !scrolled} /></div>
-      <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-        {links.map(l => (
-          <button key={l} onClick={() => setPage(l)} style={{
-            padding: "8px 18px", background: "transparent",
-            border: l === "Contact" ? `1px solid ${isHome && !scrolled ? WHITE : TERRA}` : "none",
-            borderRadius: "2px", cursor: "pointer",
-            fontFamily: "'Futura','Century Gothic',sans-serif",
-            fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase",
-            color: page === l ? TERRA : isHome && !scrolled ? WHITE : l === "Contact" ? TERRA : WARM,
-            fontWeight: page === l ? "bold" : "normal",
-            transition: "color 0.2s",
-          }}>{l}</button>
-        ))}
-      </div>
-    </nav>
+    <>
+      <nav style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+        background: bg, borderBottom: `1px solid ${borderColor}`,
+        padding: isMobile ? "0 20px" : "0 48px", height: "64px",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        transition: "background 0.3s, border-color 0.3s",
+      }}>
+        <div onClick={() => { setPage("Home"); setMenuOpen(false); }}><Logo light={light} /></div>
+        {isMobile ? (
+          <button onClick={() => setMenuOpen(o => !o)} style={{
+            background: "transparent", border: "none", cursor: "pointer",
+            display: "flex", flexDirection: "column", gap: "5px", padding: "8px",
+          }}>
+            {[0,1,2].map(i => (
+              <div key={i} style={{ width: "22px", height: "2px", background: light ? WHITE : TERRA, borderRadius: "1px" }} />
+            ))}
+          </button>
+        ) : (
+          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            {links.filter(l => l !== "Contact").map(l => (
+              <button key={l} onClick={() => setPage(l)} style={{
+                padding: "8px 18px", background: "transparent", border: "none",
+                borderRadius: "2px", cursor: "pointer",
+                fontFamily: "'Futura','Century Gothic',sans-serif",
+                fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase",
+                color: page === l ? TERRA : light ? WHITE : WARM,
+                fontWeight: page === l ? "bold" : "normal",
+                transition: "color 0.2s",
+              }}>{l}</button>
+            ))}
+            <button onClick={() => setPage("Contact")} style={{
+              padding: "10px 20px", background: TERRA, border: "none",
+              borderRadius: "2px", cursor: "pointer",
+              fontFamily: "'Futura','Century Gothic',sans-serif",
+              fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase",
+              color: WHITE, fontWeight: "bold", marginLeft: "8px",
+            }}>Start Your Handbook</button>
+          </div>
+        )}
+      </nav>
+      {/* Mobile menu dropdown */}
+      {isMobile && menuOpen && (
+        <div style={{
+          position: "fixed", top: "64px", left: 0, right: 0, zIndex: 99,
+          background: WHITE, borderBottom: `1px solid ${RULE}`,
+          padding: "16px 20px", display: "flex", flexDirection: "column", gap: "4px",
+        }}>
+          {links.map(l => (
+            <button key={l} onClick={() => { setPage(l); setMenuOpen(false); }} style={{
+              padding: "14px 0", background: "transparent", border: "none",
+              borderBottom: `1px solid ${RULE}`, cursor: "pointer", textAlign: "left",
+              fontFamily: "'Futura','Century Gothic',sans-serif",
+              fontSize: "13px", letterSpacing: "1.5px", textTransform: "uppercase",
+              color: page === l ? TERRA : WARM, fontWeight: page === l ? "bold" : "normal",
+            }}>{l}</button>
+          ))}
+        </div>
+      )}
+    </>
   );
 }
 
-function WhatsAppBtn({ text = "Get Started on WhatsApp" }) {
+function FormBtn({ text = "Start Your Handbook", setPage, light }) {
+  return (
+    <button onClick={() => setPage && setPage("Contact")} style={{
+      display: "inline-flex", alignItems: "center", gap: "10px",
+      padding: "16px 32px", background: TERRA,
+      border: "none", borderRadius: "2px", cursor: "pointer",
+      fontFamily: "'Futura','Century Gothic',sans-serif",
+      fontSize: "12px", letterSpacing: "2px", textTransform: "uppercase",
+      color: WHITE, fontWeight: "bold",
+    }}>
+      {text} →
+    </button>
+  );
+}
+
+function WhatsAppBtn({ text = "Chat on WhatsApp" }) {
   return (
     <a href="https://wa.me/447736503848" target="_blank" rel="noopener noreferrer"
       style={{
         display: "inline-flex", alignItems: "center", gap: "10px",
-        padding: "14px 28px", background: "#25D366",
-        border: "none", borderRadius: "2px", cursor: "pointer",
+        padding: "14px 24px", background: "transparent",
+        border: "1px solid #25D366", borderRadius: "2px", cursor: "pointer",
         fontFamily: "'Futura','Century Gothic',sans-serif",
         fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase",
-        color: WHITE, fontWeight: "bold", textDecoration: "none",
+        color: "#25D366", fontWeight: "bold", textDecoration: "none",
       }}>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
       </svg>
       {text}
@@ -233,7 +299,7 @@ function HomePage({ setPage }) {
         {/* Background texture */}
         <div style={{ position: "absolute", inset: 0, backgroundImage: `radial-gradient(circle at 70% 50%, ${TERRA}18 0%, transparent 60%)`, pointerEvents: "none" }} />
 
-        <div style={{ maxWidth: "600px", position: "relative" }}>
+        <div style={{ maxWidth: "min(600px, 100%)", position: "relative" }}>
           <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color: WARM, letterSpacing: "3px", textTransform: "uppercase", marginBottom: "24px" }}>
             Guest Handbook Studio
           </div>
@@ -245,8 +311,8 @@ function HomePage({ setPage }) {
           <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color: "rgba(255,255,255,0.6)", lineHeight: "1.8", marginBottom: "40px", maxWidth: "440px" }}>
             Professional guest handbooks for Airbnb hosts who care about the guest experience. Designed, written and delivered.
           </p>
-          <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
-            <WhatsAppBtn />
+          <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
+            <FormBtn text="Start Your Handbook" setPage={setPage} />
             <button onClick={() => setPage("Services")} style={{
               padding: "14px 28px", background: "transparent",
               border: `1px solid rgba(255,255,255,0.3)`, borderRadius: "2px", cursor: "pointer",
@@ -254,6 +320,10 @@ function HomePage({ setPage }) {
               fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase",
               color: "rgba(255,255,255,0.7)",
             }}>See Packages</button>
+          </div>
+          <div style={{ marginTop: "16px", display: "flex", alignItems: "center", gap: "12px" }}>
+            <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.4)" }}>or</span>
+            <WhatsAppBtn text="Chat on WhatsApp first" />
           </div>
         </div>
 
@@ -275,8 +345,8 @@ function HomePage({ setPage }) {
       </div>
 
       {/* What we do */}
-      <div style={{ padding: "96px 10%", background: WHITE }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", gap: "80px", alignItems: "center", flexWrap: "wrap" }}>
+      <div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: WHITE }}>
+        <div style={{ maxWidth: "min(1100px, 100%)", margin: "0 auto", display: "flex", gap: "80px", alignItems: "center", flexWrap: "wrap" }}>
           <div style={{ flex: "1 1 340px" }}>
             <SectionLabel text="What we do" />
             <Heading>Handbooks that impress from the moment guests arrive.</Heading>
@@ -312,27 +382,28 @@ function HomePage({ setPage }) {
       </div>
 
       {/* Before/After teaser */}
-      <div style={{ padding: "96px 10%", background: CREAM }}>
-        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+      <div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: CREAM }}>
+        <div style={{ maxWidth: "min(800px, 100%)", margin: "0 auto" }}>
           <SectionLabel text="The difference" />
           <Heading>See it for yourself.</Heading>
           <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: WARM, lineHeight: "1.8", marginBottom: "40px" }}>
             Drag the slider to see what your guests could be reading instead.
           </p>
           <BeforeAfter />
-          <div style={{ textAlign: "center", marginTop: "40px" }}>
+          <div style={{ textAlign: "center", marginTop: "40px", display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap", alignItems: "center" }}>
+            <FormBtn text="Start Your Handbook" setPage={setPage} />
             <button onClick={() => setPage("Portfolio")} style={{
               padding: "12px 28px", background: "transparent", border: `1px solid ${TERRA}`, borderRadius: "2px", cursor: "pointer",
               fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
               letterSpacing: "1.5px", textTransform: "uppercase", color: TERRA,
-            }}>See the Full Portfolio</button>
+            }}>See Portfolio</button>
           </div>
         </div>
       </div>
 
       {/* Testimonials */}
-      <div style={{ padding: "96px 10%", background: TERRA }}>
-        <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+      <div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: TERRA }}>
+        <div style={{ maxWidth: "min(900px, 100%)", margin: "0 auto" }}>
           <SectionLabel text="What hosts say" />
           <div style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}>
             {[
@@ -354,7 +425,7 @@ function HomePage({ setPage }) {
       </div>
 
       {/* CTA */}
-      <div style={{ padding: "96px 10%", background: DARK, textAlign: "center" }}>
+      <div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: DARK, textAlign: "center" }}>
         <SectionLabel text="Ready to start?" />
         <h2 style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "40px", fontWeight: "bold", color: WHITE, margin: "0 0 16px" }}>
           Let's build yours.
@@ -362,14 +433,12 @@ function HomePage({ setPage }) {
         <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.5)", marginBottom: "40px" }}>
           Message us on WhatsApp or complete the intake form to get started.
         </p>
-        <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-          <WhatsAppBtn />
-          <button onClick={() => setPage("Contact")} style={{
-            padding: "14px 28px", background: "transparent",
-            border: `1px solid rgba(255,255,255,0.3)`, borderRadius: "2px", cursor: "pointer",
-            fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
-            letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.7)",
-          }}>Intake Form</button>
+        <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap", alignItems: "center", flexDirection: "column" }}>
+          <FormBtn text="Start Your Handbook — Fill in the Form" setPage={setPage} />
+          <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+            <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.4)" }}>prefer to chat first?</span>
+            <WhatsAppBtn />
+          </div>
         </div>
       </div>
     </div>
@@ -382,7 +451,7 @@ function ServicesPage({ setPage }) {
     <div style={{ paddingTop: "64px" }}>
       {/* Header */}
       <div style={{ padding: "80px 10% 64px", background: CREAM, borderBottom: `1px solid ${RULE}` }}>
-        <div style={{ maxWidth: "600px" }}>
+        <div style={{ maxWidth: "min(600px, 100%)" }}>
           <SectionLabel text="Packages" />
           <Heading>Three tiers. Every property is different.</Heading>
           <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: WARM, lineHeight: "1.8" }}>
@@ -392,8 +461,8 @@ function ServicesPage({ setPage }) {
       </div>
 
       {/* Pricing */}
-      <div style={{ padding: "80px 10%", background: WHITE }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "flex", gap: "20px", flexWrap: "wrap" }}>
+      <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "flex", gap: "20px", flexWrap: "wrap", flexDirection: "column" }}><div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
           {[
             {
               tier: "Essential", price: "£89", popular: false,
@@ -462,7 +531,7 @@ function ServicesPage({ setPage }) {
       </div>
 
       {/* Add-ons */}
-      <div style={{ padding: "64px 10%", background: CREAM }}>
+      <div style={{ padding: "clamp(32px, 5vw, 64px) clamp(20px, 8%, 10%)", background: CREAM }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
           <SectionLabel text="Add-ons" />
           <Heading>Need something extra?</Heading>
@@ -491,7 +560,7 @@ function PortfolioPage({ setPage }) {
   return (
     <div style={{ paddingTop: "64px" }}>
       <div style={{ padding: "80px 10% 64px", background: CREAM, borderBottom: `1px solid ${RULE}` }}>
-        <div style={{ maxWidth: "600px" }}>
+        <div style={{ maxWidth: "min(600px, 100%)" }}>
           <SectionLabel text="Portfolio" />
           <Heading>The work.</Heading>
           <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: WARM, lineHeight: "1.8" }}>
@@ -501,8 +570,8 @@ function PortfolioPage({ setPage }) {
       </div>
 
       {/* Before/After full */}
-      <div style={{ padding: "80px 10%", background: WHITE }}>
-        <div style={{ maxWidth: "860px", margin: "0 auto" }}>
+      <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
+        <div style={{ maxWidth: "min(860px, 100%)", margin: "0 auto" }}>
           <SectionLabel text="Before & After" />
           <Heading>What a difference design makes.</Heading>
           <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: WARM, lineHeight: "1.8", marginBottom: "40px" }}>
@@ -513,8 +582,8 @@ function PortfolioPage({ setPage }) {
       </div>
 
       {/* Sample handbook pages */}
-      <div style={{ padding: "80px 10%", background: CREAM }}>
-        <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+      <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: CREAM }}>
+        <div style={{ maxWidth: "min(900px, 100%)", margin: "0 auto" }}>
           <SectionLabel text="Sample pages" />
           <Heading>Inside a Signature handbook.</Heading>
           <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: WARM, lineHeight: "1.8", marginBottom: "48px" }}>
@@ -540,19 +609,17 @@ function PortfolioPage({ setPage }) {
       </div>
 
       {/* CTA */}
-      <div style={{ padding: "80px 10%", background: TERRA, textAlign: "center" }}>
+      <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: TERRA, textAlign: "center" }}>
         <Heading light center>Want yours to look like this?</Heading>
         <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.7)", marginBottom: "40px", lineHeight: "1.8" }}>
           Fill in the intake form and we'll have a first draft back to you within 3 working days.
         </p>
-        <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-          <WhatsAppBtn />
-          <button onClick={() => setPage("Contact")} style={{
-            padding: "14px 28px", background: "transparent",
-            border: `1px solid rgba(255,255,255,0.5)`, borderRadius: "2px", cursor: "pointer",
-            fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
-            letterSpacing: "1.5px", textTransform: "uppercase", color: WHITE,
-          }}>Start Your Handbook</button>
+        <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap", alignItems: "center", flexDirection: "column" }}>
+          <FormBtn text="Start Your Handbook — Fill in the Form" setPage={setPage} />
+          <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+            <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.5)" }}>prefer to chat first?</span>
+            <WhatsAppBtn />
+          </div>
         </div>
       </div>
     </div>
@@ -567,7 +634,7 @@ function ContactPage() {
   return (
     <div style={{ paddingTop: "64px" }}>
       <div style={{ padding: "80px 10% 64px", background: CREAM, borderBottom: `1px solid ${RULE}` }}>
-        <div style={{ maxWidth: "600px" }}>
+        <div style={{ maxWidth: "min(600px, 100%)" }}>
           <SectionLabel text="Get Started" />
           <Heading>Order your handbook.</Heading>
           <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: WARM, lineHeight: "1.8" }}>
@@ -576,8 +643,8 @@ function ContactPage() {
         </div>
       </div>
 
-      <div style={{ padding: "80px 10%", background: WHITE }}>
-        <div style={{ maxWidth: "700px", margin: "0 auto", display: "flex", gap: "60px", flexWrap: "wrap" }}>
+      <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
+        <div style={{ maxWidth: "min(700px, 100%)", margin: "0 auto", display: "flex", gap: "60px", flexWrap: "wrap" }}>
 
           {/* Form preview */}
           <div style={{ flex: "1 1 380px" }}>
@@ -667,7 +734,14 @@ function Footer({ setPage }) {
           ))}
         </div>
         <div style={{ flex: "0 1 200px" }}>
-          <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color: WARM, letterSpacing: "2px", textTransform: "uppercase", marginBottom: "16px" }}>Get in Touch</div>
+          <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color: WARM, letterSpacing: "2px", textTransform: "uppercase", marginBottom: "16px" }}>Get Started</div>
+          <button onClick={() => {}} style={{
+            display: "inline-block", padding: "12px 20px", background: TERRA,
+            border: "none", borderRadius: "2px", cursor: "pointer",
+            fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
+            letterSpacing: "1.5px", textTransform: "uppercase", color: WHITE, fontWeight: "bold",
+            marginBottom: "12px", width: "100%", textAlign: "center",
+          }}>Start Your Handbook</button>
           <WhatsAppBtn text="WhatsApp" />
           <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.4)", marginTop: "12px" }}>hello@thecuratedhost.com</div>
         </div>
