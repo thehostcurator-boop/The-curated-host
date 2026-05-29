@@ -129,7 +129,7 @@ function Nav({ page, setPage }) {
 
 function FormBtn({ text = "Start Your Handbook", setPage, light }) {
   return (
-    <a href="https://tally.so/r/b5vkAe" target="_blank" rel="noopener noreferrer" style={{
+    <button onClick={() => { if (setPage) { setPage("Contact"); window.scrollTo({ top: 0, behavior: "smooth" }); } }} style={{
       display: "inline-flex", alignItems: "center", gap: "10px",
       padding: "16px 32px", background: TERRA,
       border: "none", borderRadius: "2px", cursor: "pointer",
@@ -138,7 +138,7 @@ function FormBtn({ text = "Start Your Handbook", setPage, light }) {
       color: WHITE, fontWeight: "bold", textDecoration: "none",
     }}>
       {text} →
-    </a>
+    </button>
   );
 }
 
