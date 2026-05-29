@@ -462,7 +462,7 @@ function ServicesPage({ setPage }) {
 
       {/* Pricing */}
       <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "flex", gap: "20px", flexWrap: "wrap", flexDirection: "column" }}><div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "flex", gap: "20px", flexWrap: "wrap" }}>
           {[
             {
               tier: "Essential", price: "£89", popular: false,
