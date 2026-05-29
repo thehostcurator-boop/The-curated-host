@@ -129,16 +129,16 @@ function Nav({ page, setPage }) {
 
 function FormBtn({ text = "Start Your Handbook", setPage, light }) {
   return (
-    <button onClick={() => setPage && setPage("Contact")} style={{
+    <a href="https://tally.so/r/b5vkAe" target="_blank" rel="noopener noreferrer" style={{
       display: "inline-flex", alignItems: "center", gap: "10px",
       padding: "16px 32px", background: TERRA,
       border: "none", borderRadius: "2px", cursor: "pointer",
       fontFamily: "'Futura','Century Gothic',sans-serif",
       fontSize: "12px", letterSpacing: "2px", textTransform: "uppercase",
-      color: WHITE, fontWeight: "bold",
+      color: WHITE, fontWeight: "bold", textDecoration: "none",
     }}>
       {text} →
-    </button>
+    </a>
   );
 }
 
@@ -309,7 +309,7 @@ function HomePage({ setPage }) {
             presented.
           </h1>
           <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color: "rgba(255,255,255,0.6)", lineHeight: "1.8", marginBottom: "40px", maxWidth: "440px" }}>
-            Professional guest handbooks for Airbnb hosts who care about the guest experience. Designed, written and delivered.
+            Professional guest handbooks for short-term rental hosts across Airbnb, Booking.com, Vrbo and beyond. Designed, written and delivered.
           </p>
           <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
             <FormBtn text="Start Your Handbook" setPage={setPage} />
@@ -336,7 +336,7 @@ function HomePage({ setPage }) {
 
       {/* Social proof strip */}
       <div style={{ background: SAND, padding: "20px 10%", display: "flex", gap: "48px", alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}>
-        {["A5 print-ready PDF", "Editable Word document", "QR codes included", "3-day turnaround", "UK & international"].map((item, i) => (
+        {["A5 print-ready PDF", "Editable Word document", "QR codes included", "3-day turnaround", "Available in multiple languages"].map((item, i) => (
           <div key={i} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: TERRA }} />
             <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color: BODY, letterSpacing: "1px" }}>{item}</span>
@@ -381,6 +381,93 @@ function HomePage({ setPage }) {
         </div>
       </div>
 
+      {/* Why section — founder story */}
+      <div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: DARK }}>
+        <div style={{ maxWidth: "min(900px, 100%)", margin: "0 auto", display: "flex", gap: "64px", flexWrap: "wrap", alignItems: "center" }}>
+          <div style={{ flex: "0 0 auto", textAlign: "center" }}>
+            <div style={{ width: "100px", height: "100px", borderRadius: "50%", background: TERRA, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+              <svg width="48" height="48" viewBox="0 0 400 400" fill="none">
+                <circle cx="200" cy="200" r="155" stroke="rgba(255,255,255,0.8)" strokeWidth="8" fill="none"/>
+                <rect x="170" y="210" width="60" height="60" fill="rgba(255,255,255,0.9)"/>
+                <ellipse cx="200" cy="210" rx="30" ry="30" fill="rgba(255,255,255,0.9)"/>
+                <circle cx="200" cy="222" r="9" fill={TERRA}/>
+                <polygon points="195,229 205,229 203,246 197,246" fill={TERRA}/>
+                <line x1="200" y1="158" x2="143" y2="193" stroke="rgba(255,255,255,0.9)" strokeWidth="7" strokeLinecap="round"/>
+                <line x1="200" y1="158" x2="257" y2="193" stroke="rgba(255,255,255,0.9)" strokeWidth="7" strokeLinecap="round"/>
+              </svg>
+            </div>
+            <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", fontWeight: "bold", color: WHITE }}>Ruben</div>
+            <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.5)", letterSpacing: "1px", textTransform: "uppercase", marginTop: "4px" }}>Founder</div>
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color: WARM, letterSpacing: "3px", textTransform: "uppercase", marginBottom: "16px" }}>Why we exist</div>
+            <h2 style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(20px, 3vw, 28px)", fontWeight: "bold", color: WHITE, margin: "0 0 20px", lineHeight: "1.3" }}>
+              "I was a host myself. I knew there had to be a better way."
+            </h2>
+            <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.65)", lineHeight: "1.9", marginBottom: "16px" }}>
+              As an experienced short-term rental host, I saw first-hand how much the guest experience depends on the moment of arrival — and how poorly most properties handle it. A scrappy notes app message, a badly formatted Word document, or nothing at all.
+            </p>
+            <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.65)", lineHeight: "1.9", marginBottom: "16px" }}>
+              Hosts work hard to create beautiful spaces — but the handbook is an afterthought. I recognised that a well-designed, clearly written guide doesn't just inform guests. It sets the tone, builds trust, reduces late-night messages, and elevates the entire stay.
+            </p>
+            <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.65)", lineHeight: "1.9" }}>
+              The Curated Host exists to give every property — regardless of size or platform — the kind of handbook that used to only exist in boutique hotels.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* The Product section */}
+      <div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: SAND }}>
+        <div style={{ maxWidth: "min(1000px, 100%)", margin: "0 auto" }}>
+          <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color: WARM, letterSpacing: "3px", textTransform: "uppercase", marginBottom: "16px" }}>What you receive</div>
+          <h2 style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(22px, 4vw, 36px)", fontWeight: "bold", color: TERRA, margin: "0 0 16px" }}>A physical handbook your guests will actually read.</h2>
+          <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: WARM, lineHeight: "1.8", marginBottom: "48px", maxWidth: "620px" }}>
+            Not a PDF attachment. Not a link in a message. A beautifully produced, printed and laminated A5 booklet — left on the kitchen table or bedside, ready for your guests the moment they arrive.
+          </p>
+          <div style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}>
+            {[
+              {
+                icon: "◻",
+                title: "A5 Format",
+                desc: "Compact, lightweight and easy to handle. A5 sits comfortably on a kitchen counter or bedside table without dominating the space. Small enough to feel personal, large enough to read comfortably."
+              },
+              {
+                icon: "◈",
+                title: "Printed & Laminated",
+                desc: "Full colour, professionally printed and laminated for durability. Wipe-clean, water-resistant and built to last the entire season — no dog-eared corners or coffee stains."
+              },
+              {
+                icon: "◎",
+                title: "Bound & Finished",
+                desc: "Spiral or saddle-stitched binding so it lays flat and stays open. Guests can read it easily without it flipping shut — a small detail that makes a real difference."
+              },
+              {
+                icon: "✦",
+                title: "QR Codes",
+                desc: "Wi-Fi, appliance setup videos, local maps and more — all scannable directly from the page. No typing, no searching, no frustration."
+              },
+              {
+                icon: "⬡",
+                title: "Multiple Languages",
+                desc: "We produce handbooks in English, French, Spanish, German, Dutch and more. Perfect for properties in international destinations or hosts welcoming guests from across the world."
+              },
+              {
+                icon: "◉",
+                title: "Digital Files Included",
+                desc: "Every handbook comes with a print-ready A5 PDF and an editable Word document — so you can share it digitally, update it yourself, or reprint at any time."
+              },
+            ].map((item, i) => (
+              <div key={i} style={{ flex: "1 1 280px", padding: "28px", background: WHITE, borderRadius: "2px", border: `1px solid ${RULE}` }}>
+                <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "22px", color: TERRA, marginBottom: "12px" }}>{item.icon}</div>
+                <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", fontWeight: "bold", color: BODY, marginBottom: "8px" }}>{item.title}</div>
+                <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color: WARM, lineHeight: "1.7" }}>{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Before/After teaser */}
       <div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: CREAM }}>
         <div style={{ maxWidth: "min(800px, 100%)", margin: "0 auto" }}>
@@ -407,7 +494,7 @@ function HomePage({ setPage }) {
           <SectionLabel text="What hosts say" />
           <div style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}>
             {[
-              { quote: "My guests keep mentioning the handbook in their reviews. It sets the tone from the moment they arrive.", name: "Sarah M.", location: "Brighton, UK" },
+              { quote: "My guests keep mentioning the handbook in their reviews. It sets the tone from the moment they walk through the door.", name: "Sarah M.", location: "Brighton, UK" },
               { quote: "I used to dread the 'how does the heating work?' messages at midnight. Haven't had one since.", name: "James T.", location: "Edinburgh, UK" },
               { quote: "Worth every penny. Professional, fast, and the printed version looks incredible on the kitchen table.", name: "Priya K.", location: "Manchester, UK" },
             ].map((t, i) => (
@@ -455,7 +542,7 @@ function ServicesPage({ setPage }) {
           <SectionLabel text="Packages" />
           <Heading>Three tiers. Every property is different.</Heading>
           <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: WARM, lineHeight: "1.8" }}>
-            Whether you're a single-property host or managing a portfolio, there's a package built for you. All prices in GBP.
+            Whether you're a single-property host or managing a portfolio across Airbnb, Booking.com, Vrbo or any other platform — there's a package built for you. All prices in GBP.
           </p>
         </div>
       </div>
@@ -644,71 +731,22 @@ function ContactPage() {
       </div>
 
       <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
-        <div style={{ maxWidth: "min(700px, 100%)", margin: "0 auto", display: "flex", gap: "60px", flexWrap: "wrap" }}>
-
-          {/* Form preview */}
-          <div style={{ flex: "1 1 380px" }}>
-            {/* Progress */}
-            <div style={{ marginBottom: "32px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
-                <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color: WARM, letterSpacing: "1px", textTransform: "uppercase" }}>Section {step + 1} of {steps.length}</span>
-                <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color: TERRA }}>{Math.round(((step+1)/steps.length)*100)}%</span>
-              </div>
-              <div style={{ height: "2px", background: SAND }}>
-                <div style={{ height: "100%", width: `${((step+1)/steps.length)*100}%`, background: TERRA, transition: "width 0.3s" }} />
-              </div>
-            </div>
-
-            <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color: WARM, letterSpacing: "2px", textTransform: "uppercase", marginBottom: "8px" }}>
-              {steps[step]}
-            </div>
-            <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "22px", fontWeight: "bold", color: TERRA, marginBottom: "32px" }}>
-              {["Tell us about the listing", "Arrival & departure", "Connectivity & entertainment", "Keeping guests comfortable", "What guests need to respect", "Your local knowledge", "Almost there"][step]}
-            </div>
-
-            {/* Sample fields per step */}
-            {step === 0 && (
-              <>
-                {["Property name *", "Full address *", "Host name *", "WhatsApp / phone *", "Which package? *"].map((l, i) => (
-                  <div key={i} style={{ marginBottom: "20px" }}>
-                    <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", fontWeight: "bold", color: BODY, marginBottom: "6px" }}>{l}</div>
-                    <div style={{ height: "40px", background: CREAM, border: `1px solid ${RULE}`, borderRadius: "2px" }} />
-                  </div>
-                ))}
-              </>
-            )}
-            {step !== 0 && (
-              <div style={{ padding: "40px", background: CREAM, border: `1px solid ${RULE}`, borderRadius: "2px", textAlign: "center" }}>
-                <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color: WARM }}>
-                  This section covers {steps[step].toLowerCase()} details.<br />The full interactive form is ready to use.
-                </div>
-              </div>
-            )}
-
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "32px" }}>
-              {step > 0 ? (
-                <button onClick={() => setStep(s => s-1)} style={{ padding: "12px 24px", background: "transparent", border: `1px solid ${RULE}`, borderRadius: "2px", cursor: "pointer", fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: WARM }}>← Back</button>
-              ) : <div />}
-              <button onClick={() => step < steps.length-1 ? setStep(s => s+1) : null} style={{ padding: "12px 28px", background: TERRA, border: "none", borderRadius: "2px", cursor: "pointer", fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: WHITE, fontWeight: "bold" }}>
-                {step === steps.length - 1 ? "Submit →" : "Continue →"}
-              </button>
-            </div>
-          </div>
-
-          {/* Contact info sidebar */}
-          <div style={{ flex: "0 1 220px" }}>
-            <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color: WARM, letterSpacing: "2px", textTransform: "uppercase", marginBottom: "20px" }}>Or reach us directly</div>
+        <div style={{ maxWidth: "min(860px, 100%)", margin: "0 auto" }}>
+          {/* Tally embed */}
+          <iframe
+            src="https://tally.so/embed/b5vkAe?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+            width="100%"
+            height="800"
+            frameBorder="0"
+            marginHeight="0"
+            marginWidth="0"
+            title="Start Your Handbook"
+            style={{ border: "none", minHeight: "600px" }}
+          />
+          {/* WhatsApp secondary */}
+          <div style={{ marginTop: "40px", paddingTop: "32px", borderTop: `1px solid ${RULE}`, display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
+            <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color: WARM }}>Prefer to chat before ordering?</div>
             <WhatsAppBtn text="Message on WhatsApp" />
-            <div style={{ marginTop: "40px" }}>
-              <div style={{ height: "1px", background: RULE, marginBottom: "24px" }} />
-              <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color: WARM, letterSpacing: "2px", textTransform: "uppercase", marginBottom: "16px" }}>What happens next</div>
-              {["We confirm receipt within 24 hours", "First draft delivered in 3 days", "Revisions until you're happy", "Final files delivered by email", "Printed copy posted (Premium)"].map((s, i) => (
-                <div key={i} style={{ display: "flex", gap: "12px", marginBottom: "12px", alignItems: "flex-start" }}>
-                  <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", fontWeight: "bold", color: RULE, minWidth: "20px" }}>0{i+1}</div>
-                  <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color: WARM, lineHeight: "1.5" }}>{s}</div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -724,7 +762,7 @@ function Footer({ setPage }) {
         <div style={{ flex: "1 1 240px" }}>
           <Logo light />
           <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.4)", lineHeight: "1.8", marginTop: "16px", maxWidth: "280px" }}>
-            Professional guest handbooks for Airbnb hosts who care about the guest experience.
+            Professional guest handbooks for short-term rental hosts across Airbnb, Booking.com, Vrbo and beyond.
           </p>
         </div>
         <div style={{ flex: "0 1 160px" }}>
