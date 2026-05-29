@@ -669,7 +669,7 @@ function Footer({ setPage }) {
         <div style={{ flex: "0 1 200px" }}>
           <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color: WARM, letterSpacing: "2px", textTransform: "uppercase", marginBottom: "16px" }}>Get in Touch</div>
           <WhatsAppBtn text="WhatsApp" />
-          <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.4)", marginTop: "12px" }}>thecuratedhost.com</div>
+          <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.4)", marginTop: "12px" }}>hello@thecuratedhost.com</div>
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
