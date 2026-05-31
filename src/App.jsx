@@ -197,7 +197,7 @@ function BeforeAfter() {
   const [dragging, setDragging] = useState(false);
 
   const updatePos = (clientX, rect) => {
-    const p = Math.max(10, Math.min(90, ((clientX - rect.left) / rect.width) * 100));
+    const p = Math.max(2, Math.min(98, ((clientX - rect.left) / rect.width) * 100));
     setPos(p);
   };
 
