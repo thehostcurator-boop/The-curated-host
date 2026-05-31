@@ -324,13 +324,13 @@ function HomePage({ setPage }) {
           </p>
           <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
             <FormBtn text="Start Your Handbook" setPage={setPage} />
-            <button onClick={() => setPage("Services")} style={{
+            <button onClick={() => setPage("Portfolio")} style={{
               padding: "14px 28px", background: "transparent",
               border: `1px solid rgba(255,255,255,0.3)`, borderRadius: "2px", cursor: "pointer",
               fontFamily: "'Futura','Century Gothic',sans-serif",
               fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase",
               color: "rgba(255,255,255,0.7)",
-            }}>See Packages</button>
+            }}>See a Real Example →</button>
           </div>
           <div style={{ marginTop: "16px", display: "flex", alignItems: "center", gap: "12px" }}>
             <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.4)" }}>or</span>
@@ -355,6 +355,21 @@ function HomePage({ setPage }) {
         ))}
       </div>
 
+      {/* Portfolio teaser strip */}
+      <div style={{ background: TERRA, padding: "20px clamp(20px, 8%, 10%)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "rgba(255,255,255,0.5)" }} />
+          <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color: WHITE }}>Want to see what your handbook could look like?</span>
+        </div>
+        <button onClick={() => setPage("Portfolio")} style={{
+          padding: "10px 24px", background: "transparent",
+          border: "1px solid rgba(255,255,255,0.6)", borderRadius: "2px", cursor: "pointer",
+          fontFamily: "'Futura','Century Gothic',sans-serif",
+          fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase",
+          color: WHITE, whiteSpace: "nowrap",
+        }}>View Real Example →</button>
+      </div>
+
       {/* What we do */}
       <div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: WHITE }}>
         <div style={{ maxWidth: "min(1100px, 100%)", margin: "0 auto", display: "flex", gap: "80px", alignItems: "center", flexWrap: "wrap" }}>
@@ -367,11 +382,18 @@ function HomePage({ setPage }) {
             <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: WARM, lineHeight: "1.8", marginBottom: "32px" }}>
               Every handbook we produce is beautifully designed, clearly written, and tailored to your property — printed, laminated and ready to leave on the kitchen table.
             </p>
-            <button onClick={() => setPage("Services")} style={{
-              padding: "12px 28px", background: TERRA, border: "none", borderRadius: "2px", cursor: "pointer",
-              fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
-              letterSpacing: "1.5px", textTransform: "uppercase", color: WHITE,
-            }}>View Packages</button>
+            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+              <button onClick={() => setPage("Services")} style={{
+                padding: "12px 28px", background: TERRA, border: "none", borderRadius: "2px", cursor: "pointer",
+                fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
+                letterSpacing: "1.5px", textTransform: "uppercase", color: WHITE,
+              }}>View Packages</button>
+              <button onClick={() => setPage("Portfolio")} style={{
+                padding: "12px 28px", background: "transparent", border: `1px solid ${TERRA}`, borderRadius: "2px", cursor: "pointer",
+                fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
+                letterSpacing: "1.5px", textTransform: "uppercase", color: TERRA,
+              }}>See Real Example →</button>
+            </div>
           </div>
           <div style={{ flex: "1 1 340px", display: "flex", flexDirection: "column", gap: "20px" }}>
             {[
@@ -697,8 +719,8 @@ function PortfolioPage({ setPage }) {
               { img: IMG_LIFESTYLE_DINING, caption: "At home in the property", desc: "The handbook lives in the space — not in an email inbox or a PDF attachment." },
             ].map((p, i) => (
               <div key={i} style={{ background: WHITE, border: `1px solid ${RULE}`, borderRadius: "2px", overflow: "hidden" }}>
-                <div style={{ height: "220px", overflow: "hidden" }}>
-                  <img src={p.img} alt={p.caption} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                <div style={{ height: "260px", overflow: "hidden", background: "#f5f0e8" }}>
+                  <img src={p.img} alt={p.caption} style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center", display: "block" }} />
                 </div>
                 <div style={{ padding: "20px" }}>
                   <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", fontWeight: "bold", color: TERRA, marginBottom: "6px", textTransform: "uppercase", letterSpacing: "1px" }}>{p.caption}</div>
