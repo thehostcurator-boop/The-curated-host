@@ -708,20 +708,20 @@ function PortfolioPage({ setPage }) {
           <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color: WARM, lineHeight: "1.8", marginBottom: "48px" }}>
             A5 format. Futura throughout. Warm ochre palette. Printed, laminated and bound.
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             {[
               { img: IMG_COVER_CLOSEUP, caption: "Cover page", desc: "Property name centred on a clean A5 cover — the first thing guests see when they arrive.", tall: false },
-              { img: IMG_LIFESTYLE_DINING, caption: "At home in the property", desc: "The handbook lives in the space — not in an email inbox or a PDF attachment.", tall: false },
               { img: IMG_INTERIOR_WELCOME, caption: "Welcome & introduction", desc: "Warm, personal welcome copy with property-specific notes. Sets the tone immediately.", tall: true },
+              { img: IMG_LIFESTYLE_DINING, caption: "At home in the property", desc: "The handbook lives in the space — not in an email inbox or a PDF attachment.", tall: false },
               { img: IMG_INTERIOR_QR, caption: "QR codes & tech", desc: "Wi-Fi credentials with scannable QR code. TV and streaming instructions. Light controls.", tall: true },
               { img: IMG_INTERIOR_HEATING, caption: "Appliance instructions", desc: "Clear heating and appliance instructions with real photos — no more midnight messages from confused guests.", tall: true },
               { img: IMG_COVER_FLATLAY, caption: "The physical product", desc: "A5 format, spiral bound, laminated. Compact, durable and easy to handle.", tall: false },
             ].map((p, i) => (
-              <div key={i} style={{ background: WHITE, border: `1px solid ${RULE}`, borderRadius: "2px", overflow: "hidden", display: "flex", flexDirection: i % 2 === 0 ? "row" : "row-reverse", flexWrap: "wrap" }}>
-                <div style={{ flex: "1 1 340px", minHeight: "320px", background: SAND, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-                  <img src={p.img} alt={p.caption} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block", minHeight: "320px" }} />
+              <div key={i} style={{ overflow: "hidden", display: "flex", flexDirection: i % 2 === 0 ? "row" : "row-reverse", flexWrap: "wrap", borderBottom: `1px solid ${RULE}` }}>
+                <div style={{ flex: "1 1 340px", minHeight: "380px", overflow: "hidden" }}>
+                  <img src={p.img} alt={p.caption} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block", minHeight: "380px" }} />
                 </div>
-                <div style={{ flex: "1 1 280px", padding: "40px 36px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                <div style={{ flex: "1 1 280px", padding: "48px 40px", display: "flex", flexDirection: "column", justifyContent: "center", background: i % 2 === 0 ? WHITE : CREAM }}>
                   <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color: WARM, letterSpacing: "2px", textTransform: "uppercase", marginBottom: "12px" }}>Portfolio</div>
                   <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "20px", fontWeight: "bold", color: TERRA, marginBottom: "16px" }}>{p.caption}</div>
                   <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color: WARM, lineHeight: "1.8" }}>{p.desc}</div>
