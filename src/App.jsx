@@ -259,8 +259,8 @@ function BeforeAfter() {
           </div>
         </div>
 
-        {/* BEFORE label */}
-        <div style={{ position: "absolute", top: "16px", left: "16px", background: "#e74c3c", color: WHITE, padding: "4px 12px", fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", zIndex: 10 }}>Before</div>
+        {/* BEFORE label — fades out as slider moves right */}
+        <div style={{ position: "absolute", top: "16px", left: "16px", background: "#e74c3c", color: WHITE, padding: "4px 12px", fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", zIndex: 10, opacity: Math.max(0, Math.min(1, (40 - pos) / 20)), transition: "opacity 0.3s ease", pointerEvents: "none" }}>Before</div>
       </div>
 
       {/* AFTER overlay — TCH style */}
@@ -303,10 +303,8 @@ function BeforeAfter() {
 
       </div>
 
-      {/* AFTER label — only visible when slider is pulled right enough */}
-      {pos > 60 && (
-        <div style={{ position: "absolute", top: "16px", right: "16px", background: TERRA, color: WHITE, padding: "4px 12px", fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", zIndex: 10 }}>After</div>
-      )}
+      {/* AFTER label — fades in as slider moves right */}
+      <div style={{ position: "absolute", top: "16px", right: "16px", background: TERRA, color: WHITE, padding: "4px 12px", fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", zIndex: 10, opacity: Math.max(0, Math.min(1, (pos - 60) / 20)), transition: "opacity 0.3s ease", pointerEvents: "none" }}>After</div>
 
       {/* Slider handle */}
       <div style={{
