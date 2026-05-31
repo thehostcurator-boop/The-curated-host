@@ -207,7 +207,7 @@ function BeforeAfter() {
       onMouseUp={() => setDragging(false)}
       onMouseLeave={() => setDragging(false)}
       onMouseMove={e => {
-        if (!dragging) return;
+        if (e.buttons !== 1) return;
         updatePos(e.clientX, e.currentTarget.getBoundingClientRect());
       }}
       onTouchStart={e => {
@@ -253,7 +253,7 @@ function BeforeAfter() {
         </div>
 
         {/* BEFORE label */}
-        <div style={{ position: "absolute", top: "16px", left: "16px", background: "#e74c3c", color: WHITE, padding: "4px 12px", fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase" }}>Before</div>
+        <div style={{ position: "absolute", top: "16px", left: "16px", background: "#e74c3c", color: WHITE, padding: "4px 12px", fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", zIndex: 10 }}>Before</div>
       </div>
 
       {/* AFTER overlay — TCH style */}
@@ -294,9 +294,10 @@ function BeforeAfter() {
           <div style={{ fontSize: "11px", color: BODY }}>07736 503848</div>
         </div>
 
-        {/* AFTER label */}
-        <div style={{ position: "absolute", top: "16px", right: "16px", background: TERRA, color: WHITE, padding: "4px 12px", fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase" }}>After</div>
       </div>
+
+      {/* Always visible AFTER label outside clip */}
+      <div style={{ position: "absolute", top: "16px", right: "16px", background: TERRA, color: WHITE, padding: "4px 12px", fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", zIndex: 10 }}>After</div>
 
       {/* Slider handle */}
       <div style={{
