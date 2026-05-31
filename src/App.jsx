@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const TERRA = "#A0782A";
 const WARM = "#9C8B6A";
@@ -194,7 +194,7 @@ function Heading({ children, center, light }) {
 // ── BEFORE / AFTER COMPONENT ──────────────────────────────────────────────────
 function BeforeAfter() {
   const [pos, setPos] = useState(50);
-  const containerRef = React.useRef(null);
+  const containerRef = useRef(null);
 
   const updatePos = (clientX) => {
     if (!containerRef.current) return;
