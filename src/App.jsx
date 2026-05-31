@@ -194,31 +194,38 @@ function Heading({ children, center, light }) {
 // ── BEFORE / AFTER COMPONENT ──────────────────────────────────────────────────
 function BeforeAfter() {
   const [pos, setPos] = useState(50);
-  const [dragging, setDragging] = useState(false);
+  const containerRef = React.useRef(null);
 
-  const updatePos = (clientX, rect) => {
+  const updatePos = (clientX) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
     const p = Math.max(2, Math.min(98, ((clientX - rect.left) / rect.width) * 100));
     setPos(p);
   };
 
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (e.buttons !== 1) return;
+      updatePos(e.clientX);
+    };
+    const handleTouchMove = (e) => {
+      e.preventDefault();
+      updatePos(e.touches[0].clientX);
+    };
+    const el = containerRef.current;
+    if (!el) return;
+    el.addEventListener('mousemove', handleMouseMove);
+    el.addEventListener('touchmove', handleTouchMove, { passive: false });
+    return () => {
+      el.removeEventListener('mousemove', handleMouseMove);
+      el.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, []);
+
   return (
-    <div style={{ position: "relative", borderRadius: "4px", overflow: "hidden", cursor: "col-resize", userSelect: "none", border: `1px solid ${RULE}`, touchAction: "none" }}
-      onMouseDown={() => setDragging(true)}
-      onMouseUp={() => setDragging(false)}
-      onMouseLeave={() => setDragging(false)}
-      onMouseMove={e => {
-        if (e.buttons !== 1) return;
-        updatePos(e.clientX, e.currentTarget.getBoundingClientRect());
-      }}
-      onTouchStart={e => {
-        setDragging(true);
-        updatePos(e.touches[0].clientX, e.currentTarget.getBoundingClientRect());
-      }}
-      onTouchMove={e => {
-        e.preventDefault();
-        updatePos(e.touches[0].clientX, e.currentTarget.getBoundingClientRect());
-      }}
-      onTouchEnd={() => setDragging(false)}>
+    <div ref={containerRef} style={{ position: "relative", borderRadius: "4px", overflow: "hidden", cursor: "col-resize", userSelect: "none", border: `1px solid ${RULE}`, touchAction: "none" }}
+      onMouseDown={e => updatePos(e.clientX)}
+      onTouchStart={e => updatePos(e.touches[0].clientX)}>
       {/* BEFORE — messy notes style */}
       <div style={{ position: "relative", background: WHITE, padding: "32px", minHeight: "440px" }}>
         <div style={{ fontFamily: "Arial, sans-serif", fontSize: "13px", color: "#333" }}>
