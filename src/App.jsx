@@ -303,8 +303,10 @@ function BeforeAfter() {
 
       </div>
 
-      {/* Always visible AFTER label outside clip */}
-      <div style={{ position: "absolute", top: "16px", right: "16px", background: TERRA, color: WHITE, padding: "4px 12px", fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", zIndex: 10 }}>After</div>
+      {/* AFTER label — only visible when slider is pulled right enough */}
+      {pos > 60 && (
+        <div style={{ position: "absolute", top: "16px", right: "16px", background: TERRA, color: WHITE, padding: "4px 12px", fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", zIndex: 10 }}>After</div>
+      )}
 
       {/* Slider handle */}
       <div style={{
