@@ -638,7 +638,7 @@ objectFit: "cover", borderRadius: "2px", flex: "0 0 auto" }} />
 <Heading light>Ruben de Bruin</Heading>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
 "rgba(255,255,255,0.6)", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "0" }}>
-Founder, The Curated Host — Public Speaker &amp; Communicator
+Founder, The Curated Host — Property Management &amp; Guest Experience
 </p>
 </div>
 </div>
@@ -647,47 +647,47 @@ Founder, The Curated Host — Public Speaker &amp; Communicator
 <div style={{ maxWidth: "760px", margin: "0 auto" }}>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color:
 BODY, lineHeight: "1.9", marginBottom: "24px" }}>
-I am a Dutch-British, internationally experienced professional working across corporate
-and regulatory environments, bringing a cross-jurisdictional perspective to complex,
-fast-moving landscapes. This international foundation sits at the heart of everything I
-do, and positions me to engage meaningfully across different countries, cultures and
-contexts.
+I am a Dutch-British, internationally experienced professional based in Amsterdam,
+bringing a cross-jurisdictional perspective to property management across the
+Netherlands, UK and US. This international foundation lets me engage meaningfully with
+hosts and guests across different countries, cultures and contexts.
 </p>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color:
 BODY, lineHeight: "1.9", marginBottom: "24px" }}>
 At The Curated Host, I manage short and long-term rental properties for Airbnb hosts —
-guest messaging, pricing and revenue management, and cleaning coordination — bringing
-the standard I hold my own Airbnb Superhost listing in Bournemouth, UK to. Alongside
-this, I work as a public speaker and communicator, drawing on experience across legal,
-international and entrepreneurial environments to engage audiences on topics where
-clarity, trust and human connection matter most.
+guest messaging, pricing and revenue management, and cleaning and turnover coordination
+— bringing the same standard I hold my own Airbnb Superhost listing in Bournemouth, UK
+to every property. The guest experience sits at the centre of it all: a well-run
+property isn't just about occupancy and returns, it's about how a guest feels the
+moment they arrive.
 </p>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color:
 BODY, lineHeight: "1.9", marginBottom: "24px" }}>
 I bring to this work a foundation in legal practice, navigating regulatory frameworks,
 managing risk, and supporting sound decision-making across corporate and international
 environments — working at the intersection of legal, strategic, operational and
-interpersonal dynamics to translate complexity into practical, actionable outcomes.
+interpersonal dynamics to translate complexity into practical, dependable outcomes for
+the property owners I work with.
 </p>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color:
 BODY, lineHeight: "1.9", marginBottom: "24px" }}>
 I also serve as Vice President of the UCLA Alumni UK Network and as a Board Member of
 the University of California Trust, contributing to governance, strategic direction and
-stakeholder engagement with a focus on strengthening global alumni connections and
-advancing long-term institutional priorities.
+stakeholder engagement — experience that shapes how I run this business: with clear
+processes, accountability and attention to detail.
 </p>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color:
 WARM, lineHeight: "1.9", fontStyle: "italic" }}>
-I am drawn to environments where communication, clarity and human connection are at the
-heart of the work.
+I am drawn to work where thoughtful hosting, trust and the guest experience are at the
+heart of it — and I manage every property the way I manage my own.
 </p>
 <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "40px" }}>
-<button onClick={() => setPage("Speaking")} style={{
+<button onClick={() => setPage("Property Management")} style={{
 padding: "12px 28px", background: TERRA, border: "none", borderRadius: "2px",
 cursor: "pointer",
 fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
 letterSpacing: "1.5px", textTransform: "uppercase", color: WHITE,
-}}>View Engagements</button>
+}}>View Property Management</button>
 <button onClick={() => setPage("Contact")} style={{
 padding: "12px 28px", background: "transparent", border: `1px solid ${TERRA}`,
 borderRadius: "2px", cursor: "pointer",
