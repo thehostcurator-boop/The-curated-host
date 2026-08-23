@@ -20,9 +20,9 @@ const IMG_AMSTERDAM_INTERIOR = "/images/amsterdam-canal-interior.jpg";
 const IMG_ENGAGEMENT_TALK = "/images/ruben-speaking-mic-flags.jpg";
 // ── Mobile hook──────────────────────────────────────────────────────────────
 function useIsMobile() {
-const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
 useEffect(() => {
-const h = () => setIsMobile(window.innerWidth < 768);
+const h = () => setIsMobile(window.innerWidth < 900);
 window.addEventListener("resize", h);
 return () => window.removeEventListener("resize", h);
 }, []);
@@ -106,24 +106,24 @@ borderRadius: "1px" }} />
 ))}
 </button>
 ):(
-<div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+<div style={{ display: "flex", gap: "4px", alignItems: "center", flexWrap: "nowrap" }}>
 {primaryLinks.map(l => (
 <button key={l} onClick={() => setPage(l)} style={{
-padding: "8px 12px", background: "transparent", border: "none",
+padding: "8px 10px", background: "transparent", border: "none",
 borderRadius: "2px", cursor: "pointer",
 fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "10.5px", letterSpacing: "1px", textTransform: "uppercase",
+fontSize: "10px", letterSpacing: "0.5px", textTransform: "uppercase",
 color: page === l ? TERRA : light ? WHITE : WARM,
 fontWeight: page === l ? "bold" : "normal",
-transition: "color 0.2s", whiteSpace: "nowrap",
+transition: "color 0.2s", whiteSpace: "nowrap", flexShrink: 0,
 }}>{l}</button>
 ))}
-<div ref={moreRef} style={{ position: "relative" }}>
+<div ref={moreRef} style={{ position: "relative", flexShrink: 0 }}>
 <button onClick={() => setMoreOpen(o => !o)} style={{
-padding: "8px 12px", background: "transparent", border: "none",
+padding: "8px 10px", background: "transparent", border: "none",
 borderRadius: "2px", cursor: "pointer",
 fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "10.5px", letterSpacing: "1px", textTransform: "uppercase",
+fontSize: "10px", letterSpacing: "0.5px", textTransform: "uppercase",
 color: isMoreActive ? TERRA : light ? WHITE : WARM,
 fontWeight: isMoreActive ? "bold" : "normal",
 whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px",
@@ -147,11 +147,12 @@ color: page === l ? TERRA : BODY, fontWeight: page === l ? "bold" : "normal",
 )}
 </div>
 <button onClick={() => setPage("Contact")} style={{
-padding: "10px 18px", background: TERRA, border: "none",
+padding: "9px 16px", background: TERRA, border: "none",
 borderRadius: "2px", cursor: "pointer",
 fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "10.5px", letterSpacing: "1px", textTransform: "uppercase",
+fontSize: "10px", letterSpacing: "0.5px", textTransform: "uppercase",
 color: WHITE, fontWeight: "bold", marginLeft: "4px", whiteSpace: "nowrap",
+flexShrink: 0,
 }}>Get In Touch</button>
 </div>
 )}
@@ -537,44 +538,6 @@ color: WHITE, whiteSpace: "nowrap",
 }}>See a Sample →</button>
 </div>
 
-{/* Speaking & Communications teaser */}
-<div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: DARK }}>
-<div style={{ maxWidth: "min(900px, 100%)", margin: "0 auto", display: "flex", gap: "64px",
-flexWrap: "wrap", alignItems: "center" }}>
-<div style={{ flex: "0 0 auto" }}>
-<img src={IMG_HEADSHOT_PORTRAIT} alt="Ruben de Bruin" style={{ width: "180px", height: "220px",
-objectFit: "cover", borderRadius: "2px", display: "block" }} />
-</div>
-<div style={{ flex: 1 }}>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color:
-WARM, letterSpacing: "3px", textTransform: "uppercase", marginBottom: "16px" }}>Also from Ruben</div>
-<h2 style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(20px,3vw, 28px)", fontWeight: "bold", color: WHITE, margin: "0 0 20px", lineHeight: "1.3" }}>
-Public speaking &amp; communications advisory.
-</h2>
-<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
-"rgba(255,255,255,0.65)", lineHeight: "1.9", marginBottom: "24px" }}>
-Alongside property management, Ruben speaks and advises on communication and
-connection — drawing on experience across legal, international and entrepreneurial
-environments.
-</p>
-<div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-<button onClick={() => setPage("Speaking")} style={{
-padding: "12px 28px", background: "transparent", border: `1px solid ${TERRA}`,
-borderRadius: "2px", cursor: "pointer",
-fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
-letterSpacing: "1.5px", textTransform: "uppercase", color: TERRA,
-}}>View Speaking →</button>
-<button onClick={() => setPage("About")} style={{
-padding: "12px 28px", background: "transparent", border: `1px solid rgba(255,255,255,0.3)`,
-borderRadius: "2px", cursor: "pointer",
-fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
-letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.7)",
-}}>About Ruben →</button>
-</div>
-</div>
-</div>
-</div>
-
 {/* CTA */}
 <div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: SAND,
 textAlign: "center" }}>
@@ -694,7 +657,7 @@ alignItems: "center", flexWrap: "wrap-reverse" }}>
 <Heading>Engagements.</Heading>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
 WARM, lineHeight: "1.8" }}>
-Ruben speaks on communication, clarity and connection — drawing on experience across
+I speak on communication, clarity and connection — drawing on experience across
 legal, international and entrepreneurial environments. Below is a selection of past and
 upcoming engagements.
 </p>
@@ -744,7 +707,7 @@ color: WARM, fontWeight: "bold", letterSpacing: "1px", textTransform: "uppercase
 </div>
 </div>
 <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: DARK, textAlign: "center" }}>
-<Heading light center>Invite Ruben to speak.</Heading>
+<Heading light center>Invite me to speak.</Heading>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
 "rgba(255,255,255,0.6)", marginBottom: "40px", maxWidth: "500px", marginLeft: "auto", marginRight: "auto" }}>
 For speaking enquiries, get in touch with details of your event, audience and topic.
@@ -773,7 +736,7 @@ TERRA, fontStyle: "italic", marginBottom: "16px" }}>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
 WARM, lineHeight: "1.8" }}>
 A podcast exploring the paths, choices and lessons behind inspiring professions —
-conversations with people shaping their fields, hosted by Ruben de Bruin.
+conversations with people shaping their fields, hosted by me.
 </p>
 </div>
 </div>
@@ -949,7 +912,7 @@ marginBottom: "10px" }}>Primary — Full-Service</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "18px",
 fontWeight: "bold", color: BODY, marginBottom: "10px" }}>Amsterdam & the Netherlands</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
-WARM, lineHeight: "1.7" }}>Where Ruben is based — full hands-on management including
+WARM, lineHeight: "1.7" }}>Where we're based — full hands-on management including
 guest messaging, pricing, and cleaning &amp; turnover coordination, with regular
 in-person attention.</div>
 </div>
@@ -962,7 +925,7 @@ marginBottom: "10px" }}>Also Available</div>
 fontWeight: "bold", color: BODY, marginBottom: "10px" }}>UK &amp; US</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
 WARM, lineHeight: "1.7" }}>Working knowledge of both markets, with guest messaging and
-pricing &amp; revenue management deliverable remotely. Ruben travels for onboarding and
+pricing &amp; revenue management deliverable remotely. We travel for onboarding and
 periodic visits — get in touch to discuss what's realistic for your property.</div>
 </div>
 </div>
