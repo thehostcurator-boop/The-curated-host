@@ -61,20 +61,26 @@ strokeLinecap="round"/>
 );
 }
 function Nav({ page, setPage }) {
-const primaryLinks = ["Home", "Property Management", "About"];
+const topLinks = ["Home", "About"];
+const pmLinks = ["Property Management", "Guest Handbooks", "Interior Design"];
 const moreLinks = ["Speaking", "Millennicast"];
 const [scrolled, setScrolled] = useState(false);
 const [menuOpen, setMenuOpen] = useState(false);
 const [moreOpen, setMoreOpen] = useState(false);
+const [pmOpen, setPmOpen] = useState(false);
 const isMobile = useIsMobile();
 const moreRef = useRef(null);
+const pmRef = useRef(null);
 useEffect(() => {
 const h = () => setScrolled(window.scrollY > 40);
 window.addEventListener("scroll", h);
 return () => window.removeEventListener("scroll", h);
 }, []);
 useEffect(() => {
-const h = (e) => { if (moreRef.current && !moreRef.current.contains(e.target)) setMoreOpen(false); };
+const h = (e) => {
+if (moreRef.current && !moreRef.current.contains(e.target)) setMoreOpen(false);
+if (pmRef.current && !pmRef.current.contains(e.target)) setPmOpen(false);
+};
 window.addEventListener("mousedown", h);
 return () => window.removeEventListener("mousedown", h);
 }, []);
@@ -83,6 +89,7 @@ const bg = (isHome && !scrolled && !menuOpen) ? "transparent" : WHITE;
 const borderColor = (isHome && !scrolled && !menuOpen) ? "transparent" : RULE;
 const light = isHome && !scrolled && !menuOpen;
 const isMoreActive = moreLinks.includes(page);
+const isPmActive = pmLinks.includes(page);
 return (
 <>
 <nav style={{
@@ -107,17 +114,52 @@ borderRadius: "1px" }} />
 </button>
 ):(
 <div style={{ display: "flex", gap: "4px", alignItems: "center", flexWrap: "nowrap" }}>
-{primaryLinks.map(l => (
-<button key={l} onClick={() => setPage(l)} style={{
+<button onClick={() => setPage("Home")} style={{
 padding: "8px 10px", background: "transparent", border: "none",
 borderRadius: "2px", cursor: "pointer",
 fontFamily: "'Futura','Century Gothic',sans-serif",
 fontSize: "10px", letterSpacing: "0.5px", textTransform: "uppercase",
-color: page === l ? TERRA : light ? WHITE : WARM,
-fontWeight: page === l ? "bold" : "normal",
+color: page === "Home" ? TERRA : light ? WHITE : WARM,
+fontWeight: page === "Home" ? "bold" : "normal",
 transition: "color 0.2s", whiteSpace: "nowrap", flexShrink: 0,
-}}>{l}</button>
+}}>Home</button>
+<div ref={pmRef} style={{ position: "relative", flexShrink: 0 }}>
+<button onClick={() => setPmOpen(o => !o)} style={{
+padding: "8px 10px", background: "transparent", border: "none",
+borderRadius: "2px", cursor: "pointer",
+fontFamily: "'Futura','Century Gothic',sans-serif",
+fontSize: "10px", letterSpacing: "0.5px", textTransform: "uppercase",
+color: isPmActive ? TERRA : light ? WHITE : WARM,
+fontWeight: isPmActive ? "bold" : "normal",
+whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px",
+}}>Property Management {pmOpen ? "▴" : "▾"}</button>
+{pmOpen && (
+<div style={{
+position: "absolute", top: "calc(100% + 8px)", left: 0,
+background: WHITE, border: `1px solid ${RULE}`, borderRadius: "2px",
+minWidth: "200px", boxShadow: "0 8px 24px rgba(0,0,0,0.1)", overflow: "hidden",
+}}>
+{pmLinks.map(l => (
+<button key={l} onClick={() => { setPage(l); setPmOpen(false); }} style={{
+display: "block", width: "100%", padding: "12px 16px", background: "transparent",
+border: "none", cursor: "pointer", textAlign: "left",
+fontFamily: "'Futura','Century Gothic',sans-serif",
+fontSize: "11px", letterSpacing: "1px", textTransform: "uppercase",
+color: page === l ? TERRA : BODY, fontWeight: page === l ? "bold" : "normal",
+}}>{l === "Property Management" ? "Overview" : l}</button>
 ))}
+</div>
+)}
+</div>
+<button onClick={() => setPage("About")} style={{
+padding: "8px 10px", background: "transparent", border: "none",
+borderRadius: "2px", cursor: "pointer",
+fontFamily: "'Futura','Century Gothic',sans-serif",
+fontSize: "10px", letterSpacing: "0.5px", textTransform: "uppercase",
+color: page === "About" ? TERRA : light ? WHITE : WARM,
+fontWeight: page === "About" ? "bold" : "normal",
+transition: "color 0.2s", whiteSpace: "nowrap", flexShrink: 0,
+}}>About</button>
 <div ref={moreRef} style={{ position: "relative", flexShrink: 0 }}>
 <button onClick={() => setMoreOpen(o => !o)} style={{
 padding: "8px 10px", background: "transparent", border: "none",
@@ -165,7 +207,7 @@ background: WHITE, borderBottom: `1px solid ${RULE}`,
 padding: "16px 20px", display: "flex", flexDirection: "column", gap: "4px",
 maxHeight: "calc(100vh - 64px)", overflowY: "auto",
 }}>
-{[...primaryLinks, "Contact"].map(l => (
+{topLinks.map(l => (
 <button key={l} onClick={() => { setPage(l); setMenuOpen(false); }} style={{
 padding: "14px 0", background: "transparent", border: "none",
 borderBottom: `1px solid ${RULE}`, cursor: "pointer", textAlign: "left",
@@ -173,6 +215,25 @@ fontFamily: "'Futura','Century Gothic',sans-serif",
 fontSize: "13px", letterSpacing: "1.5px", textTransform: "uppercase",
 color: page === l ? TERRA : WARM, fontWeight: page === l ? "bold" : "normal",
 }}>{l}</button>
+))}
+<button onClick={() => { setPage("Contact"); setMenuOpen(false); }} style={{
+padding: "14px 0", background: "transparent", border: "none",
+borderBottom: `1px solid ${RULE}`, cursor: "pointer", textAlign: "left",
+fontFamily: "'Futura','Century Gothic',sans-serif",
+fontSize: "13px", letterSpacing: "1.5px", textTransform: "uppercase",
+color: page === "Contact" ? TERRA : WARM, fontWeight: page === "Contact" ? "bold" : "normal",
+}}>Contact</button>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
+color: WARM, letterSpacing: "1.5px", textTransform: "uppercase", margin: "16px 0 4px"
+}}>Property Management</div>
+{pmLinks.map(l => (
+<button key={l} onClick={() => { setPage(l); setMenuOpen(false); }} style={{
+padding: "14px 0", background: "transparent", border: "none",
+borderBottom: `1px solid ${RULE}`, cursor: "pointer", textAlign: "left",
+fontFamily: "'Futura','Century Gothic',sans-serif",
+fontSize: "13px", letterSpacing: "1.5px", textTransform: "uppercase",
+color: page === l ? TERRA : WARM, fontWeight: page === l ? "bold" : "normal",
+}}>{l === "Property Management" ? "Overview" : l}</button>
 ))}
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
 color: WARM, letterSpacing: "1.5px", textTransform: "uppercase", margin: "16px 0 4px"
@@ -529,7 +590,7 @@ alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1
 <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
 WHITE }}>Every property we manage comes with a professionally designed guest handbook.</span>
 </div>
-<button onClick={() => setPage("Property Management")} style={{
+<button onClick={() => setPage("Guest Handbooks")} style={{
 padding: "10px 24px", background: "transparent",
 border: "1px solid rgba(255,255,255,0.6)", borderRadius: "2px", cursor: "pointer",
 fontFamily: "'Futura','Century Gothic',sans-serif",
@@ -931,122 +992,88 @@ periodic visits — get in touch to discuss what's realistic for your property.<
 </div>
 </div>
 </div>
-{/* Additional services */}
-<div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
+{/* Explore our services */}
+<div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: WHITE }}>
 <div style={{ maxWidth: "min(1000px, 100%)", margin: "0 auto" }}>
-<SectionLabel text="Additional services" />
-<Heading>Interior design & styling.</Heading>
-<div style={{ padding: "28px", background: CREAM, borderRadius: "2px", border: `1px solid ${RULE}`,
-display: "flex", gap: "24px", alignItems: "flex-start", flexWrap: "wrap", marginTop: "24px" }}>
+<SectionLabel text="Explore further" />
+<Heading>Two more ways we help hosts.</Heading>
+<div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginTop: "32px" }}>
+<div style={{ flex: "1 1 300px", padding: "32px 28px", background: CREAM, borderRadius: "2px",
+border: `1px solid ${RULE}` }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "26px", color:
-TERRA }}>◆</div>
-<div style={{ flex: "1 1 300px" }}>
+TERRA, marginBottom: "16px" }}>◆</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "16px",
-fontWeight: "bold", color: BODY, marginBottom: "10px" }}>In partnership with a qualified
-architect</div>
+fontWeight: "bold", color: BODY, marginBottom: "10px" }}>Guest Handbooks</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
-WARM, lineHeight: "1.8" }}>For hosts looking to increase appeal and rental value, we
-offer interior design and styling advisory through a trusted architect partner — from
-small styling refreshes to fuller layout and design consultations. Available as a
-standalone engagement, priced separately on request.</div>
-</div>
-</div>
-</div>
-</div>
-{/* Pricing */}
-<div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
-<div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-<SectionLabel text="Pricing" />
-<Heading>Simple, performance-aligned pricing.</Heading>
-<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
-WARM, lineHeight: "1.8", marginBottom: "16px" }}>
-Like most co-hosting services, we work on a percentage of your booking revenue — we
-only do well when your property does well.
-</p>
-<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
-WARM, lineHeight: "1.8", marginBottom: "40px", maxWidth: "640px" }}>
-Our rate reflects a proven track record, not a starting-out one — Ruben has run his own
-Bournemouth property to Superhost status with a 4.81★ rating and consistent occupancy
-and returns, and every property we manage gets that same standard.
-</p>
-<div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-{[
-{
-tier: "Essential Co-Hosting", price: "20%", popular: false,
-tagline: "Messaging & pricing.",
-items: ["Guest messaging & communication", "Pricing & revenue management", "Monthly performance summary", "Direct WhatsApp line"],
-},
-{
-tier: "Full-Service Management", price: "30%", popular: true,
-tagline: "Everything, handled.",
-items: ["Guest messaging & communication", "Pricing & revenue management", "Cleaning & turnover coordination", "Signature guest handbook included", "Monthly performance summary", "Priority support"],
-},
-{
-tier: "Portfolio", price: "Custom", popular: false,
-tagline: "Multiple properties.",
-items: ["Everything in Full-Service", "Multi-property dashboard", "Dedicated point of contact", "Custom quote based on portfolio size"],
-},
-].map((pkg, i) => (
-<div key={i} style={{
-flex: "1 1 260px", padding: "36px 28px",
-background: pkg.popular ? TERRA : CREAM,
-border: `1px solid ${pkg.popular ? TERRA : RULE}`,
-borderRadius: "2px", position: "relative",
-}}>
-{pkg.popular && (
-<div style={{
-position: "absolute", top: "-13px", left: "50%", transform: "translateX(-50%)",
-background: BODY, color: WHITE, padding: "4px 16px",
-fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "9px", letterSpacing:
-"2px", textTransform: "uppercase",
-}}>Most Popular</div>
-)}
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
-letterSpacing: "2px", textTransform: "uppercase", color: pkg.popular ? "rgba(255,255,255,0.7)" :
-WARM, marginBottom: "8px" }}>{pkg.tier}</div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "36px",
-fontWeight: "bold", color: pkg.popular ? WHITE : TERRA, marginBottom: "4px"
-}}>{pkg.price}<span style={{ fontSize: "14px", fontWeight: "normal" }}>{pkg.price !== "Custom" ? " of revenue" : ""}</span></div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
-pkg.popular ? "rgba(255,255,255,0.6)" : WARM, marginBottom: "24px", fontStyle: "italic"
-}}>{pkg.tagline}</div>
-<div style={{ height: "1px", background: pkg.popular ? "rgba(255,255,255,0.2)" : RULE,
-marginBottom: "24px" }} />
-{pkg.items.map((item, j) => (
-<div key={j} style={{ display: "flex", alignItems: "flex-start", gap: "10px", marginBottom:
-"10px" }}>
-<span style={{ color: pkg.popular ? "rgba(255,255,255,0.5)" : TERRA, fontSize:
-"14px", marginTop: "1px" }}>—</span>
-<span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px",
-color: pkg.popular ? "rgba(255,255,255,0.9)" : BODY, lineHeight: "1.5" }}>{item}</span>
-</div>
-))}
-<div style={{ marginTop: "28px" }}>
-<button onClick={() => setPage("Contact")} style={{
-width: "100%", padding: "12px", cursor: "pointer", borderRadius: "2px",
+WARM, lineHeight: "1.7", marginBottom: "20px" }}>Our signature printed, laminated A5
+guest handbook — included with Full-Service, or available as a standalone product.</div>
+<button onClick={() => setPage("Guest Handbooks")} style={{
+background: "transparent", border: "none", cursor: "pointer", padding: 0,
 fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
-letterSpacing: "1.5px", textTransform: "uppercase", fontWeight: "bold",
-background: pkg.popular ? WHITE : TERRA,
-color: pkg.popular ? TERRA : WHITE, border: "none",
-}}>Get Started</button>
+letterSpacing: "1.5px", textTransform: "uppercase", color: TERRA, fontWeight: "bold",
+}}>See a Sample →</button>
+</div>
+<div style={{ flex: "1 1 300px", padding: "32px 28px", background: CREAM, borderRadius: "2px",
+border: `1px solid ${RULE}` }}>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "26px", color:
+TERRA, marginBottom: "16px" }}>✦</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "16px",
+fontWeight: "bold", color: BODY, marginBottom: "10px" }}>Interior Design &amp; Styling</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
+WARM, lineHeight: "1.7", marginBottom: "20px" }}>For hosts looking to increase appeal
+and rental value — in partnership with a friend with an architecture and design
+background.</div>
+<button onClick={() => setPage("Interior Design")} style={{
+background: "transparent", border: "none", cursor: "pointer", padding: 0,
+fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
+letterSpacing: "1.5px", textTransform: "uppercase", color: TERRA, fontWeight: "bold",
+}}>Learn More →</button>
 </div>
 </div>
-))}
 </div>
 </div>
-</div>
-{/* Signature guest handbook — differentiator */}
-<div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: CREAM }}>
-<div style={{ maxWidth: "min(1000px, 100%)", margin: "0 auto" }}>
-<SectionLabel text="Included with Full-Service" />
-<Heading>Your signature guest handbook.</Heading>
+{/* CTA */}
+<div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background:
+DARK, textAlign: "center" }}>
+<Heading light center>Let us take hosting off your plate.</Heading>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
-WARM, lineHeight: "1.8", marginBottom: "40px", maxWidth: "700px" }}>
+"rgba(255,255,255,0.5)", marginBottom: "40px", lineHeight: "1.8" }}>
+Get a free assessment of your property and a straightforward quote — no obligation.
+</p>
+<div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap",
+alignItems: "center", flexDirection: "column" }}>
+<FormBtn text="Get a Free Property Assessment" setPage={setPage} />
+<div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+<span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color:
+"rgba(255,255,255,0.5)" }}>prefer to chat first?</span>
+<WhatsAppBtn />
+</div>
+</div>
+</div>
+</div>
+);
+}
+// ── GUEST HANDBOOKS PAGE──────────────────────────────────────────────────────
+function GuestHandbooksPage({ setPage }) {
+return (
+<div style={{ paddingTop: "64px" }}>
+{/* Header */}
+<div style={{ padding: "80px 10% 64px", background: DARK }}>
+<div style={{ maxWidth: "min(700px, 100%)" }}>
+<SectionLabel text="Property Management · Guest Handbooks" />
+<Heading light>Your signature guest handbook.</Heading>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
+"rgba(255,255,255,0.6)", lineHeight: "1.8" }}>
 Not a PDF attachment. Not a link in a message. A beautifully produced, printed and
 laminated A5 booklet left on the kitchen table — ready for guests the moment they
 arrive. Included as standard with Full-Service Management, and available as a
 standalone product for any host.
 </p>
+</div>
+</div>
+{/* Features */}
+<div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: CREAM }}>
+<div style={{ maxWidth: "min(1000px, 100%)", margin: "0 auto" }}>
 <div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginBottom: "48px" }}>
 {[
 { icon: "◆", title: "Printed & Laminated", desc: "Full colour, wipe-clean and built to last the season." },
@@ -1130,14 +1157,95 @@ WHITE, lineHeight: "1.8", marginBottom: "20px", fontStyle: "italic" }}>
 {/* CTA */}
 <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background:
 DARK, textAlign: "center" }}>
-<Heading light center>Let us take hosting off your plate.</Heading>
+<Heading light center>Want yours to look like this?</Heading>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
 "rgba(255,255,255,0.5)", marginBottom: "40px", lineHeight: "1.8" }}>
-Get a free assessment of your property and a straightforward quote — no obligation.
+Order a standalone handbook, or ask about bundling it with Full-Service Management.
 </p>
 <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap",
 alignItems: "center", flexDirection: "column" }}>
-<FormBtn text="Get a Free Property Assessment" setPage={setPage} />
+<FormBtn text="Order a Handbook" setPage={setPage} />
+<div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+<span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color:
+"rgba(255,255,255,0.5)" }}>prefer to chat first?</span>
+<WhatsAppBtn />
+</div>
+</div>
+</div>
+</div>
+);
+}
+// ── INTERIOR DESIGN PAGE──────────────────────────────────────────────────────
+function InteriorDesignPage({ setPage }) {
+return (
+<div style={{ paddingTop: "64px" }}>
+{/* Header */}
+<div style={{ padding: "80px 10% 64px", background: DARK }}>
+<div style={{ maxWidth: "min(700px, 100%)" }}>
+<SectionLabel text="Property Management · Interior Design" />
+<Heading light>Interior design &amp; styling.</Heading>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
+"rgba(255,255,255,0.6)", lineHeight: "1.8" }}>
+For hosts looking to increase appeal and rental value — from small styling refreshes
+to fuller layout and design consultations, in partnership with a friend with an
+architecture and design background.
+</p>
+</div>
+</div>
+{/* What's offered */}
+<div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: SAND }}>
+<div style={{ maxWidth: "min(1000px, 100%)", margin: "0 auto" }}>
+<SectionLabel text="What's offered" />
+<Heading>From a refresh to a full redesign.</Heading>
+<div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginTop: "32px" }}>
+{[
+{ icon: "◆", title: "Styling Refresh", desc: "Furniture arrangement, soft furnishings and small styling touches to lift how a property presents in photos and in person." },
+{ icon: "✦", title: "Layout Consultation", desc: "A review of how a space is used, with suggestions to improve flow, functionality and guest experience." },
+{ icon: "⬡", title: "Fuller Design Projects", desc: "For bigger renovations or new properties, more involved design input scoped and quoted individually." },
+].map((item, i) => (
+<div key={i} style={{ flex: "1 1 280px", padding: "28px", background: WHITE,
+borderRadius: "2px", border: `1px solid ${RULE}` }}>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "26px", color:
+TERRA, marginBottom: "16px" }}>{item.icon}</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px",
+fontWeight: "bold", color: BODY, marginBottom: "10px" }}>{item.title}</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
+WARM, lineHeight: "1.7" }}>{item.desc}</div>
+</div>
+))}
+</div>
+</div>
+</div>
+{/* How it works */}
+<div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
+<div style={{ maxWidth: "min(900px, 100%)", margin: "0 auto" }}>
+<SectionLabel text="How it works" />
+<Heading>A standalone engagement.</Heading>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
+WARM, lineHeight: "1.8", marginBottom: "16px", maxWidth: "700px" }}>
+Interior design is available to any host — whether or not you use us for property
+management. We start with a conversation about the space and what you're hoping to
+achieve, then scope and price the work individually depending on what's involved.
+</p>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
+WARM, lineHeight: "1.8", maxWidth: "700px" }}>
+Priced separately on request — get in touch with a few details about your property and
+what you have in mind.
+</p>
+</div>
+</div>
+{/* CTA */}
+<div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background:
+DARK, textAlign: "center" }}>
+<Heading light center>Thinking about a refresh?</Heading>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
+"rgba(255,255,255,0.5)", marginBottom: "40px", lineHeight: "1.8" }}>
+Tell us about your property and what you'd like to change — we'll get back to you with
+next steps.
+</p>
+<div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap",
+alignItems: "center", flexDirection: "column" }}>
+<FormBtn text="Enquire About Design" setPage={setPage} />
 <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
 <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color:
 "rgba(255,255,255,0.5)" }}>prefer to chat first?</span>
@@ -1231,7 +1339,7 @@ on one belief: how you host people defines the experience they take away.
 <div style={{ flex: "0 1 160px" }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color:
 WARM, letterSpacing: "2px", textTransform: "uppercase", marginBottom: "16px" }}>Pages</div>
-{["Home","Property Management","Speaking","About","Millennicast","Contact"].map(l => (
+{["Home","Property Management","Guest Handbooks","Interior Design","Speaking","About","Millennicast","Contact"].map(l => (
 <div key={l} onClick={() => setPage(l)} style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.5)", marginBottom: "10px",
 cursor: "pointer" }}>{l}</div>
 ))}
@@ -1311,6 +1419,8 @@ return (
 {page === "Speaking" && <EngagementsPage setPage={changePage} />}
 {page === "Millennicast" && <MillennicastPage setPage={changePage} />}
 {page === "Property Management" && <PropertyManagementPage setPage={changePage} />}
+{page === "Guest Handbooks" && <GuestHandbooksPage setPage={changePage} />}
+{page === "Interior Design" && <InteriorDesignPage setPage={changePage} />}
 {page === "Contact" && <ContactPage />}
 <Footer setPage={changePage} />
 </div>
