@@ -9,15 +9,15 @@ const WHITE = "#FFFFFF";
 const DARK = "#1A1612";
 
 // ── Portfolio images────────────────────────────────────────────────────────
-const IMG_COVER_CLOSEUP = "/images/handbook-cover-closeup.jpg";
-const IMG_COVER_FLATLAY = "/images/handbook-cover-flatlay.jpg";
-const IMG_INTERIOR_WELCOME = "/images/handbook-interior-welcome.jpg";
-const IMG_INTERIOR_QR = "/images/handbook-interior-qr.jpg";
-const IMG_INTERIOR_HEATING = "/images/handbook-interior-heating.jpg";
-const IMG_SPEAKING_ACTION = "/images/ruben-speaking-renaissance-ucla.jpg";
-const IMG_HEADSHOT_PORTRAIT = "/images/ruben-headshot-portrait.jpg";
-const IMG_AMSTERDAM_INTERIOR = "/images/amsterdam-canal-interior.jpg";
-const IMG_ENGAGEMENT_TALK = "/images/ruben-speaking-mic-flags.jpg";
+const IMG_COVER_CLOSEUP = "/handbook-cover-closeup.jpg";
+const IMG_COVER_FLATLAY = "/handbook-cover-flatlay.jpg";
+const IMG_INTERIOR_WELCOME = "/handbook-interior-welcome.jpg";
+const IMG_INTERIOR_QR = "/handbook-interior-qr.jpg";
+const IMG_INTERIOR_HEATING = "/handbook-interior-heating.jpg";
+const IMG_SPEAKING_ACTION = "/ruben-speaking-renaissance-ucla.jpg";
+const IMG_HEADSHOT_PORTRAIT = "/ruben-headshot-portrait.jpg";
+const IMG_AMSTERDAM_INTERIOR = "/amsterdam-canal-interior.jpg";
+const IMG_ENGAGEMENT_TALK = "/ruben-speaking-mic-flags.jpg";
 // ── Mobile hook──────────────────────────────────────────────────────────────
 function useIsMobile() {
 const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
