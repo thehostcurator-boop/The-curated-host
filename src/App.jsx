@@ -16,6 +16,7 @@ const IMG_INTERIOR_QR = "/images/handbook-interior-qr.jpg";
 const IMG_INTERIOR_HEATING = "/images/handbook-interior-heating.jpg";
 const IMG_SPEAKING_ACTION = "/images/ruben-speaking-renaissance-ucla.jpg";
 const IMG_HEADSHOT_PORTRAIT = "/images/ruben-headshot-portrait.jpg";
+const IMG_AMSTERDAM_INTERIOR = "/images/amsterdam-canal-interior.jpg";
 const IMG_ENGAGEMENT_TALK = "/images/ruben-speaking-mic-flags.jpg";
 // ── Mobile hook──────────────────────────────────────────────────────────────
 function useIsMobile() {
@@ -60,19 +61,28 @@ strokeLinecap="round"/>
 );
 }
 function Nav({ page, setPage }) {
-const links = ["Home", "Property Management", "Speaking", "About", "Millennicast", "Contact"];
+const primaryLinks = ["Home", "Property Management", "About"];
+const moreLinks = ["Speaking", "Millennicast"];
 const [scrolled, setScrolled] = useState(false);
 const [menuOpen, setMenuOpen] = useState(false);
+const [moreOpen, setMoreOpen] = useState(false);
 const isMobile = useIsMobile();
+const moreRef = useRef(null);
 useEffect(() => {
 const h = () => setScrolled(window.scrollY > 40);
 window.addEventListener("scroll", h);
 return () => window.removeEventListener("scroll", h);
 }, []);
+useEffect(() => {
+const h = (e) => { if (moreRef.current && !moreRef.current.contains(e.target)) setMoreOpen(false); };
+window.addEventListener("mousedown", h);
+return () => window.removeEventListener("mousedown", h);
+}, []);
 const isHome = page === "Home";
 const bg = (isHome && !scrolled && !menuOpen) ? "transparent" : WHITE;
 const borderColor = (isHome && !scrolled && !menuOpen) ? "transparent" : RULE;
 const light = isHome && !scrolled && !menuOpen;
+const isMoreActive = moreLinks.includes(page);
 return (
 <>
 <nav style={{
@@ -97,7 +107,7 @@ borderRadius: "1px" }} />
 </button>
 ):(
 <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-{links.filter(l => l !== "Contact").map(l => (
+{primaryLinks.map(l => (
 <button key={l} onClick={() => setPage(l)} style={{
 padding: "8px 12px", background: "transparent", border: "none",
 borderRadius: "2px", cursor: "pointer",
@@ -108,6 +118,34 @@ fontWeight: page === l ? "bold" : "normal",
 transition: "color 0.2s", whiteSpace: "nowrap",
 }}>{l}</button>
 ))}
+<div ref={moreRef} style={{ position: "relative" }}>
+<button onClick={() => setMoreOpen(o => !o)} style={{
+padding: "8px 12px", background: "transparent", border: "none",
+borderRadius: "2px", cursor: "pointer",
+fontFamily: "'Futura','Century Gothic',sans-serif",
+fontSize: "10.5px", letterSpacing: "1px", textTransform: "uppercase",
+color: isMoreActive ? TERRA : light ? WHITE : WARM,
+fontWeight: isMoreActive ? "bold" : "normal",
+whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px",
+}}>More {moreOpen ? "▴" : "▾"}</button>
+{moreOpen && (
+<div style={{
+position: "absolute", top: "calc(100% + 8px)", right: 0,
+background: WHITE, border: `1px solid ${RULE}`, borderRadius: "2px",
+minWidth: "160px", boxShadow: "0 8px 24px rgba(0,0,0,0.1)", overflow: "hidden",
+}}>
+{moreLinks.map(l => (
+<button key={l} onClick={() => { setPage(l); setMoreOpen(false); }} style={{
+display: "block", width: "100%", padding: "12px 16px", background: "transparent",
+border: "none", cursor: "pointer", textAlign: "left",
+fontFamily: "'Futura','Century Gothic',sans-serif",
+fontSize: "11px", letterSpacing: "1px", textTransform: "uppercase",
+color: page === l ? TERRA : BODY, fontWeight: page === l ? "bold" : "normal",
+}}>{l}</button>
+))}
+</div>
+)}
+</div>
 <button onClick={() => setPage("Contact")} style={{
 padding: "10px 18px", background: TERRA, border: "none",
 borderRadius: "2px", cursor: "pointer",
@@ -124,8 +162,9 @@ color: WHITE, fontWeight: "bold", marginLeft: "4px", whiteSpace: "nowrap",
 position: "fixed", top: "64px", left: 0, right: 0, zIndex: 99,
 background: WHITE, borderBottom: `1px solid ${RULE}`,
 padding: "16px 20px", display: "flex", flexDirection: "column", gap: "4px",
+maxHeight: "calc(100vh - 64px)", overflowY: "auto",
 }}>
-{links.map(l => (
+{[...primaryLinks, "Contact"].map(l => (
 <button key={l} onClick={() => { setPage(l); setMenuOpen(false); }} style={{
 padding: "14px 0", background: "transparent", border: "none",
 borderBottom: `1px solid ${RULE}`, cursor: "pointer", textAlign: "left",
@@ -133,7 +172,18 @@ fontFamily: "'Futura','Century Gothic',sans-serif",
 fontSize: "13px", letterSpacing: "1.5px", textTransform: "uppercase",
 color: page === l ? TERRA : WARM, fontWeight: page === l ? "bold" : "normal",
 }}>{l}</button>
-
+))}
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
+color: WARM, letterSpacing: "1.5px", textTransform: "uppercase", margin: "16px 0 4px"
+}}>More</div>
+{moreLinks.map(l => (
+<button key={l} onClick={() => { setPage(l); setMenuOpen(false); }} style={{
+padding: "14px 0", background: "transparent", border: "none",
+borderBottom: `1px solid ${RULE}`, cursor: "pointer", textAlign: "left",
+fontFamily: "'Futura','Century Gothic',sans-serif",
+fontSize: "13px", letterSpacing: "1.5px", textTransform: "uppercase",
+color: page === l ? TERRA : WARM, fontWeight: page === l ? "bold" : "normal",
+}}>{l}</button>
 ))}
 </div>
 )}
@@ -386,7 +436,8 @@ Your property,
 "rgba(255,255,255,0.6)", lineHeight: "1.8", marginBottom: "40px", maxWidth: "440px" }}>
 The Curated Host manages short and long-term rental properties for Airbnb hosts —
 guest messaging, pricing and revenue management, and cleaning and turnover
-coordination — run by a 4.81★ host who understands the business from the inside.
+coordination — run by an Airbnb Superhost with proven results from his own
+short-term rental in Bournemouth, UK.
 </p>
 <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
 <FormBtn text="Get a Free Property Assessment" setPage={setPage} />
@@ -416,6 +467,14 @@ fontWeight: "bold", color: TERRA }}>4.81★</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
 color: "rgba(255,255,255,0.5)", letterSpacing: "1px", textTransform: "uppercase",
 marginTop: "4px" }}>Ruben's Own Airbnb Rating</div>
+</div>
+<div style={{ flex: 1, padding: "16px 20px", background: "rgba(255,255,255,0.06)",
+border: "1px solid rgba(255,255,255,0.12)", borderRadius: "2px", textAlign: "center" }}>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "16px",
+fontWeight: "bold", color: TERRA, marginTop: "4px" }}>Superhost</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
+color: "rgba(255,255,255,0.5)", letterSpacing: "1px", textTransform: "uppercase",
+marginTop: "4px" }}>Airbnb Status</div>
 </div>
 </div>
 </div>
@@ -574,10 +633,10 @@ contexts.
 BODY, lineHeight: "1.9", marginBottom: "24px" }}>
 At The Curated Host, I manage short and long-term rental properties for Airbnb hosts —
 guest messaging, pricing and revenue management, and cleaning coordination — bringing
-the standard I hold my own 4.81★ listing to. Alongside this, I work as a public speaker
-and communicator, drawing on experience across legal, international and entrepreneurial
-environments to engage audiences on topics where clarity, trust and human connection
-matter most.
+the standard I hold my own Airbnb Superhost listing in Bournemouth, UK to. Alongside
+this, I work as a public speaker and communicator, drawing on experience across legal,
+international and entrepreneurial environments to engage audiences on topics where
+clarity, trust and human connection matter most.
 </p>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color:
 BODY, lineHeight: "1.9", marginBottom: "24px" }}>
@@ -754,30 +813,70 @@ Get in touch about being a guest on The Millennicast.
 }
 // ── PROPERTY MANAGEMENT PAGE──────────────────────────────────────────────────
 function PropertyManagementPage({ setPage }) {
+const isMobileHero = useIsMobile();
 return (
 <div style={{ paddingTop: "64px" }}>
-{/* Header */}
-<div style={{ padding: "80px 10% 64px", background: DARK }}>
-<div style={{ maxWidth: "min(700px, 100%)" }}>
+{/* Hero */}
+<div style={{ padding: "56px 10% 0", background: CREAM }}>
+<div style={{ maxWidth: "1200px", margin: "0 auto" }}>
 <SectionLabel text="Property Management" />
-<Heading light>Hosting, run properly.</Heading>
+<h1 style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(30px, 4.5vw, 46px)",
+fontWeight: "bold", color: BODY, lineHeight: "1.1", margin: "0 0 20px" }}>
+More income.<br /><span style={{ color: TERRA }}>Less hassle.</span>
+</h1>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
-"rgba(255,255,255,0.6)", lineHeight: "1.8" }}>
-The Curated Host manages short and long-term rental properties for Airbnb hosts —
-so you keep the income without carrying the day-to-day admin. Run by Ruben de Bruin,
-a 4.81★ host who manages every property the way he manages his own.
+WARM, lineHeight: "1.8", marginBottom: "28px", maxWidth: "440px" }}>
+Boutique short-term rental management for property owners who want more from their
+investment and less from their to-do list.
 </p>
+<div style={{ display: "flex", gap: "24px", flexWrap: "wrap", marginBottom: "32px" }}>
+{[
+{ stat: "4.81", label: "Guest Rating" },
+{ stat: "Superhost", label: "Airbnb Status" },
+{ stat: "5-Star", label: "Reviews" },
+].map((s, i) => (
+<div key={i} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+{i > 0 && <div style={{ width: "1px", height: "28px", background: RULE, marginRight: "6px" }} />}
+<div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "17px",
+fontWeight: "bold", color: TERRA }}>{s.stat}</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
+color: WARM, letterSpacing: "0.5px" }}>{s.label}</div>
+</div>
+</div>
+))}
+</div>
+</div>
+</div>
+<div style={{ position: "relative", width: "100%", aspectRatio: isMobileHero ? "3 / 4" : "21 / 9",
+overflow: "hidden" }}>
+<img src={IMG_AMSTERDAM_INTERIOR} alt="Amsterdam canal-side interior"
+style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+<div style={{ position: "absolute", top: "24px", right: "24px", maxWidth: "260px",
+background: "rgba(26,22,18,0.9)", borderRadius: "2px", padding: "24px" }}>
+<div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
+<span style={{ color: TERRA, fontSize: "14px" }}>◆</span>
+<span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
+color: TERRA, letterSpacing: "1.5px", textTransform: "uppercase", fontWeight: "bold"
+}}>Based in Amsterdam</span>
+</div>
+<div style={{ height: "1px", background: "rgba(255,255,255,0.15)", marginBottom: "12px" }} />
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
+color: "rgba(255,255,255,0.7)", letterSpacing: "1px", textTransform: "uppercase",
+marginBottom: "6px" }}>Operational expertise across</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "16px",
+color: WHITE, fontWeight: "bold", marginBottom: "10px" }}>UK &nbsp;|&nbsp; U.S.</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
+color: "rgba(255,255,255,0.6)", lineHeight: "1.6" }}>Combining local insight with
+international standards. On-the-ground presence when it matters.</div>
 </div>
 </div>
 {/* Credibility strip */}
-<div style={{ padding: "32px clamp(20px, 8%, 10%)", background: TERRA, display: "flex",
-alignItems: "center", gap: "24px", flexWrap: "wrap", justifyContent: "center" }}>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "32px",
-fontWeight: "bold", color: WHITE }}>4.81★</div>
+<div style={{ padding: "24px clamp(20px, 8%, 10%)", background: TERRA, textAlign: "center" }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px",
-color: "rgba(255,255,255,0.85)", maxWidth: "440px", lineHeight: "1.6" }}>
-Ruben's own Airbnb host rating — every property is managed with the same standard he
-holds his own listing to.
+color: "rgba(255,255,255,0.9)", maxWidth: "560px", margin: "0 auto", lineHeight: "1.6" }}>
+Proven results from Ruben's own short-term rental in Bournemouth, UK — every property
+we manage gets the same standard.
 </div>
 </div>
 {/* Services detail */}
@@ -806,6 +905,91 @@ WARM, lineHeight: "1.7" }}>{item.desc}</div>
 </div>
 </div>
 </div>
+{/* How it works */}
+<div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: DARK }}>
+<div style={{ maxWidth: "min(1000px, 100%)", margin: "0 auto" }}>
+<SectionLabel text="How it works" />
+<Heading light>From first message to first guest.</Heading>
+<div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginTop: "40px" }}>
+{[
+{ step: "01", title: "Free Assessment", desc: "We look at your property, current listing and performance, and tell you honestly what we think we can improve." },
+{ step: "02", title: "Agreement", desc: "A clear, straightforward agreement — no hidden fees, no long tie-in. You know exactly what you're paying and for what." },
+{ step: "03", title: "Onboarding", desc: "We take over messaging, pricing and (if Full-Service) turnover coordination — a short handover, then it's running." },
+{ step: "04", title: "Monthly Reporting", desc: "A clear monthly summary of performance, occupancy and revenue, so you always know how your property is doing." },
+].map((s, i) => (
+<div key={i} style={{ flex: "1 1 220px", padding: "28px 24px", background:
+"rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "2px" }}>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "28px",
+fontWeight: "bold", color: TERRA, marginBottom: "12px" }}>{s.step}</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px",
+fontWeight: "bold", color: WHITE, marginBottom: "10px" }}>{s.title}</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
+"rgba(255,255,255,0.6)", lineHeight: "1.7" }}>{s.desc}</div>
+</div>
+))}
+</div>
+</div>
+</div>
+{/* Where we operate */}
+<div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: SAND }}>
+<div style={{ maxWidth: "min(1000px, 100%)", margin: "0 auto" }}>
+<SectionLabel text="Where we operate" />
+<Heading>Based in Amsterdam, not limited to it.</Heading>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
+WARM, lineHeight: "1.8", marginBottom: "8px", maxWidth: "640px" }}>
+Personal. Responsive. Present. Ruben visits, inspects and builds every relationship
+in-person to make sure your property is in the best hands.
+</p>
+<div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginTop: "24px" }}>
+<div style={{ flex: "1 1 280px", padding: "28px", background: WHITE, borderRadius: "2px",
+border: `2px solid ${TERRA}` }}>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
+letterSpacing: "2px", textTransform: "uppercase", color: TERRA, fontWeight: "bold",
+marginBottom: "10px" }}>Primary — Full-Service</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "18px",
+fontWeight: "bold", color: BODY, marginBottom: "10px" }}>Amsterdam & the Netherlands</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
+WARM, lineHeight: "1.7" }}>Where Ruben is based — full hands-on management including
+guest messaging, pricing, and cleaning &amp; turnover coordination, with regular
+in-person attention.</div>
+</div>
+<div style={{ flex: "1 1 280px", padding: "28px", background: WHITE, borderRadius: "2px",
+border: `1px solid ${RULE}` }}>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
+letterSpacing: "2px", textTransform: "uppercase", color: WARM, fontWeight: "bold",
+marginBottom: "10px" }}>Also Available</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "18px",
+fontWeight: "bold", color: BODY, marginBottom: "10px" }}>UK &amp; US</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
+WARM, lineHeight: "1.7" }}>Working knowledge of both markets, with guest messaging and
+pricing &amp; revenue management deliverable remotely. Ruben travels for onboarding and
+periodic visits — get in touch to discuss what's realistic for your property.</div>
+</div>
+</div>
+</div>
+</div>
+{/* Additional services */}
+<div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
+<div style={{ maxWidth: "min(1000px, 100%)", margin: "0 auto" }}>
+<SectionLabel text="Additional services" />
+<Heading>Interior design & styling.</Heading>
+<div style={{ padding: "28px", background: CREAM, borderRadius: "2px", border: `1px solid ${RULE}`,
+display: "flex", gap: "24px", alignItems: "flex-start", flexWrap: "wrap", marginTop: "24px" }}>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "26px", color:
+TERRA }}>◆</div>
+<div style={{ flex: "1 1 300px" }}>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "16px",
+fontWeight: "bold", color: BODY, marginBottom: "10px" }}>In partnership with a qualified
+architect</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
+WARM, lineHeight: "1.8" }}>For hosts looking to increase appeal and rental value, we
+offer interior design and styling advisory through a trusted architect partner — from
+small styling refreshes to fuller layout and design consultations. Available as a
+standalone engagement, priced separately on request.</div>
+</div>
+</div>
+</div>
+</div>
 {/* Pricing */}
 <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
 <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
@@ -816,23 +1000,21 @@ WARM, lineHeight: "1.8", marginBottom: "16px" }}>
 Like most co-hosting services, we work on a percentage of your booking revenue — we
 only do well when your property does well.
 </p>
-<div style={{ padding: "14px 20px", background: SAND, border: `1px dashed ${TERRA}`,
-borderRadius: "2px", marginBottom: "40px", maxWidth: "600px" }}>
-<span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px",
-color: TERRA, fontWeight: "bold" }}>Placeholder:</span>
-<span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px",
-color: BODY }}> rates below are examples only — replace with your actual commission
-percentages before this goes live.</span>
-</div>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
+WARM, lineHeight: "1.8", marginBottom: "40px", maxWidth: "640px" }}>
+Our rate reflects a proven track record, not a starting-out one — Ruben has run his own
+Bournemouth property to Superhost status with a 4.81★ rating and consistent occupancy
+and returns, and every property we manage gets that same standard.
+</p>
 <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
 {[
 {
-tier: "Essential Co-Hosting", price: "[X]%", popular: false,
+tier: "Essential Co-Hosting", price: "20%", popular: false,
 tagline: "Messaging & pricing.",
 items: ["Guest messaging & communication", "Pricing & revenue management", "Monthly performance summary", "Direct WhatsApp line"],
 },
 {
-tier: "Full-Service Management", price: "[X]%", popular: true,
+tier: "Full-Service Management", price: "30%", popular: true,
 tagline: "Everything, handled.",
 items: ["Guest messaging & communication", "Pricing & revenue management", "Cleaning & turnover coordination", "Signature guest handbook included", "Monthly performance summary", "Priority support"],
 },
