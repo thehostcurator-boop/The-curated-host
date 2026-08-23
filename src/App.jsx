@@ -1021,8 +1021,8 @@ TERRA, marginBottom: "16px" }}>✦</div>
 fontWeight: "bold", color: BODY, marginBottom: "10px" }}>Interior Design &amp; Styling</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
 WARM, lineHeight: "1.7", marginBottom: "20px" }}>For hosts looking to increase appeal
-and rental value — in partnership with a friend with an architecture and design
-background.</div>
+and rental value — in partnership with an independent architect running his own design
+practice.</div>
 <button onClick={() => setPage("Interior Design")} style={{
 background: "transparent", border: "none", cursor: "pointer", padding: 0,
 fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
@@ -1187,8 +1187,8 @@ return (
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
 "rgba(255,255,255,0.6)", lineHeight: "1.8" }}>
 For hosts looking to increase appeal and rental value — from small styling refreshes
-to fuller layout and design consultations, in partnership with a friend with an
-architecture and design background.
+to fuller layout and design consultations, delivered in partnership with an independent
+architect with his own design practice and a proven track record.
 </p>
 </div>
 </div>
