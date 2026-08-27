@@ -639,58 +639,42 @@ function AboutPage({ setPage }) {
 return (
 <div style={{ paddingTop: "64px" }}>
 <div style={{ padding: "80px 10% 64px", background: DARK }}>
-<div style={{ maxWidth: "1000px", margin: "0 auto", display: "flex", gap: "56px",
-alignItems: "flex-start", flexWrap: "wrap" }}>
-<img src={IMG_HEADSHOT_PORTRAIT} alt="Ruben de Bruin" style={{ width: "220px", height: "270px",
-objectFit: "cover", borderRadius: "2px", flex: "0 0 auto" }} />
-<div style={{ flex: "1 1 320px", minWidth: 0 }}>
+<div style={{ maxWidth: "760px", margin: "0 auto" }}>
 <SectionLabel text="About" />
-<Heading light>Ruben de Bruin</Heading>
+<Heading light>About The Curated Host</Heading>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
 "rgba(255,255,255,0.6)", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "0" }}>
-Founder, The Curated Host — Property Management &amp; Guest Experience
+Property Management &amp; Guest Experience
 </p>
-</div>
 </div>
 </div>
 <div style={{ padding: "clamp(48px, 8vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
 <div style={{ maxWidth: "760px", margin: "0 auto" }}>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color:
 BODY, lineHeight: "1.9", marginBottom: "24px" }}>
-I am a Dutch-British, internationally experienced professional based in Amsterdam,
-bringing a cross-jurisdictional perspective to property management across Europe.
-This international foundation lets me engage meaningfully with hosts and guests across
-different countries, cultures and contexts.
-</p>
-<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color:
-BODY, lineHeight: "1.9", marginBottom: "24px" }}>
-At The Curated Host, I manage short and long-term rental properties for Airbnb hosts —
+We manage short and long-term rental properties for Airbnb hosts across Europe —
 guest messaging, pricing and revenue management, cleaning and turnover coordination,
-and maintenance coordination — bringing the same standard across every property I
-manage in Bournemouth, UK, from my own Superhost listing to properties I now co-host
-for clients. The guest experience sits at the centre of it all: a well-run property
-isn't just about occupancy and returns, it's about how a guest feels the moment they
-arrive.
+and maintenance coordination.
 </p>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color:
 BODY, lineHeight: "1.9", marginBottom: "24px" }}>
-I bring to this work a foundation in legal practice, navigating regulatory frameworks,
-managing risk, and supporting sound decision-making across corporate and international
-environments — working at the intersection of legal, strategic, operational and
-interpersonal dynamics to translate complexity into practical, dependable outcomes for
-the property owners I work with.
+We run every property we manage in Bournemouth, UK, to the same standard as our own
+Airbnb Superhost listing — including the properties we now co-host for clients. The
+guest experience sits at the centre of it: a well-run property isn't just about
+occupancy and returns, it's about how a guest feels the moment they arrive.
 </p>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color:
 BODY, lineHeight: "1.9", marginBottom: "24px" }}>
-I also serve as Vice President of the UCLA Alumni UK Network and as a Board Member of
-the University of California Trust, contributing to governance, strategic direction and
-stakeholder engagement — experience that shapes how I run this business: with clear
-processes, accountability and attention to detail.
+Our background is in legal practice — which is where the emphasis on clear processes,
+accountability and attention to detail in how we run this business comes from.
 </p>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color:
-WARM, lineHeight: "1.9", fontStyle: "italic" }}>
-I am drawn to work where thoughtful hosting, trust and the guest experience are at the
-heart of it — and I manage every property the way I manage my own.
+BODY, lineHeight: "1.9", marginBottom: "40px" }}>
+Every property we manage gets treated the way we treat our own.
+</p>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
+WARM, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "0" }}>
+— Ruben de Bruin, Founder
 </p>
 <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "40px" }}>
 <button onClick={() => setPage("Property Management")} style={{
