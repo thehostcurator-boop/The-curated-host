@@ -16,7 +16,7 @@ const IMG_INTERIOR_QR = "/handbook-interior-qr.jpg";
 const IMG_INTERIOR_HEATING = "/handbook-interior-heating.jpg";
 const IMG_SPEAKING_ACTION = "/ruben-speaking-renaissance-ucla.jpg";
 const IMG_HEADSHOT_PORTRAIT = "/ruben-headshot-portrait.jpg";
-const IMG_BOURNEMOUTH_BEACH = "/bournemouth-beach-huts-pier.jpg";
+const IMG_BOURNEMOUTH_BEACH = "/hero-photo-v2.jpg";
 const IMG_ENGAGEMENT_TALK = "/ruben-speaking-mic-flags.jpg";
 // ── Mobile hook──────────────────────────────────────────────────────────────
 function useIsMobile() {
