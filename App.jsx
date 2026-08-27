@@ -9,15 +9,15 @@ const WHITE = "#FFFFFF";
 const DARK = "#1A1612";
 
 // ── Portfolio images────────────────────────────────────────────────────────
-const IMG_COVER_CLOSEUP = "/images/handbook-cover-closeup.jpg";
-const IMG_COVER_FLATLAY = "/images/handbook-cover-flatlay.jpg";
-const IMG_INTERIOR_WELCOME = "/images/handbook-interior-welcome.jpg";
-const IMG_INTERIOR_QR = "/images/handbook-interior-qr.jpg";
-const IMG_INTERIOR_HEATING = "/images/handbook-interior-heating.jpg";
-const IMG_SPEAKING_ACTION = "/images/ruben-speaking-renaissance-ucla.jpg";
-const IMG_HEADSHOT_PORTRAIT = "/images/ruben-headshot-portrait.jpg";
-const IMG_AMSTERDAM_INTERIOR = "/images/amsterdam-canal-interior.jpg";
-const IMG_ENGAGEMENT_TALK = "/images/ruben-speaking-mic-flags.jpg";
+const IMG_COVER_CLOSEUP = "/handbook-cover-closeup.jpg";
+const IMG_COVER_FLATLAY = "/handbook-cover-flatlay.jpg";
+const IMG_INTERIOR_WELCOME = "/handbook-interior-welcome.jpg";
+const IMG_INTERIOR_QR = "/handbook-interior-qr.jpg";
+const IMG_INTERIOR_HEATING = "/handbook-interior-heating.jpg";
+const IMG_SPEAKING_ACTION = "/ruben-speaking-renaissance-ucla.jpg";
+const IMG_HEADSHOT_PORTRAIT = "/ruben-headshot-portrait.jpg";
+const IMG_BOURNEMOUTH_BEACH = "/IMG_3647.jpeg";
+const IMG_ENGAGEMENT_TALK = "/ruben-speaking-mic-flags.jpg";
 // ── Mobile hook──────────────────────────────────────────────────────────────
 function useIsMobile() {
 const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
@@ -498,8 +498,8 @@ Your property,
 "rgba(255,255,255,0.6)", lineHeight: "1.8", marginBottom: "40px", maxWidth: "440px" }}>
 The Curated Host manages short and long-term rental properties for Airbnb hosts —
 guest messaging, pricing and revenue management, cleaning and turnover coordination,
-and maintenance coordination — run by an Airbnb Superhost with proven results from
-his own short-term rental in Bournemouth, UK.
+and maintenance coordination — run by an Airbnb Superhost already managing properties
+across Bournemouth, UK.
 </p>
 <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
 <FormBtn text="Get a Free Property Assessment" setPage={setPage} />
@@ -540,6 +540,20 @@ marginTop: "4px" }}>Airbnb Status</div>
 </div>
 </div>
 </div>
+</div>
+</div>
+
+{/* Thin location banner */}
+<div style={{ position: "relative", width: "100%", height: "clamp(90px, 12vw, 140px)",
+overflow: "hidden" }}>
+<img src={IMG_BOURNEMOUTH_BEACH} alt="Beach huts and Bournemouth pier at sunset"
+style={{ width: "100%", height: "100%", objectFit: "cover", display: "block",
+objectPosition: "center 60%" }} />
+<div style={{ position: "absolute", inset: 0, background: "rgba(26,22,18,0.35)",
+display: "flex", alignItems: "center", justifyContent: "center" }}>
+<span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(10px, 1.6vw, 12px)",
+color: WHITE, letterSpacing: "2px", textTransform: "uppercase", textAlign: "center",
+padding: "0 20px" }}>Now managing properties in Bournemouth, UK</span>
 </div>
 </div>
 
@@ -657,10 +671,11 @@ different countries, cultures and contexts.
 BODY, lineHeight: "1.9", marginBottom: "24px" }}>
 At The Curated Host, I manage short and long-term rental properties for Airbnb hosts —
 guest messaging, pricing and revenue management, cleaning and turnover coordination,
-and maintenance coordination — bringing the same standard I hold my own Airbnb
-Superhost listing in Bournemouth, UK to every property. The guest experience sits at
-the centre of it all: a well-run property isn't just about occupancy and returns, it's
-about how a guest feels the moment they arrive.
+and maintenance coordination — bringing the same standard across every property I
+manage in Bournemouth, UK, from my own Superhost listing to properties I now co-host
+for clients. The guest experience sits at the centre of it all: a well-run property
+isn't just about occupancy and returns, it's about how a guest feels the moment they
+arrive.
 </p>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color:
 BODY, lineHeight: "1.9", marginBottom: "24px" }}>
@@ -873,9 +888,9 @@ color: WARM, letterSpacing: "0.5px" }}>{s.label}</div>
 </div>
 </div>
 </div>
-<div style={{ position: "relative", width: "100%", aspectRatio: isMobileHero ? "3 / 4" : "21 / 9",
+<div style={{ position: "relative", width: "100%", aspectRatio: isMobileHero ? "16 / 9" : "21 / 9",
 overflow: "hidden" }}>
-<img src={IMG_AMSTERDAM_INTERIOR} alt="Amsterdam canal-side interior"
+<img src={IMG_BOURNEMOUTH_BEACH} alt="Beach huts and Bournemouth pier at sunset"
 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
 <div style={{ position: "absolute", top: "24px", right: "24px", maxWidth: "260px",
 background: "rgba(26,22,18,0.9)", borderRadius: "2px", padding: "24px" }}>
@@ -883,12 +898,12 @@ background: "rgba(26,22,18,0.9)", borderRadius: "2px", padding: "24px" }}>
 <span style={{ color: TERRA, fontSize: "14px" }}>◆</span>
 <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
 color: TERRA, letterSpacing: "1.5px", textTransform: "uppercase", fontWeight: "bold"
-}}>Based in Amsterdam</span>
+}}>Operational Expertise</span>
 </div>
 <div style={{ height: "1px", background: "rgba(255,255,255,0.15)", marginBottom: "12px" }} />
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
 color: "rgba(255,255,255,0.7)", letterSpacing: "1px", textTransform: "uppercase",
-marginBottom: "6px" }}>Operational expertise across</div>
+marginBottom: "6px" }}>Managing properties across</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "16px",
 color: WHITE, fontWeight: "bold", marginBottom: "10px" }}>Europe</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
@@ -900,8 +915,8 @@ international standards. On-the-ground presence when it matters.</div>
 <div style={{ padding: "24px clamp(20px, 8%, 10%)", background: TERRA, textAlign: "center" }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px",
 color: "rgba(255,255,255,0.9)", maxWidth: "560px", margin: "0 auto", lineHeight: "1.6" }}>
-Proven results from Ruben's own short-term rental in Bournemouth, UK — every property
-we manage gets the same standard.
+Proven results across the properties Ruben manages in Bournemouth, UK — including his
+own Superhost listing — every property we manage gets the same standard.
 </div>
 </div>
 {/* Services detail */}
@@ -960,7 +975,7 @@ fontWeight: "bold", color: WHITE, marginBottom: "10px" }}>{s.title}</div>
 <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: SAND }}>
 <div style={{ maxWidth: "min(1000px, 100%)", margin: "0 auto" }}>
 <SectionLabel text="Where we operate" />
-<Heading>Based in Amsterdam, operating Europe-wide.</Heading>
+<Heading>Hands-on in Bournemouth, reach across Europe.</Heading>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
 WARM, lineHeight: "1.8", marginBottom: "8px", maxWidth: "640px" }}>
 Personal. Responsive. Present. Ruben visits, inspects and builds every relationship
@@ -973,11 +988,11 @@ border: `2px solid ${TERRA}` }}>
 letterSpacing: "2px", textTransform: "uppercase", color: TERRA, fontWeight: "bold",
 marginBottom: "10px" }}>Primary — Full-Service</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "18px",
-fontWeight: "bold", color: BODY, marginBottom: "10px" }}>Amsterdam</div>
+fontWeight: "bold", color: BODY, marginBottom: "10px" }}>Bournemouth</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
-WARM, lineHeight: "1.7" }}>Where we're based — full hands-on management including
-guest messaging, pricing, cleaning &amp; turnover, and maintenance coordination, with
-regular in-person attention.</div>
+WARM, lineHeight: "1.7" }}>Where we already manage properties — full hands-on
+management including guest messaging, pricing, cleaning &amp; turnover, and
+maintenance coordination, with regular in-person attention.</div>
 </div>
 <div style={{ flex: "1 1 280px", padding: "28px", background: WHITE, borderRadius: "2px",
 border: `1px solid ${RULE}` }}>
@@ -1006,9 +1021,9 @@ only do well when your property does well.
 </p>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
 WARM, lineHeight: "1.8", marginBottom: "40px", maxWidth: "640px" }}>
-Our rate reflects a proven track record, not a starting-out one — Ruben has run his own
-Bournemouth property to Superhost status with a 4.81★ rating and consistent occupancy
-and returns, and every property we manage gets that same standard.
+Our rate reflects a proven track record, not a starting-out one — Ruben has taken his
+own Bournemouth property to Superhost status with a 4.81★ rating, and now manages
+properties for clients there too. Every property we manage gets that same standard.
 </p>
 <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
 {[
