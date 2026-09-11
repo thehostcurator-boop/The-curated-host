@@ -480,7 +480,7 @@ return (
 {/* Thin location banner — first thing visible on load */}
 <div style={{ position: "relative", width: "100%", height: "clamp(140px, 20vw, 220px)",
 overflow: "hidden" }}>
-<img src={IMG_BOURNEMOUTH_HUTS_BANNER} alt="Beach huts on the Bournemouth coast"
+<img src={IMG_BOURNEMOUTH_HUTS_BANNER} alt="Beach huts on the UK coast"
 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
 <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "64px",
 background: "linear-gradient(to bottom, rgba(26,22,18,0.55) 0%, rgba(26,22,18,0) 100%)" }} />
@@ -508,7 +508,7 @@ Your property,
 The Curated Host manages short and long-term rental properties for Airbnb hosts —
 guest messaging, pricing and revenue management, cleaning and turnover coordination,
 and maintenance coordination — run by an Airbnb Superhost already managing properties
-across Bournemouth, UK.
+across the UK.
 </p>
 <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
 <FormBtn text="Get a Free Property Assessment" setPage={setPage} />
@@ -658,7 +658,7 @@ and maintenance coordination.
 </p>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px", color:
 BODY, lineHeight: "1.9", marginBottom: "24px" }}>
-We run every property we manage in Bournemouth, UK, to the same standard as our own
+We run every property we manage in the UK to the same standard as our own
 Airbnb Superhost listing — including the properties we now co-host for clients. The
 guest experience sits at the centre of it: a well-run property isn't just about
 occupancy and returns, it's about how a guest feels the moment they arrive.
@@ -869,7 +869,7 @@ color: WARM, letterSpacing: "0.5px" }}>{s.label}</div>
 </div>
 <div style={{ position: "relative", width: "100%", aspectRatio: isMobileHero ? "16 / 9" : "21 / 9",
 overflow: "hidden" }}>
-<img src={IMG_BOURNEMOUTH_BEACH} alt="Beach huts and Bournemouth pier at sunset"
+<img src={IMG_BOURNEMOUTH_BEACH} alt="Beach huts and a pier on the UK coast at sunset"
 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
 <div style={{ position: "absolute", top: "24px", right: "24px", maxWidth: "260px",
 background: "rgba(26,22,18,0.9)", borderRadius: "2px", padding: "24px" }}>
@@ -894,7 +894,7 @@ international standards. On-the-ground presence when it matters.</div>
 <div style={{ padding: "24px clamp(20px, 8%, 10%)", background: TERRA, textAlign: "center" }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px",
 color: "rgba(255,255,255,0.9)", maxWidth: "560px", margin: "0 auto", lineHeight: "1.6" }}>
-Proven results across the properties Ruben manages in Bournemouth, UK — including his
+Proven results across the properties Ruben manages in the UK — including his
 own Superhost listing — every property we manage gets the same standard.
 </div>
 </div>
@@ -954,7 +954,7 @@ fontWeight: "bold", color: WHITE, marginBottom: "10px" }}>{s.title}</div>
 <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: SAND }}>
 <div style={{ maxWidth: "min(1000px, 100%)", margin: "0 auto" }}>
 <SectionLabel text="Where we operate" />
-<Heading>Hands-on in Bournemouth, reach across Europe.</Heading>
+<Heading>Hands-on in the UK, reach across Europe.</Heading>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
 WARM, lineHeight: "1.8", marginBottom: "8px", maxWidth: "640px" }}>
 Personal. Responsive. Present. Ruben visits, inspects and builds every relationship
@@ -967,7 +967,7 @@ border: `2px solid ${TERRA}` }}>
 letterSpacing: "2px", textTransform: "uppercase", color: TERRA, fontWeight: "bold",
 marginBottom: "10px" }}>Primary — Full-Service</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "18px",
-fontWeight: "bold", color: BODY, marginBottom: "10px" }}>Bournemouth</div>
+fontWeight: "bold", color: BODY, marginBottom: "10px" }}>United Kingdom</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
 WARM, lineHeight: "1.7" }}>Where we already manage properties — full hands-on
 management including guest messaging, pricing, cleaning &amp; turnover, and
@@ -1001,8 +1001,8 @@ only do well when your property does well.
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
 WARM, lineHeight: "1.8", marginBottom: "40px", maxWidth: "640px" }}>
 Our rate reflects a proven track record, not a starting-out one — Ruben has taken his
-own Bournemouth property to Superhost status with a 4.81★ rating, and now manages
-properties for clients there too. Every property we manage gets that same standard.
+own UK property to Superhost status with a 4.81★ rating, and now manages
+properties for clients too. Every property we manage gets that same standard.
 </p>
 <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
 {[
