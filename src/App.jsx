@@ -272,10 +272,15 @@ function WhatsAppBtn({ text = "Chat on WhatsApp" }) {
 const whatsappUrl = "https://wa.me/447736503848";
 const handleClick = (e) => {
 e.preventDefault();
-if (typeof window.gtag_report_conversion === "function") {
-window.gtag_report_conversion(whatsappUrl);
-} else {
+const newTab = window.open("", "_blank", "noopener,noreferrer");
+if (!newTab) {
 window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+return;
+}
+if (typeof window.gtag_report_conversion === "function") {
+window.gtag_report_conversion(whatsappUrl, newTab);
+} else {
+newTab.location = whatsappUrl;
 }
 };
 return (
