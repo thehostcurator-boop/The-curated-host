@@ -253,10 +253,19 @@ color: page === l ? TERRA : WARM, fontWeight: page === l ? "bold" : "normal",
 </>
 );
 }
-function FormBtn({ text = "Start Your Handbook", setPage, light }) {
+function FormBtn({ text = "Start Your Handbook", setPage, light, trackConversion }) {
+const handleClick = () => {
+if (trackConversion && typeof window.gtag === "function") {
+window.gtag('event', 'conversion', {
+'send_to': 'AW-18441082610/5WgSCKXYx_gcEPKtstlE',
+'value': 1.0,
+'currency': 'GBP'
+});
+}
+if (setPage) { setPage("Contact"); window.scrollTo({ top: 0, behavior: "smooth" }); }
+};
 return (
-<button onClick={() => { if (setPage) { setPage("Contact"); window.scrollTo({ top: 0, behavior:
-"smooth" }); } }} style={{
+<button onClick={handleClick} style={{
 display: "inline-flex", alignItems: "center", gap: "10px",
 padding: "16px 32px", background: TERRA,
 border: "none", borderRadius: "2px", cursor: "pointer",
@@ -525,7 +534,7 @@ and maintenance coordination — run by an Airbnb Superhost already managing pro
 across the UK.
 </p>
 <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
-<FormBtn text="Get a Free Property Assessment" setPage={setPage} />
+<FormBtn text="Get a Free Property Assessment" setPage={setPage} trackConversion />
 <button onClick={() => setPage("Property Management")} style={{
 padding: "14px 28px", background: "transparent",
 border: `1px solid rgba(255,255,255,0.3)`, borderRadius: "2px", cursor: "pointer",
@@ -637,7 +646,7 @@ Message on WhatsApp or fill in the contact form to get a free property assessmen
 </p>
 <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap",
 alignItems: "center", flexDirection: "column" }}>
-<FormBtn text="Get a Free Property Assessment" setPage={setPage} />
+<FormBtn text="Get a Free Property Assessment" setPage={setPage} trackConversion />
 <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
 <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color:
 WARM }}>prefer to chat first?</span>
@@ -1134,7 +1143,7 @@ Get a free assessment of your property and a straightforward quote — no obliga
 </p>
 <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap",
 alignItems: "center", flexDirection: "column" }}>
-<FormBtn text="Get a Free Property Assessment" setPage={setPage} />
+<FormBtn text="Get a Free Property Assessment" setPage={setPage} trackConversion />
 <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
 <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color:
 "rgba(255,255,255,0.5)" }}>prefer to chat first?</span>
