@@ -269,8 +269,17 @@ color: WHITE, fontWeight: "bold", textDecoration: "none",
 );
 }
 function WhatsAppBtn({ text = "Chat on WhatsApp" }) {
+const whatsappUrl = "https://wa.me/447736503848";
+const handleClick = (e) => {
+e.preventDefault();
+if (typeof window.gtag_report_conversion === "function") {
+window.gtag_report_conversion(whatsappUrl);
+} else {
+window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+}
+};
 return (
-<a href="https://wa.me/447736503848" target="_blank" rel="noopener noreferrer"
+<a href={whatsappUrl} target="_blank" rel="noopener noreferrer" onClick={handleClick}
 style={{
 display: "inline-flex", alignItems: "center", gap: "10px",
 padding: "14px 24px", background: "transparent",
