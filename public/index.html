@@ -21,6 +21,23 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'AW-18441082610');
 </script>
+<!-- Event snippet for Uitgaande klik conversion page -->
+<script>
+function gtag_report_conversion(url) {
+var callback = function () {
+if (typeof(url) != 'undefined') {
+window.open(url, '_blank', 'noopener,noreferrer');
+}
+};
+gtag('event', 'conversion', {
+'send_to': 'AW-18441082610/XXhfCIWLxPgcEPKtstlE',
+'value': 1.0,
+'currency': 'GBP',
+'event_callback': callback
+});
+return false;
+}
+</script>
 </head>
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
