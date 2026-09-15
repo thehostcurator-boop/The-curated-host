@@ -23,18 +23,28 @@ gtag('config', 'AW-18441082610');
 </script>
 <!-- Event snippet for Uitgaande klik conversion page -->
 <script>
-function gtag_report_conversion(url) {
-var callback = function () {
+function gtag_report_conversion(url, targetWindow) {
+var navigated = false;
+var doNavigate = function () {
+if (navigated) return;
+navigated = true;
 if (typeof(url) != 'undefined') {
-window.open(url, '_blank', 'noopener,noreferrer');
+if (targetWindow) {
+targetWindow.location = url;
+} else {
+window.location = url;
+}
 }
 };
+if (typeof gtag === 'function') {
 gtag('event', 'conversion', {
 'send_to': 'AW-18441082610/XXhfCIWLxPgcEPKtstlE',
 'value': 1.0,
 'currency': 'GBP',
-'event_callback': callback
+'event_callback': doNavigate
 });
+}
+setTimeout(doNavigate, 1000);
 return false;
 }
 </script>
