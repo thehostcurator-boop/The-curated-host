@@ -1493,8 +1493,6 @@ alignItems: "center", flexDirection: "column" }}>
 }
 // ── CONTACT PAGE──────────────────────────────────────────────────────────────
 function ContactPage() {
-const [step, setStep] = useState(0);
-const steps = ["Your property", "Check-in", "Wi-Fi & Tech", "Heating", "House Rules", "Local Recs", "Final Details"];
 return (
 <div style={{ paddingTop: "64px" }}>
 <div style={{ padding: "80px 10% 64px", background: CREAM, borderBottom: `1px solid
@@ -1504,44 +1502,58 @@ ${RULE}` }}>
 <Heading>Let's talk.</Heading>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
 WARM, lineHeight: "1.8" }}>
-Ready for a free property assessment, have a speaking or communications enquiry, or
-just want to order a guest handbook — reach out on WhatsApp or email and we'll be in
-touch within 24 hours.
+Whatever you're reaching out about, we'll be in touch within 24 hours. Pick the section
+below that matches what you need.
 </p>
 </div>
 </div>
-<div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background:
-WHITE }}>
+{/* Property Management — primary */}
+<div style={{ padding: "clamp(40px, 6vw, 64px) clamp(20px, 8%, 10%)", background: WHITE }}>
 <div style={{ maxWidth: "min(860px, 100%)", margin: "0 auto" }}>
-{/* Direct contact — property management (primary) */}
+<SectionLabel text="Property management enquiries" />
 <div style={{ padding: "32px", background: TERRA, borderRadius: "2px",
-marginBottom: "24px", display: "flex", alignItems: "center",
-gap: "20px", flexWrap: "wrap" }}>
+display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap", marginTop: "16px" }}>
 <div style={{ flex: 1, minWidth: "220px" }}>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px",
-fontWeight: "bold", color: WHITE, marginBottom: "6px" }}>Want us to manage your property?</div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
-"rgba(255,255,255,0.85)", lineHeight: "1.6" }}>Message on WhatsApp or email
-hello@thecuratedhost.com for a free property assessment — no form required.</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "16px",
+fontWeight: "bold", color: WHITE, marginBottom: "8px" }}>Want us to manage your property?</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
+"rgba(255,255,255,0.85)", lineHeight: "1.7" }}>Message on WhatsApp or email
+hello@thecuratedhost.com for a free property assessment. No form to fill in — just get
+in touch directly and we'll take it from there.</div>
 </div>
 <WhatsAppBtn text="Message on WhatsApp" />
 </div>
-{/* Speaking / communications enquiries (secondary) */}
-<div style={{ padding: "24px 32px", background: SAND, border: `1px solid ${RULE}`,
-borderRadius: "2px", marginBottom: "48px", display: "flex", alignItems: "center",
-gap: "20px", flexWrap: "wrap" }}>
+</div>
+</div>
+{/* Speaking & Communications */}
+<div style={{ padding: "clamp(32px, 5vw, 48px) clamp(20px, 8%, 10%)", background: SAND }}>
+<div style={{ maxWidth: "min(860px, 100%)", margin: "0 auto" }}>
+<SectionLabel text="Speaking & communications enquiries" />
+<div style={{ padding: "24px 32px", background: WHITE, border: `1px solid ${RULE}`,
+borderRadius: "2px", display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap",
+marginTop: "16px" }}>
 <div style={{ flex: 1, minWidth: "220px" }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px",
 fontWeight: "bold", color: BODY, marginBottom: "6px" }}>Speaking or communications enquiry?</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
-WARM, lineHeight: "1.6" }}>Same channels — WhatsApp or
-hello@thecuratedhost.com works for these too.</div>
+WARM, lineHeight: "1.6" }}>Same channels — WhatsApp or hello@thecuratedhost.com works
+for these too. No form required here either.</div>
 </div>
 </div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color:
-WARM, letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "16px" }}>Order a
-standalone guest handbook</div>
-{/* Tally embed */}
+</div>
+</div>
+{/* Guest Handbook orders — fully separate */}
+<div style={{ padding: "clamp(48px, 7vw, 80px) clamp(20px, 8%, 10%)", background: DARK }}>
+<div style={{ maxWidth: "min(860px, 100%)", margin: "0 auto" }}>
+<SectionLabel text="Ordering a guest handbook" />
+<Heading light>This form is for handbook orders only.</Heading>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
+"rgba(255,255,255,0.6)", lineHeight: "1.8", marginBottom: "32px", maxWidth: "600px" }}>
+If you're after property management, use the section above instead — no need to fill
+this in. This questionnaire is only for ordering a standalone signature guest handbook,
+and walks through the details we need to design yours.
+</p>
+<div style={{ background: WHITE, borderRadius: "2px", padding: "8px", overflow: "hidden" }}>
 <iframe
 src="https://tally.so/embed/b5vkAe?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
 width="100%"
@@ -1549,9 +1561,10 @@ height="800"
 frameBorder="0"
 marginHeight="0"
 marginWidth="0"
-title="Start Your Handbook"
+title="Order a Guest Handbook"
 style={{ border: "none", minHeight: "600px" }}
 />
+</div>
 </div>
 </div>
 </div>
