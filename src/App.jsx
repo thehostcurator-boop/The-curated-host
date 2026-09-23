@@ -277,6 +277,20 @@ color: WHITE, fontWeight: "bold", textDecoration: "none",
 </button>
 );
 }
+function BuzzsproutEmbed({ episodeId, slug }) {
+const containerId = `buzzsprout-player-${episodeId}`;
+useEffect(() => {
+const container = document.getElementById(containerId);
+if (!container) return;
+const script = document.createElement("script");
+script.src = `https://www.buzzsprout.com/1463422/episodes/${episodeId}-${slug}.js?container_id=${containerId}&player=small`;
+script.type = "text/javascript";
+script.charset = "utf-8";
+container.appendChild(script);
+return () => { if (container.contains(script)) container.removeChild(script); };
+}, [episodeId, slug]);
+return <div id={containerId} style={{ minHeight: "56px" }} />;
+}
 function WhatsAppBtn({ text = "Chat on WhatsApp" }) {
 const whatsappUrl = "https://wa.me/447736503848";
 const handleClick = (e) => {
@@ -867,6 +881,15 @@ For speaking enquiries, get in touch with details of your event, audience and to
 }
 // ── MILLENNICAST PAGE─────────────────────────────────────────────────────────
 function MillennicastPage({ setPage }) {
+const episodes = [
+{
+title: "Introducing The Millennicast",
+date: "29 Nov 2020",
+description: "The very first episode — a short introduction to what the show is about: helping students, graduates and young professionals pick up practical mindset and communication skills by learning directly from experienced guests across a range of fields.",
+episodeId: "6601306",
+slug: "introducing-the-millennicast-where-curious-minds-meet-inspiring-professionals",
+},
+];
 return (
 <div style={{ paddingTop: "64px" }}>
 <div style={{ padding: "80px 10% 64px", background: CREAM, borderBottom: `1px solid ${RULE}` }}>
@@ -898,6 +921,29 @@ objectFit: "cover", borderRadius: "8px", border: `1px solid ${RULE}`, display: "
 </div>
 <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
 <div style={{ maxWidth: "min(700px, 100%)", margin: "0 auto" }}>
+<SectionLabel text="Episodes" />
+<Heading>Listen now.</Heading>
+<div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "32px" }}>
+{episodes.map((e, i) => (
+<div key={i} style={{ padding: "24px 28px", background: CREAM, border: `1px solid ${RULE}`,
+borderRadius: "2px" }}>
+<div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "12px",
+marginBottom: "14px" }}>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px",
+fontWeight: "bold", color: BODY }}>{e.title}</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px",
+color: WARM, fontWeight: "bold", letterSpacing: "1px", textTransform: "uppercase" }}>{e.date}</div>
+</div>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
+WARM, lineHeight: "1.8", marginBottom: "18px" }}>{e.description}</p>
+<BuzzsproutEmbed episodeId={e.episodeId} slug={e.slug} />
+</div>
+))}
+</div>
+</div>
+</div>
+<div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: SAND }}>
+<div style={{ maxWidth: "min(700px, 100%)", margin: "0 auto" }}>
 <SectionLabel text="Listen" />
 <Heading>Follow the show</Heading>
 <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "24px" }}>
@@ -917,7 +963,7 @@ letterSpacing: "1px", textTransform: "uppercase", color: BODY, fontWeight: "bold
 </div>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
 WARM, marginTop: "16px" }}>
-New episodes coming soon — follow now so you don't miss the first one.
+More episodes coming soon — follow now so you don't miss the next one.
 </p>
 </div>
 </div>
