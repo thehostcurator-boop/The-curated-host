@@ -870,7 +870,9 @@ function MillennicastPage({ setPage }) {
 return (
 <div style={{ paddingTop: "64px" }}>
 <div style={{ padding: "80px 10% 64px", background: CREAM, borderBottom: `1px solid ${RULE}` }}>
-<div style={{ maxWidth: "min(700px, 100%)" }}>
+<div style={{ maxWidth: "1000px", margin: "0 auto", display: "flex", gap: "40px",
+alignItems: "center", flexWrap: "wrap-reverse" }}>
+<div style={{ flex: "1 1 380px", minWidth: 0 }}>
 <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
 <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#4CAF50" }} />
 <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color:
@@ -887,15 +889,23 @@ A podcast exploring the paths, choices and lessons behind inspiring professions 
 conversations with people shaping their fields, hosted by me.
 </p>
 </div>
+<div style={{ flex: "0 0 auto" }}>
+<img src="https://millennicast.buzzsprout.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjYwNTMyNjQsInB1ciI6ImJsb2JfaWQifX0=--05cfb19fcccdaa8c3b00aa30285ede091c2bdcf4/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJqcGciLCJyZXNpemVfdG9fZmlsbCI6WzE0MDAsMTQwMCx7ImNyb3AiOiJjZW50cmUifV0sImRlZmF1bHRfdXJsIjoiaHR0cHM6Ly93d3cuYnV6enNwcm91dC5jb20vaW1hZ2VzL2FydHdvcmtzX2xhcmdlLmpwZyIsInNhdmVyIjp7InF1YWxpdHkiOjYwfSwiY29sb3Vyc3BhY2UiOiJzcmdiIn0sInB1ciI6InZhcmlhdGlvbiJ9fQ==--2454c883dcd12a10059f243d8ea753f8b5c1613e/The%20Millennicast%20(1).jpg"
+alt="The Millennicast podcast artwork" style={{ width: "220px", height: "220px",
+objectFit: "cover", borderRadius: "8px", border: `1px solid ${RULE}`, display: "block" }} />
+</div>
+</div>
 </div>
 <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
 <div style={{ maxWidth: "min(700px, 100%)", margin: "0 auto" }}>
 <SectionLabel text="Listen" />
-<Heading>Available on</Heading>
+<Heading>Follow the show</Heading>
 <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "24px" }}>
 {[
-{ name: "Spotify", href: "#" },
-{ name: "Apple Podcasts", href: "#" },
+{ name: "Spotify", href: "https://open.spotify.com/show/2kYp8FOpiknhrKKCqzY01v" },
+{ name: "Apple Podcasts", href: "https://podcasts.apple.com/gb/podcast/millennicast-where-curious-minds-meet-inspiring-professionals/id1542531436" },
+{ name: "Amazon Music", href: "https://music.amazon.com/podcasts/6fe116a9-58b8-4748-83d9-228ae45a23b0" },
+{ name: "RSS Feed", href: "https://feeds.buzzsprout.com/1463422.rss" },
 ].map((p, i) => (
 <a key={i} href={p.href} target="_blank" rel="noopener noreferrer" style={{
 padding: "14px 28px", background: SAND, border: `1px solid ${RULE}`,
@@ -907,7 +917,7 @@ letterSpacing: "1px", textTransform: "uppercase", color: BODY, fontWeight: "bold
 </div>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
 WARM, marginTop: "16px" }}>
-Platform links coming soon — check back shortly.
+New episodes coming soon — follow now so you don't miss the first one.
 </p>
 </div>
 </div>
