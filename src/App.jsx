@@ -1618,9 +1618,14 @@ WHITE, fontWeight: "bold" }}>@thehostcurator</div>
 </div>
 <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "12px"
 }}>
+<div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color:
-"rgba(255,255,255,0.25)", letterSpacing: "1px" }}>© The Curated Host 2025. All rights
+"rgba(255,255,255,0.25)", letterSpacing: "1px" }}>© The Curated Host 2026. All rights
 reserved.</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color:
+"rgba(255,255,255,0.25)", letterSpacing: "1px" }}>The Curated Host Ltd is registered in
+England and Wales, company number 17431364.</div>
+</div>
 
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color:
 "rgba(255,255,255,0.25)", letterSpacing: "1px" }}>Property Management · Speaking · Europe-Wide</div>
