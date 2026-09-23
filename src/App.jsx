@@ -725,6 +725,7 @@ const upcoming = [
 ];
 const past = [
 { title: "Guest talk", org: "Renaissance Foundation × UCLA", date: "2026", location: "London, UK" },
+{ title: "Podcast guest, Episode 66", org: "Superhosts Down Under with Silvia and Ray", date: "Sep 2026", location: "Remote" },
 ];
 return (
 <div style={{ paddingTop: "64px" }}>
@@ -783,6 +784,29 @@ color: WARM, fontWeight: "bold", letterSpacing: "1px", textTransform: "uppercase
 </div>
 ))}
 </div>
+</div>
+</div>
+<div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: SAND }}>
+<div style={{ maxWidth: "min(700px, 100%)", margin: "0 auto" }}>
+<SectionLabel text="Featured on" />
+<Heading>Superhosts Down Under.</Heading>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
+WARM, lineHeight: "1.8", marginBottom: "28px" }}>
+Guest on Episode 66 of Superhosts Down Under with Silvia and Ray, talking remote
+property operations, building a reliable local team, and why a well-designed guest
+handbook is one of the highest-leverage investments a host can make.
+</p>
+<iframe
+style={{ borderRadius: "12px", display: "block" }}
+src="https://open.spotify.com/embed/episode/5Gw0oc9KXCDC7KAiPIggAO?utm_source=generator"
+width="100%"
+height="152"
+frameBorder="0"
+allowFullScreen
+allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+loading="lazy"
+title="Superhosts Down Under — Episode 66 with Ruben de Bruin"
+/>
 </div>
 </div>
 <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: DARK, textAlign: "center" }}>
