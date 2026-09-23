@@ -737,7 +737,8 @@ function EngagementsPage({ setPage }) {
 const upcoming = [
 {
 title: "The U.S. Midterms and the World: Transatlantic and Global Perspectives on America's Political Future",
-org: "UCLA Alumni UK Network × UChicago Booth UK — helping organise",
+org: "UCLA Alumni UK Network × UChicago Booth UK",
+role: "Delivering the introductory remarks",
 date: "22 Oct 2026",
 location: "Institution of Mechanical Engineers, London",
 image: "https://uploads.tickettailorassets.com/c_scale,w_800/v1/production/userfiles/rrrfwiudy1ny2jjtjoga.jpg",
@@ -855,6 +856,14 @@ objectFit: "cover", borderRadius: "2px", flexShrink: 0 }} />
 <div style={{ minWidth: 0 }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px",
 fontWeight: "bold", color: BODY, marginBottom: "6px", maxWidth: "480px" }}>{e.title}</div>
+{e.role && (
+<div style={{ display: "inline-block", padding: "3px 10px", background: TERRA,
+borderRadius: "2px", marginBottom: "8px" }}>
+<span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
+color: WHITE, letterSpacing: "1px", textTransform: "uppercase", fontWeight: "bold"
+}}>{e.role}</span>
+</div>
+)}
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
 WARM, marginBottom: "4px" }}>{e.org}</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
