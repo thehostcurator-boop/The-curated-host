@@ -724,8 +724,7 @@ const upcoming = [
 { title: "[Talk title to be confirmed]", org: "[Organisation]", date: "[Date]", location: "[Location]" },
 ];
 const past = [
-{ title: "Guest talk", org: "Renaissance Foundation × UCLA", date: "2026", location: "London, UK" },
-{ title: "Podcast guest, Episode 66", org: "Superhosts Down Under with Silvia and Ray", date: "Sep 2026", location: "Remote" },
+{ title: "Guest talk", org: "Renaissance Foundation × UCLA", date: "2026", location: "London, UK", image: IMG_SPEAKING_ACTION },
 ];
 return (
 <div style={{ paddingTop: "64px" }}>
@@ -743,7 +742,7 @@ upcoming engagements.
 </p>
 </div>
 <div style={{ flex: "1 1 340px", minWidth: "260px" }}>
-<img src={IMG_SPEAKING_ACTION} alt="Ruben de Bruin addressing a room at a UCLA event" style={{
+<img src={IMG_ENGAGEMENT_TALK} alt="Ruben de Bruin speaking to a room" style={{
 width: "100%", display: "block", borderRadius: "2px", border: `1px solid ${RULE}` }} />
 </div>
 </div>
@@ -767,35 +766,42 @@ color: TERRA, fontWeight: "bold", letterSpacing: "1px", textTransform: "uppercas
 </div>
 ))}
 </div>
-<SectionLabel text="Past engagements" />
-<Heading>Where I've spoken.</Heading>
+<SectionLabel text="Past engagements & media" />
+<Heading>Recent appearances.</Heading>
 <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "32px" }}>
 {past.map((e, i) => (
 <div key={i} style={{ padding: "24px 28px", background: CREAM, border: `1px solid ${RULE}`,
-borderRadius: "2px", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
-<div>
+borderRadius: "2px", display: "flex", alignItems: "center", justifyContent: "space-between",
+flexWrap: "wrap", gap: "16px" }}>
+<div style={{ display: "flex", alignItems: "center", gap: "16px", minWidth: 0 }}>
+{e.image && (
+<img src={e.image} alt={e.title} style={{ width: "64px", height: "64px",
+objectFit: "cover", borderRadius: "2px", flexShrink: 0 }} />
+)}
+<div style={{ minWidth: 0 }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px",
 fontWeight: "bold", color: BODY, marginBottom: "6px" }}>{e.title}</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
 WARM }}>{e.org} · {e.location}</div>
 </div>
+</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px",
 color: WARM, fontWeight: "bold", letterSpacing: "1px", textTransform: "uppercase" }}>{e.date}</div>
 </div>
 ))}
+<div style={{ padding: "24px 28px", background: CREAM, border: `1px solid ${RULE}`,
+borderRadius: "2px" }}>
+<div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "12px",
+marginBottom: "18px" }}>
+<div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px",
+fontWeight: "bold", color: BODY, marginBottom: "6px" }}>Podcast guest, Episode 66</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
+WARM }}>Superhosts Down Under with Silvia and Ray · Remote</div>
 </div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px",
+color: WARM, fontWeight: "bold", letterSpacing: "1px", textTransform: "uppercase" }}>Sep 2026</div>
 </div>
-</div>
-<div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: SAND }}>
-<div style={{ maxWidth: "min(700px, 100%)", margin: "0 auto" }}>
-<SectionLabel text="Featured on" />
-<Heading>Superhosts Down Under.</Heading>
-<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
-WARM, lineHeight: "1.8", marginBottom: "28px" }}>
-Guest on Episode 66 of Superhosts Down Under with Silvia and Ray, talking remote
-property operations, building a reliable local team, and why a well-designed guest
-handbook is one of the highest-leverage investments a host can make.
-</p>
 <iframe
 style={{ borderRadius: "12px", display: "block" }}
 src="https://open.spotify.com/embed/episode/5Gw0oc9KXCDC7KAiPIggAO?utm_source=generator"
@@ -807,6 +813,8 @@ allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-pictur
 loading="lazy"
 title="Superhosts Down Under — Episode 66 with Ruben de Bruin"
 />
+</div>
+</div>
 </div>
 </div>
 <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: DARK, textAlign: "center" }}>
