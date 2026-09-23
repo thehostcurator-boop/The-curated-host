@@ -744,6 +744,14 @@ location: "Institution of Mechanical Engineers, London",
 image: "https://uploads.tickettailorassets.com/c_scale,w_800/v1/production/userfiles/rrrfwiudy1ny2jjtjoga.jpg",
 url: "https://www.tickettailor.com/events/uclaeurope/2350451",
 },
+{
+title: "Guest Lecture — Privacy, Data & Cyber Security Law",
+org: "UCLA School of Law",
+role: "Guest speaker, Professor Alex Alben's class",
+date: "Pending — Fall Semester",
+location: "Virtual",
+pending: true,
+},
 ];
 const past = [
 {
@@ -843,15 +851,30 @@ title="Superhosts Down Under — Episode 66 with Ruben de Bruin"
 <SectionLabel text="Upcoming" />
 <Heading>What's next.</Heading>
 <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "32px" }}>
-{upcoming.map((e, i) => (
-<a key={i} href={e.url} target="_blank" rel="noopener noreferrer" style={{
+{upcoming.map((e, i) => {
+const CardTag = e.url ? "a" : "div";
+const cardProps = e.url ? { href: e.url, target: "_blank", rel: "noopener noreferrer" } : {};
+return (
+<CardTag key={i} {...cardProps} style={{
 padding: "24px 28px", background: SAND, border: `1px solid ${RULE}`,
 borderRadius: "2px", display: "flex", alignItems: "center", justifyContent: "space-between",
 flexWrap: "wrap", gap: "16px", textDecoration: "none" }}>
 <div style={{ display: "flex", alignItems: "center", gap: "20px", minWidth: 0, flexWrap: "wrap" }}>
-{e.image && (
+{e.image ? (
 <img src={e.image} alt={e.title} style={{ width: "104px", height: "104px",
 objectFit: "cover", borderRadius: "2px", flexShrink: 0 }} />
+) : (
+<div style={{ width: "104px", height: "104px", borderRadius: "2px", flexShrink: 0,
+background: DARK, display: "flex", flexDirection: "column", alignItems: "center",
+justifyContent: "center", gap: "6px" }}>
+<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.5">
+<path d="M12 3L2 8l10 5 10-5-10-5z" />
+<path d="M6 10.5V16c0 1.5 2.5 3 6 3s6-1.5 6-3v-5.5" />
+<path d="M22 8v6" strokeLinecap="round" />
+</svg>
+<span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "8px",
+color: "rgba(255,255,255,0.5)", letterSpacing: "0.5px", textTransform: "uppercase" }}>UCLA Law</span>
+</div>
 )}
 <div style={{ minWidth: 0 }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px",
@@ -870,10 +893,17 @@ WARM, marginBottom: "4px" }}>{e.org}</div>
 WARM }}>{e.location}</div>
 </div>
 </div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px",
-color: TERRA, fontWeight: "bold", letterSpacing: "1px", textTransform: "uppercase" }}>{e.date}</div>
-</a>
-))}
+<div style={e.pending ? {
+fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px",
+color: TERRA, fontWeight: "bold", letterSpacing: "1px", textTransform: "uppercase",
+padding: "6px 12px", border: `1px dashed ${TERRA}`, borderRadius: "2px", whiteSpace: "nowrap"
+} : {
+fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px",
+color: TERRA, fontWeight: "bold", letterSpacing: "1px", textTransform: "uppercase"
+}}>{e.date}</div>
+</CardTag>
+);
+})}
 </div>
 </div>
 </div>
@@ -892,11 +922,25 @@ For speaking enquiries, get in touch with details of your event, audience and to
 function MillennicastPage({ setPage }) {
 const episodes = [
 {
-title: "Introducing The Millennicast",
-date: "29 Nov 2020",
-description: "The very first episode — a short introduction to what the show is about: helping students, graduates and young professionals pick up practical mindset and communication skills by learning directly from experienced guests across a range of fields.",
-episodeId: "6601306",
-slug: "introducing-the-millennicast-where-curious-minds-meet-inspiring-professionals",
+title: "Seizing the Digital Revolution and Embracing Adversity",
+date: "23 Sep 2026",
+description: "A conversation with Bas Wakker, managing partner at Inteleads, on helping sales teams grow with the help of his own sales software, and his broader take on how businesses can put technology to work more effectively.",
+episodeId: "19853482",
+slug: "seizing-the-digital-revolution-and-embracing-adversity",
+},
+{
+title: "Building Courage Muscles and Effective Time-Management",
+date: "23 Sep 2026",
+description: "A conversation with Caroline Carter on making travel and culture a lasting priority, and practical approaches to building courage and managing time well.",
+episodeId: "19853464",
+slug: "building-courage-muscles-and-effective-time-management",
+},
+{
+title: "Building Your Professional Toolkit and Adapting to Dynamic Industries",
+date: "23 Sep 2026",
+description: "A conversation with Ameer Ibrahim, a Masayoshi Son Fellow on the Schwarzman Scholars Program at Tsinghua University, on building a strong professional toolkit and adapting to fast-changing industries.",
+episodeId: "19853457",
+slug: "building-your-professional-toolkit-and-adapting-to-dynamic-industries",
 },
 ];
 return (
