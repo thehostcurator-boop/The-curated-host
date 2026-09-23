@@ -721,10 +721,21 @@ letterSpacing: "1.5px", textTransform: "uppercase", color: TERRA,
 // ── ENGAGEMENTS PAGE──────────────────────────────────────────────────────────
 function EngagementsPage({ setPage }) {
 const upcoming = [
-{ title: "[Talk title to be confirmed]", org: "[Organisation]", date: "[Date]", location: "[Location]" },
+{
+title: "The U.S. Midterms and the World: Transatlantic and Global Perspectives on America's Political Future",
+org: "UCLA Alumni UK Network × UChicago Booth UK — helping organise",
+date: "22 Oct 2026",
+location: "Institution of Mechanical Engineers, London",
+image: "https://uploads.tickettailorassets.com/c_scale,w_800/v1/production/userfiles/rrrfwiudy1ny2jjtjoga.jpg",
+url: "https://www.tickettailor.com/events/uclaeurope/2350451",
+},
 ];
 const past = [
-{ title: "Guest talk", org: "Renaissance Foundation × UCLA", date: "2026", location: "London, UK", image: IMG_SPEAKING_ACTION },
+{
+title: "Guest talk", org: "Renaissance Foundation × UCLA", date: "2026", location: "London, UK",
+image: IMG_SPEAKING_ACTION,
+instagramUrl: "https://www.instagram.com/p/DUX9j3MjoJK/",
+},
 ];
 return (
 <div style={{ paddingTop: "64px" }}>
@@ -749,40 +760,39 @@ width: "100%", display: "block", borderRadius: "2px", border: `1px solid ${RULE}
 </div>
 <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
 <div style={{ maxWidth: "min(900px, 100%)", margin: "0 auto" }}>
-<SectionLabel text="Upcoming" />
-<Heading>What's next.</Heading>
-<div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "32px", marginBottom: "64px" }}>
-{upcoming.map((e, i) => (
-<div key={i} style={{ padding: "24px 28px", background: SAND, border: `1px solid ${RULE}`,
-borderRadius: "2px", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
-<div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px",
-fontWeight: "bold", color: BODY, marginBottom: "6px" }}>{e.title}</div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
-WARM }}>{e.org} · {e.location}</div>
-</div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px",
-color: TERRA, fontWeight: "bold", letterSpacing: "1px", textTransform: "uppercase" }}>{e.date}</div>
-</div>
-))}
-</div>
 <SectionLabel text="Past engagements & media" />
 <Heading>Recent appearances.</Heading>
-<div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "32px" }}>
+<div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "32px", marginBottom: "64px" }}>
 {past.map((e, i) => (
 <div key={i} style={{ padding: "24px 28px", background: CREAM, border: `1px solid ${RULE}`,
 borderRadius: "2px", display: "flex", alignItems: "center", justifyContent: "space-between",
 flexWrap: "wrap", gap: "16px" }}>
-<div style={{ display: "flex", alignItems: "center", gap: "16px", minWidth: 0 }}>
+<div style={{ display: "flex", alignItems: "center", gap: "20px", minWidth: 0, flexWrap: "wrap" }}>
 {e.image && (
-<img src={e.image} alt={e.title} style={{ width: "64px", height: "64px",
+<img src={e.image} alt={e.title} style={{ width: "104px", height: "104px",
 objectFit: "cover", borderRadius: "2px", flexShrink: 0 }} />
 )}
 <div style={{ minWidth: 0 }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px",
 fontWeight: "bold", color: BODY, marginBottom: "6px" }}>{e.title}</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
-WARM }}>{e.org} · {e.location}</div>
+WARM, marginBottom: e.instagramUrl ? "14px" : "0" }}>{e.org} · {e.location}</div>
+{e.instagramUrl && (
+<a href={e.instagramUrl} target="_blank" rel="noopener noreferrer" style={{
+display: "inline-flex", alignItems: "center", gap: "8px", padding: "8px 16px",
+background: "transparent", border: `1px solid ${TERRA}`, borderRadius: "2px",
+fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
+letterSpacing: "1.5px", textTransform: "uppercase", color: TERRA,
+fontWeight: "bold", textDecoration: "none",
+}}>
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2">
+<rect x="2" y="2" width="20" height="20" rx="5" />
+<circle cx="12" cy="12" r="4" />
+<circle cx="17.5" cy="6.5" r="1" fill={TERRA} stroke="none" />
+</svg>
+View on Instagram
+</a>
+)}
 </div>
 </div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px",
@@ -814,6 +824,33 @@ loading="lazy"
 title="Superhosts Down Under — Episode 66 with Ruben de Bruin"
 />
 </div>
+</div>
+<SectionLabel text="Upcoming" />
+<Heading>What's next.</Heading>
+<div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "32px" }}>
+{upcoming.map((e, i) => (
+<a key={i} href={e.url} target="_blank" rel="noopener noreferrer" style={{
+padding: "24px 28px", background: SAND, border: `1px solid ${RULE}`,
+borderRadius: "2px", display: "flex", alignItems: "center", justifyContent: "space-between",
+flexWrap: "wrap", gap: "16px", textDecoration: "none" }}>
+<div style={{ display: "flex", alignItems: "center", gap: "20px", minWidth: 0, flexWrap: "wrap" }}>
+{e.image && (
+<img src={e.image} alt={e.title} style={{ width: "104px", height: "104px",
+objectFit: "cover", borderRadius: "2px", flexShrink: 0 }} />
+)}
+<div style={{ minWidth: 0 }}>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15px",
+fontWeight: "bold", color: BODY, marginBottom: "6px", maxWidth: "480px" }}>{e.title}</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
+WARM, marginBottom: "4px" }}>{e.org}</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
+WARM }}>{e.location}</div>
+</div>
+</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px",
+color: TERRA, fontWeight: "bold", letterSpacing: "1px", textTransform: "uppercase" }}>{e.date}</div>
+</a>
+))}
 </div>
 </div>
 </div>
