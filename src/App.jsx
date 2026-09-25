@@ -571,10 +571,10 @@ color: "rgba(255,255,255,0.7)",
 <div style={{ flex: 1, padding: "16px 20px", background: "rgba(255,255,255,0.06)",
 border: "1px solid rgba(255,255,255,0.12)", borderRadius: "2px", textAlign: "center" }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "24px",
-fontWeight: "bold", color: TERRA }}>4.81★</div>
+fontWeight: "bold", color: TERRA }}>65+</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
 color: "rgba(255,255,255,0.5)", letterSpacing: "1px", textTransform: "uppercase",
-marginTop: "4px" }}>Ruben's Own Airbnb Rating</div>
+marginTop: "4px" }}>5-Star Reviews, Managed Portfolio</div>
 </div>
 <div style={{ flex: 1, padding: "16px 20px", background: "rgba(255,255,255,0.06)",
 border: "1px solid rgba(255,255,255,0.12)", borderRadius: "2px", textAlign: "center" }}>
@@ -644,6 +644,33 @@ fontFamily: "'Futura','Century Gothic',sans-serif",
 fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase",
 color: WHITE, whiteSpace: "nowrap",
 }}>See a Sample →</button>
+</div>
+
+{/* Values */}
+<div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: WHITE }}>
+<div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+<SectionLabel text="Why The Curated Host" />
+<Heading>The values behind every property we manage.</Heading>
+<div style={{ display: "flex", gap: "24px", flexWrap: "wrap", marginTop: "40px" }}>
+{[
+{ icon: "◆", title: "Guest First", desc: "Every decision — pricing, messaging, turnover — is made with the guest experience in mind, because happy guests are what drive repeat bookings and reviews." },
+{ icon: "✦", title: "Integrity", desc: "Transparent pricing, honest performance summaries, no hidden fees. You always know exactly how your property is doing." },
+{ icon: "⬡", title: "Ownership", desc: "We treat every property we manage — client or family — the same way: like it's our own." },
+{ icon: "◆", title: "Attention to Detail", desc: "The small things — a spotless turnover, a prompt reply, a well-stocked welcome — are what earn Superhost status and keep it." },
+].map((item, i) => (
+<div key={i} style={{ flex: "1 1 240px", padding: "28px 24px", background: CREAM,
+borderRadius: "2px", border: `1px solid ${RULE}` }}>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "24px", color:
+TERRA, marginBottom: "14px" }}>{item.icon}</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px",
+fontWeight: "bold", color: BODY, marginBottom: "8px", letterSpacing: "0.5px",
+textTransform: "uppercase" }}>{item.title}</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12.5px", color:
+WARM, lineHeight: "1.7" }}>{item.desc}</div>
+</div>
+))}
+</div>
+</div>
 </div>
 
 {/* CTA */}
@@ -747,7 +774,7 @@ url: "https://www.tickettailor.com/events/uclaeurope/2350451",
 {
 title: "Guest Lecture — Privacy, Data & Cyber Security Law",
 org: "UCLA School of Law",
-role: "Guest speaker, Professor Alex Alben's class",
+role: "Guest speaker",
 date: "Pending — Fall Semester",
 location: "Virtual",
 pending: true,
@@ -1051,9 +1078,8 @@ investment and less from their to-do list.
 </p>
 <div style={{ display: "flex", gap: "24px", flexWrap: "wrap", marginBottom: "32px" }}>
 {[
-{ stat: "4.81", label: "Guest Rating" },
 { stat: "Superhost", label: "Airbnb Status" },
-{ stat: "5-Star", label: "Reviews" },
+{ stat: "65+", label: "5-Star Reviews" },
 ].map((s, i) => (
 <div key={i} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
 {i > 0 && <div style={{ width: "1px", height: "28px", background: RULE, marginRight: "6px" }} />}
@@ -1202,7 +1228,7 @@ only do well when your property does well.
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
 WARM, lineHeight: "1.8", marginBottom: "40px", maxWidth: "640px" }}>
 Our rate reflects a proven track record, not a starting-out one — Ruben has taken his
-own UK property to Superhost status with a 4.81★ rating, and now manages
+own UK property to Superhost status, and now manages
 properties for clients too. Every property we manage gets that same standard.
 </p>
 <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
