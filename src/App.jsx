@@ -342,7 +342,7 @@ return () => { if (container.contains(script)) container.removeChild(script); };
 }, [episodeId, slug]);
 return <div id={containerId} style={{ minHeight: "56px" }} />;
 }
-function WhatsAppBtn({ text = "Chat on WhatsApp" }) {
+function WhatsAppBtn({ text = "Chat on WhatsApp", wide }) {
 const whatsappUrl = "https://wa.me/447736503848";
 const handleClick = (e) => {
 e.preventDefault();
@@ -362,6 +362,7 @@ return (
 style={{
 display: "inline-flex", alignItems: "center", gap: "10px",
 padding: "14px 24px", background: "transparent",
+justifyContent: "center", minWidth: wide ? "240px" : undefined, boxSizing: "border-box",
 border: "1px solid #25D366", borderRadius: "2px", cursor: "pointer",
 fontFamily: "'Futura','Century Gothic',sans-serif",
 fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase",
@@ -374,11 +375,74 @@ color: "#25D366", fontWeight: "bold", textDecoration: "none",
 </a>
 );
 }
+function EmailBtn({ text = "Send an Email", wide }) {
+const email = "hello@thecuratedhost.com";
+const subject = "Free property assessment enquiry";
+const body = [
+"Hi,", "",
+"I'd like a free property assessment for my property.", "",
+"Property location:",
+"Number of bedrooms:",
+"Currently listed on Airbnb? (yes/no):",
+"Best way and time to reach me:", "",
+"Thanks,",
+].join("\r\n");
+const enc = encodeURIComponent;
+const href = `mailto:${email}?subject=${enc(subject)}&body=${enc(body)}`;
+const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${enc(email)}&su=${enc(subject)}&body=${enc(body)}`;
+const outlook = `https://outlook.live.com/mail/0/deeplink/compose?to=${enc(email)}&subject=${enc(subject)}&body=${enc(body)}`;
+const [showAlt, setShowAlt] = useState(false);
+const [copied, setCopied] = useState(false);
+const copy = () => {
+const done = () => { setCopied(true); setTimeout(() => setCopied(false), 2200); };
+const legacy = () => {
+const t = document.createElement("textarea");
+t.value = email; t.style.position = "fixed"; t.style.opacity = "0";
+document.body.appendChild(t); t.select();
+try { document.execCommand("copy"); done(); } catch (e) {}
+document.body.removeChild(t);
+};
+if (navigator.clipboard && navigator.clipboard.writeText) {
+navigator.clipboard.writeText(email).then(done).catch(legacy);
+} else legacy();
+};
+const font = "'Futura','Century Gothic',sans-serif";
+const alt = { color: WHITE, fontWeight: "bold", textDecoration: "underline", cursor: "pointer",
+background: "none", border: "none", padding: 0, fontSize: "12px", fontFamily: font };
+return (
+<div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
+<a href={href} onClick={() => setShowAlt(true)} style={{
+display: "inline-flex", alignItems: "center", gap: "10px",
+padding: "14px 24px", background: "transparent",
+justifyContent: "center", minWidth: wide ? "240px" : undefined, boxSizing: "border-box",
+border: "1px solid rgba(255,255,255,0.85)", borderRadius: "2px", cursor: "pointer",
+fontFamily: font,
+fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase",
+color: WHITE, fontWeight: "bold", textDecoration: "none",
+}}>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={WHITE} strokeWidth="2"
+strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></svg>
+{text}
+</a>
+{showAlt && (
+<div style={{ fontFamily: font, fontSize: "12px", color: "rgba(255,255,255,0.85)", textAlign: "center",
+lineHeight: "1.9", maxWidth: "290px" }}>
+Email app didn't open? Write to <b>{email}</b> or open in{" "}
+<a href={gmail} target="_blank" rel="noopener noreferrer" style={alt}>Gmail</a>
+{" · "}
+<a href={outlook} target="_blank" rel="noopener noreferrer" style={alt}>Outlook</a>
+{" · "}
+<button type="button" onClick={copy} style={alt}>{copied ? "Copied ✓" : "Copy address"}</button>
+</div>
+)}
+</div>
+);
+}
 function Divider() {
 return <div style={{ height: "1px", background: RULE, margin: "64px 0" }} />;
 }
 function SectionLabel({ text }) {
-return <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color:
+return <div data-fade style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color:
 WARM, letterSpacing: "3px", textTransform: "uppercase", marginBottom: "16px" }}>{text}</div>;
 }
 function Heading({ children, center, light }) {
@@ -620,7 +684,7 @@ color: "rgba(255,255,255,0.7)",
 <div style={{ flex: 1, padding: "16px 20px", background: "rgba(255,255,255,0.06)",
 border: "1px solid rgba(255,255,255,0.12)", borderRadius: "2px", textAlign: "center" }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "24px",
-fontWeight: "bold", color: TERRA }}>65+</div>
+fontWeight: "bold", color: TERRA }}>66+</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
 color: "rgba(255,255,255,0.5)", letterSpacing: "1px", textTransform: "uppercase",
 marginTop: "4px" }}>5-Star Reviews, Managed Portfolio</div>
@@ -659,7 +723,7 @@ icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={TERRA}
 { title: "Maintenance", desc: "Repairs organised and followed through before they become complaints.",
 icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> },
 ].map((item, i) => (
-<div key={i} style={{ flex: "0 1 380px", padding: "36px 32px", background: WHITE,
+<div key={i} data-reveal style={{ flex: "0 1 380px", padding: "36px 32px", background: WHITE,
 borderRadius: "16px", boxShadow: "0 2px 20px rgba(0,0,0,0.05)" }}>
 <div style={{ width: "56px", height: "56px", borderRadius: "14px",
 background: "rgba(160,120,42,0.1)", display: "flex", alignItems: "center",
@@ -744,6 +808,8 @@ height: "100%", objectFit: "cover", opacity: 0.4 }} />
 <div style={{ position: "absolute", inset: 0,
 background: "linear-gradient(180deg, rgba(26,22,18,0.5) 0%, rgba(26,22,18,0.82) 100%)" }} />
 <div style={{ position: "relative" }}>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", letterSpacing: "3px",
+textTransform: "uppercase", color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>Let's talk</div>
 <h2 style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(28px, 5vw, 56px)",
 fontWeight: "bold", color: WHITE, textTransform: "uppercase", letterSpacing: "-0.5px",
 lineHeight: "1.1", margin: "0 0 20px" }}>
@@ -754,10 +820,11 @@ Message on WhatsApp or fill in the contact form to get a free property assessmen
 <div style={{ display: "flex", gap: "18px", justifyContent: "center", flexWrap: "wrap",
 alignItems: "center", flexDirection: "column" }}>
 <FormBtn text="Get a Free Property Assessment" setPage={setPage} trackConversion />
-<div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+<div style={{ display: "flex", gap: "14px", alignItems: "center", flexDirection: "column" }}>
 <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px",
-color: "rgba(255,255,255,0.6)" }}>prefer to chat first?</span>
-<WhatsAppBtn />
+color: "rgba(255,255,255,0.6)" }}>prefer to reach out directly?</span>
+<WhatsAppBtn wide />
+<EmailBtn wide />
 </div>
 </div>
 </div>
@@ -881,7 +948,7 @@ width: "100%", display: "block", borderRadius: "2px", border: `1px solid ${RULE}
 <Heading>Recent appearances.</Heading>
 <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "32px", marginBottom: "64px" }}>
 {past.map((e, i) => (
-<div key={i} style={{ padding: "24px 28px", background: CREAM, border: `1px solid ${RULE}`,
+<div key={i} data-reveal style={{ padding: "24px 28px", background: CREAM, border: `1px solid ${RULE}`,
 borderRadius: "2px", display: "flex", alignItems: "center", justifyContent: "space-between",
 flexWrap: "wrap", gap: "16px" }}>
 <div style={{ display: "flex", alignItems: "center", gap: "20px", minWidth: 0, flexWrap: "wrap" }}>
@@ -1072,7 +1139,7 @@ objectFit: "cover", borderRadius: "8px", border: `1px solid ${RULE}`, display: "
 <Heading>Listen now.</Heading>
 <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "32px" }}>
 {episodes.map((e, i) => (
-<div key={i} style={{ padding: "24px 28px", background: CREAM, border: `1px solid ${RULE}`,
+<div key={i} data-reveal style={{ padding: "24px 28px", background: CREAM, border: `1px solid ${RULE}`,
 borderRadius: "2px" }}>
 <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "12px",
 marginBottom: "14px" }}>
@@ -1146,9 +1213,9 @@ investment and less from their to-do list.
 <div style={{ display: "flex", gap: "24px", flexWrap: "wrap", marginBottom: "32px" }}>
 {[
 { stat: "Superhost", label: "Airbnb Status" },
-{ stat: "65+", label: "5-Star Reviews" },
+{ stat: "66+", label: "5-Star Reviews" },
 ].map((s, i) => (
-<div key={i} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+<div key={i} data-fade style={{ display: "flex", alignItems: "center", gap: "10px" }}>
 {i > 0 && <div style={{ width: "1px", height: "28px", background: RULE, marginRight: "6px" }} />}
 <div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "17px",
@@ -1204,7 +1271,7 @@ own Superhost listing — every property we manage gets the same standard.
 { icon: "⬡", title: "Cleaning & Turnover Coordination", desc: "Reliable cleaning scheduled and coordinated around every check-out and check-in, so the property is guest-ready every time, with issues caught before the next guest arrives." },
 { icon: "◆", title: "Maintenance Coordination", desc: "Repairs, servicing and general upkeep organised and followed through with trusted tradespeople, so issues get resolved before they affect a guest's stay." },
 ].map((item, i) => (
-<div key={i} style={{ display: "flex", gap: "24px", padding: "28px", background: WHITE,
+<div key={i} data-reveal style={{ display: "flex", gap: "24px", padding: "28px", background: WHITE,
 borderRadius: "2px", border: `1px solid ${RULE}`, alignItems: "flex-start", flexWrap: "wrap" }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "26px", color:
 TERRA }}>{item.icon}</div>
@@ -1231,7 +1298,7 @@ WARM, lineHeight: "1.7" }}>{item.desc}</div>
 { step: "03", title: "Onboarding", desc: "We take over messaging, pricing and (if Full-Service) turnover and maintenance coordination — a short handover, then it's running." },
 { step: "04", title: "Monthly Reporting", desc: "A clear monthly summary of performance, occupancy and revenue, so you always know how your property is doing." },
 ].map((s, i) => (
-<div key={i} style={{ flex: "1 1 220px", padding: "28px 24px", background:
+<div key={i} data-reveal style={{ flex: "1 1 220px", padding: "28px 24px", background:
 "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "2px" }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "28px",
 fontWeight: "bold", color: TERRA, marginBottom: "12px" }}>{s.step}</div>
@@ -1316,7 +1383,7 @@ tagline: "Multiple properties.",
 items: ["Everything in Full-Service", "Multi-property dashboard", "Dedicated point of contact", "Custom quote based on portfolio size"],
 },
 ].map((pkg, i) => (
-<div key={i} style={{
+<div key={i} data-reveal style={{
 flex: "1 1 260px", padding: "36px 28px",
 background: pkg.popular ? TERRA : CREAM,
 border: `1px solid ${pkg.popular ? TERRA : RULE}`,
@@ -1415,10 +1482,11 @@ Get a free assessment of your property and a straightforward quote — no obliga
 <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap",
 alignItems: "center", flexDirection: "column" }}>
 <FormBtn text="Get a Free Property Assessment" setPage={setPage} trackConversion />
-<div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+<div style={{ display: "flex", gap: "14px", alignItems: "center", flexDirection: "column" }}>
 <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color:
-"rgba(255,255,255,0.5)" }}>prefer to chat first?</span>
-<WhatsAppBtn />
+"rgba(255,255,255,0.5)" }}>prefer to reach out directly?</span>
+<WhatsAppBtn wide />
+<EmailBtn wide />
 </div>
 </div>
 </div>
@@ -1452,7 +1520,7 @@ standalone product for any host.
 { icon: "✦", title: "QR Codes", desc: "Wi-Fi, how-to videos and local maps — scannable from the page." },
 { icon: "⬡", title: "Multiple Languages", desc: "English, French, Spanish, German, Dutch and more." },
 ].map((item, i) => (
-<div key={i} style={{ flex: "1 1 260px", padding: "24px", background: WHITE,
+<div key={i} data-reveal style={{ flex: "1 1 260px", padding: "24px", background: WHITE,
 borderRadius: "2px", border: `1px solid ${RULE}` }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "20px", color:
 TERRA, marginBottom: "10px" }}>{item.icon}</div>
@@ -1511,7 +1579,7 @@ TERRA }}>
 { quote: "I used to dread the 'how does the heating work?' messages at midnight. Haven't had one since.", name: "James T.", location: "Edinburgh, UK" },
 { quote: "Worth every penny. Professional, fast, and the printed version looks incredible on the kitchen table.", name: "Priya K.", location: "Manchester, UK" },
 ].map((t, i) => (
-<div key={i} style={{ flex: "1 1 240px", padding: "28px", background:
+<div key={i} data-reveal style={{ flex: "1 1 240px", padding: "28px", background:
 "rgba(255,255,255,0.1)", borderRadius: "2px", borderTop: `2px solid rgba(255,255,255,0.3)` }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
 WHITE, lineHeight: "1.8", marginBottom: "20px", fontStyle: "italic" }}>
@@ -1537,10 +1605,11 @@ Order a standalone handbook, or ask about bundling it with Full-Service Manageme
 <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap",
 alignItems: "center", flexDirection: "column" }}>
 <FormBtn text="Order a Handbook" setPage={setPage} />
-<div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+<div style={{ display: "flex", gap: "14px", alignItems: "center", flexDirection: "column" }}>
 <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color:
-"rgba(255,255,255,0.5)" }}>prefer to chat first?</span>
-<WhatsAppBtn />
+"rgba(255,255,255,0.5)" }}>prefer to reach out directly?</span>
+<WhatsAppBtn wide />
+<EmailBtn wide />
 </div>
 </div>
 </div>
@@ -1575,7 +1644,7 @@ architect with his own design practice and a proven track record.
 { icon: "✦", title: "Layout Consultation", desc: "A review of how a space is used, with suggestions to improve flow, functionality and guest experience." },
 { icon: "⬡", title: "Fuller Design Projects", desc: "For bigger renovations or new properties, more involved design input scoped and quoted individually." },
 ].map((item, i) => (
-<div key={i} style={{ flex: "1 1 280px", padding: "28px", background: WHITE,
+<div key={i} data-reveal style={{ flex: "1 1 280px", padding: "28px", background: WHITE,
 borderRadius: "2px", border: `1px solid ${RULE}` }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "26px", color:
 TERRA, marginBottom: "16px" }}>{item.icon}</div>
@@ -1618,10 +1687,11 @@ next steps.
 <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap",
 alignItems: "center", flexDirection: "column" }}>
 <FormBtn text="Enquire About Design" setPage={setPage} />
-<div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+<div style={{ display: "flex", gap: "14px", alignItems: "center", flexDirection: "column" }}>
 <span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color:
-"rgba(255,255,255,0.5)" }}>prefer to chat first?</span>
-<WhatsAppBtn />
+"rgba(255,255,255,0.5)" }}>prefer to reach out directly?</span>
+<WhatsAppBtn wide />
+<EmailBtn wide />
 </div>
 </div>
 </div>
@@ -1658,7 +1728,10 @@ fontWeight: "bold", color: WHITE, marginBottom: "8px" }}>Want us to manage your 
 hello@thecuratedhost.com for a free property assessment. No form to fill in — just get
 in touch directly and we'll take it from there.</div>
 </div>
-<WhatsAppBtn text="Message on WhatsApp" />
+<div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+<WhatsAppBtn text="Message on WhatsApp" wide />
+<EmailBtn text="Send an email" wide />
+</div>
 </div>
 </div>
 </div>
@@ -1798,7 +1871,7 @@ const GLOBAL_CSS = `
 .tch-footer{margin:0 clamp(10px,2vw,28px) clamp(10px,2vw,28px);border-radius:clamp(22px,3vw,40px)}
 @media (max-width:900px){.tch-page{padding-top:92px}}
 .tch-page [style*="border-radius: 2px"],.tch-footer [style*="border-radius: 2px"]{border-radius:18px !important}
-.tch-page button[style*="border-radius: 2px"],.tch-footer button[style*="border-radius: 2px"]{border-radius:999px !important}
+.tch-page button[style*="border-radius: 2px"],.tch-footer button[style*="border-radius: 2px"],.tch-page a[style*="border-radius: 2px"],.tch-footer a[style*="border-radius: 2px"]{border-radius:999px !important}
 .tch-values{display:grid;grid-template-columns:repeat(6,1fr);gap:24px;max-width:1180px;margin:56px auto 0}
 .tch-values > div{grid-column:span 2}
 .tch-values > div:nth-child(4){grid-column:2 / span 2}
@@ -1812,34 +1885,70 @@ const GLOBAL_CSS = `
 .tch-values{grid-template-columns:1fr}
 .tch-values > div:nth-child(5){width:auto}
 }
-.tch-reveal{opacity:0;translate:0 28px;transition:opacity 1.2s ease var(--rd,0s),translate 1.2s cubic-bezier(.2,.7,.2,1) var(--rd,0s)}
-.tch-reveal.tch-in{opacity:1;translate:0 0}
+.tch-reveal{opacity:0;translate:0 56px;transition:opacity 1.6s ease var(--rd,0s),translate 1.6s cubic-bezier(.16,.8,.2,1) var(--rd,0s),scale 1.6s cubic-bezier(.16,.8,.2,1) var(--rd,0s)}
+.tch-reveal[data-reveal]{translate:0 72px;scale:.94}
+.tch-reveal.tch-in{opacity:1;translate:0 0;scale:1}
 @media (prefers-reduced-motion:reduce){.tch-reveal{opacity:1;translate:none;transition:none}}
 `;
 function useScrollReveal(page) {
 useLayoutEffect(() => {
-const root = document.querySelector(".tch-page");
-if (!root || typeof IntersectionObserver === "undefined") return;
+const roots = Array.prototype.slice.call(document.querySelectorAll(".tch-page, .tch-footer"));
+if (!roots.length) return;
 if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-const io = new IntersectionObserver((entries) => {
-entries.forEach(en => {
-if (en.isIntersecting) { en.target.classList.add("tch-in"); io.unobserve(en.target); }
+const SEL = 'h1,h2,h3,h4,p,[data-reveal],[data-fade],[style*="border-radius"]';
+const pending = new Set();
+let raf = 0;
+const check = () => {
+raf = 0;
+const vh = window.innerHeight || 800;
+const line = vh * 0.88;
+const above = [];
+const inView = [];
+pending.forEach(el => {
+if (!el.isConnected) { pending.delete(el); return; }
+const r = el.getBoundingClientRect();
+const off = el.hasAttribute("data-reveal") ? 72 : 56;
+const top = r.top - off;
+if (top >= line) return;
+(r.bottom < 0 ? above : inView).push(el);
 });
-}, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+const fire = (el, d) => {
+pending.delete(el);
+el.style.setProperty("--rd", d + "s");
+el.dataset.tchDone = "1";
+el.classList.add("tch-in");
+setTimeout(() => {
+el.classList.remove("tch-reveal", "tch-in");
+el.style.removeProperty("--rd");
+}, (d + 1.9) * 1000);
+};
+above.forEach(el => fire(el, 0));
+inView.sort((x, y) => (x.compareDocumentPosition(y) & 4) ? -1 : 1);
+const step = Math.min(0.18, 1.8 / Math.max(inView.length, 1));
+inView.forEach((el, k) => fire(el, k * step));
+};
+const schedule = () => { if (!raf) raf = requestAnimationFrame(check); };
 const tag = () => {
-root.querySelectorAll("h1,h2,h3,h4,p,[data-reveal]").forEach(el => {
-if (el.dataset.tchSeen) return;
-el.dataset.tchSeen = "1";
-const idx = Array.prototype.indexOf.call(el.parentElement.children, el);
-el.style.setProperty("--rd", Math.min(idx, 5) * 0.1 + "s");
+roots.forEach(root => {
+root.querySelectorAll(SEL).forEach(el => {
+if (el.dataset.tchDone || pending.has(el)) return;
 el.classList.add("tch-reveal");
-io.observe(el);
+pending.add(el);
 });
+});
+check();
 };
 tag();
 const mo = new MutationObserver(tag);
-mo.observe(root, { childList: true, subtree: true });
-return () => { io.disconnect(); mo.disconnect(); };
+roots.forEach(r => mo.observe(r, { childList: true, subtree: true }));
+window.addEventListener("scroll", schedule, { passive: true });
+window.addEventListener("resize", schedule);
+const tick = setInterval(() => { if (pending.size) schedule(); }, 400);
+return () => {
+mo.disconnect(); clearInterval(tick); if (raf) cancelAnimationFrame(raf);
+window.removeEventListener("scroll", schedule);
+window.removeEventListener("resize", schedule);
+};
 }, [page]);
 }
 // ── APP───────────────────────────────────────────────────────────────────────
