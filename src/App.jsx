@@ -438,6 +438,63 @@ Email app didn't open? Write to <b>{email}</b> or open in{" "}
 </div>
 );
 }
+function Flag({ type, size = 22 }) {
+const uid = useRef("ukc" + Math.random().toString(36).slice(2, 9)).current;
+return (
+<span style={{ display: "inline-block", width: size + "px", height: size + "px", borderRadius: "50%",
+overflow: "hidden", flexShrink: 0, lineHeight: 0, boxShadow: "0 0 0 1.5px rgba(255,255,255,0.9), 0 1px 4px rgba(0,0,0,0.25)" }}>
+{type === "NL" ? (
+<svg width={size} height={size} viewBox="0.5 0 2 2" preserveAspectRatio="xMidYMid slice" aria-label="Netherlands flag" role="img">
+<rect width="3" height="0.6667" fill="#AE1C28" />
+<rect y="0.6667" width="3" height="0.6667" fill="#FFFFFF" />
+<rect y="1.3333" width="3" height="0.6667" fill="#21468B" />
+</svg>
+) : (
+<svg width={size} height={size} viewBox="15 0 30 30" preserveAspectRatio="xMidYMid slice" aria-label="United Kingdom flag" role="img">
+<clipPath id={uid}><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z" /></clipPath>
+<path d="M0,0 v30 h60 v-30 z" fill="#012169" />
+<path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" strokeWidth="6" />
+<path d="M0,0 L60,30 M60,0 L0,30" clipPath={`url(#${uid})`} stroke="#C8102E" strokeWidth="4" />
+<path d="M30,0 v30 M0,15 h60" stroke="#FFFFFF" strokeWidth="10" />
+<path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6" />
+</svg>
+)}
+</span>
+);
+}
+function FlagPair({ size = 22 }) {
+return (
+<span style={{ display: "inline-flex", alignItems: "center", flexShrink: 0 }}>
+<Flag type="NL" size={size} />
+<span style={{ marginLeft: -Math.round(size * 0.28) + "px", display: "inline-flex" }}><Flag type="UK" size={size} /></span>
+</span>
+);
+}
+function RegionBadge({ variant = "light", label = "Netherlands & UK", sub, full }) {
+const dark = variant === "dark";
+const font = "'Futura','Century Gothic',sans-serif";
+return (
+<div style={{
+display: full ? "flex" : "inline-flex", alignItems: "center", gap: "12px", boxSizing: "border-box",
+justifyContent: full ? "center" : "flex-start",
+padding: sub ? "14px 20px" : "9px 18px 9px 12px",
+background: dark ? "rgba(255,255,255,0.06)" : WHITE,
+border: dark ? "1px solid rgba(255,255,255,0.12)" : `1px solid ${RULE}`,
+borderRadius: "999px", width: full ? "100%" : undefined,
+}}>
+<FlagPair size={sub ? 28 : 22} />
+<div style={{ textAlign: sub ? "left" : undefined }}>
+<div style={{ fontFamily: font, fontSize: sub ? "14px" : "11px", fontWeight: "bold",
+letterSpacing: sub ? "0.3px" : "1.5px", textTransform: sub ? undefined : "uppercase",
+color: sub ? TERRA : (dark ? "rgba(255,255,255,0.85)" : BODY) }}>{label}</div>
+{sub && (
+<div style={{ fontFamily: font, fontSize: "10px", letterSpacing: "1px", textTransform: "uppercase",
+color: dark ? "rgba(255,255,255,0.5)" : WARM, marginTop: "3px" }}>{sub}</div>
+)}
+</div>
+</div>
+);
+}
 function Divider() {
 return <div style={{ height: "1px", background: RULE, margin: "64px 0" }} />;
 }
@@ -698,6 +755,9 @@ color: "rgba(255,255,255,0.5)", letterSpacing: "1px", textTransform: "uppercase"
 marginTop: "4px" }}>Airbnb Status</div>
 </div>
 </div>
+<div style={{ marginTop: "12px" }}>
+<RegionBadge variant="dark" full label="Netherlands & UK" sub="Where we operate" />
+</div>
 </div>
 </div>
 </div>
@@ -844,6 +904,9 @@ return (
 "rgba(255,255,255,0.6)", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "0" }}>
 Property Management &amp; Guest Experience
 </p>
+<div style={{ marginTop: "24px" }}>
+<RegionBadge variant="dark" label="Netherlands & UK" />
+</div>
 </div>
 </div>
 <div style={{ padding: "clamp(48px, 8vw, 80px) clamp(20px, 8%, 10%)", background: WHITE }}>
@@ -1210,7 +1273,7 @@ WARM, lineHeight: "1.8", marginBottom: "28px", maxWidth: "440px" }}>
 Boutique short-term rental management for property owners who want more from their
 investment and less from their to-do list.
 </p>
-<div style={{ display: "flex", gap: "24px", flexWrap: "wrap", marginBottom: "32px" }}>
+<div style={{ display: "flex", gap: "24px", flexWrap: "wrap", marginBottom: "18px" }}>
 {[
 { stat: "Superhost", label: "Airbnb Status" },
 { stat: "66+", label: "5-Star Reviews" },
@@ -1225,6 +1288,9 @@ color: WARM, letterSpacing: "0.5px" }}>{s.label}</div>
 </div>
 </div>
 ))}
+</div>
+<div style={{ marginBottom: "32px" }}>
+<RegionBadge variant="light" label="Operating in the Netherlands & UK" />
 </div>
 </div>
 </div>
@@ -1327,8 +1393,11 @@ border: `2px solid ${TERRA}` }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
 letterSpacing: "2px", textTransform: "uppercase", color: TERRA, fontWeight: "bold",
 marginBottom: "10px" }}>Primary — Full-Service</div>
+<div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "12px" }}>
+<FlagPair size={30} />
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "18px",
-fontWeight: "bold", color: BODY, marginBottom: "10px" }}>The Netherlands &amp; UK</div>
+fontWeight: "bold", color: BODY }}>The Netherlands &amp; UK</div>
+</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
 WARM, lineHeight: "1.7" }}>Where we already manage properties — full hands-on
 management including guest messaging, pricing, cleaning &amp; turnover, and
@@ -1793,6 +1862,9 @@ paddingBottom: "48px", borderBottom: `1px solid rgba(255,255,255,0.1)` }}>
 Property management for Airbnb hosts, built on one belief: how you host people
 defines the experience they take away.
 </p>
+<div style={{ marginTop: "20px" }}>
+<RegionBadge variant="dark" label="Netherlands & UK" />
+</div>
 </div>
 <div style={{ flex: "0 1 160px" }}>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px", color:
