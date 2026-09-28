@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 const TERRA = "#A0782A";
 const WARM = "#9C8B6A";
 const SAND = "#F5EDD8";
@@ -29,12 +29,12 @@ return () => window.removeEventListener("resize", h);
 }, []);
 return isMobile;
 }
-function Logo({ light }) {
+function Logo({ light, big }) {
 const c = light ? WHITE : TERRA;
 const sc = light ? "rgba(255,255,255,0.4)" : CREAM;
 return (
 <div style={{ display: "flex", alignItems: "center", gap: "12px", cursor: "pointer" }}>
-<svg width="38" height="38" viewBox="0 0 400 400" fill="none">
+<svg width={big ? 54 : 38} height={big ? 54 : 38} viewBox="0 0 400 400" fill="none">
 <circle cx="200" cy="200" r="155" stroke={c} strokeWidth="8" fill="none" />
 <circle cx="200" cy="200" r="140" stroke={c} strokeWidth="2" strokeOpacity="0.3"
 fill="none" />
@@ -53,11 +53,124 @@ strokeLinecap="round"/>
 
 </svg>
 <div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "16px", fontWeight:
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: big ? "23px" : "16px", fontWeight:
 "bold", color: light ? WHITE : TERRA, letterSpacing: "0.5px" }}>The Curated Host</div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "9px", color: light ?
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: big ? "11px" : "9px", color: light ?
 "rgba(255,255,255,0.6)" : WARM, letterSpacing: "2.5px", textTransform: "uppercase" }}>Property Management</div>
 </div>
+</div>
+);
+}
+function useWidth() {
+const [w, setW] = useState(window.innerWidth);
+useEffect(() => {
+const h = () => setW(window.innerWidth);
+window.addEventListener("resize", h);
+return () => window.removeEventListener("resize", h);
+}, []);
+return w;
+}
+const SEARCH_INDEX = [
+{ title: "Home", page: "Home", blurb: "Welcome to The Curated Host",
+kw: "home start welcome superhost reviews thuis" },
+{ title: "Property Management", page: "Property Management",
+blurb: "Airbnb co-hosting, services, pricing and where we operate",
+kw: "property management airbnb co-hosting cohosting services pricing fees commission essential full-service portfolio guest messaging revenue cleaning turnover maintenance netherlands uk europe where we operate how it works beheer verhuur vastgoed tarieven prijzen kosten schoonmaak onderhoud" },
+{ title: "Guest Handbooks", page: "Guest Handbooks",
+blurb: "Professionally designed guest handbooks for your property",
+kw: "guest handbook handbooks welcome book house manual qr code printed gasten handboek" },
+{ title: "Interior Design", page: "Interior Design",
+blurb: "Interior design and styling for short-term rentals",
+kw: "interior design styling furnishing decor interieur inrichting" },
+{ title: "About", page: "About", blurb: "About The Curated Host",
+kw: "about us who ruben story values over ons" },
+{ title: "Speaking", page: "Speaking", blurb: "Talks, guest lectures and appearances",
+kw: "speaking public speaker talks engagements events ucla lecture spreker" },
+{ title: "Millennicast", page: "Millennicast", blurb: "The podcast and its episodes",
+kw: "millennicast podcast episodes listen spotify apple" },
+{ title: "Contact", page: "Contact", blurb: "Get in touch or request a free property assessment",
+kw: "contact get in touch whatsapp email enquiry free property assessment form phone reach neem contact op" },
+];
+function SearchBox({ setPage, mode = "inline", onDone }) {
+const [q, setQ] = useState("");
+const [open, setOpen] = useState(false);
+const [focus, setFocus] = useState(false);
+const boxRef = useRef(null);
+useEffect(() => {
+const h = (e) => {
+if (boxRef.current && !boxRef.current.contains(e.target)) { setFocus(false); setOpen(false); }
+};
+window.addEventListener("mousedown", h);
+window.addEventListener("touchstart", h);
+return () => { window.removeEventListener("mousedown", h); window.removeEventListener("touchstart", h); };
+}, []);
+const tokens = q.toLowerCase().split(/\s+/).filter(Boolean);
+const results = tokens.length ? SEARCH_INDEX.map(e => {
+const t = e.title.toLowerCase();
+const hay = t + " " + e.blurb.toLowerCase() + " " + e.kw;
+if (!tokens.every(k => hay.includes(k))) return null;
+return { e, score: tokens.some(k => t.includes(k)) ? 0 : 1 };
+}).filter(Boolean).sort((a, b) => a.score - b.score).map(x => x.e) : [];
+const go = (e) => { setPage(e.page); setQ(""); setFocus(false); setOpen(false); if (onDone) onDone(); };
+const font = "'Futura','Century Gothic',sans-serif";
+const glass = (
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"
+strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+);
+const field = (
+<div style={{ display: "flex", alignItems: "center", gap: "10px", background: CREAM,
+border: `1px solid ${RULE}`, borderRadius: "999px", padding: "0 18px", height: "46px",
+width: "100%", boxSizing: "border-box" }}>
+{glass}
+<input value={q} placeholder="Search the site" autoFocus={mode === "icon"}
+onChange={e => { setQ(e.target.value); setFocus(true); }} onFocus={() => setFocus(true)}
+onKeyDown={e => {
+if (e.key === "Enter" && results[0]) go(results[0]);
+if (e.key === "Escape") { setQ(""); setFocus(false); setOpen(false); }
+}}
+style={{ flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent",
+fontFamily: font, fontSize: "16px", color: BODY }} />
+</div>
+);
+const list = tokens.length > 0 && (mode === "mobile" || focus || open) ? (
+<div style={{ background: WHITE, borderRadius: "18px", overflow: "hidden",
+boxShadow: mode === "mobile" ? "none" : "0 12px 36px rgba(26,22,18,0.16)",
+border: mode === "mobile" ? `1px solid ${RULE}` : "none", marginTop: "8px" }}>
+{results.length === 0 ? (
+<div style={{ padding: "16px 18px", fontFamily: font, fontSize: "13px", color: WARM }}>
+No matches. Try "pricing", "handbook" or "contact".</div>
+) : results.slice(0, 6).map(r => (
+<button key={r.page} onClick={() => go(r)} style={{ display: "block", width: "100%",
+textAlign: "left", padding: "12px 18px", background: "transparent", border: "none",
+borderBottom: `1px solid ${SAND}`, cursor: "pointer" }}>
+<div style={{ fontFamily: font, fontSize: "14px", fontWeight: "bold", color: TERRA }}>{r.title}</div>
+<div style={{ fontFamily: font, fontSize: "12px", color: WARM, marginTop: "2px" }}>{r.blurb}</div>
+</button>
+))}
+</div>
+) : null;
+if (mode === "mobile") {
+return <div ref={boxRef} style={{ marginBottom: "12px" }}>{field}{list}</div>;
+}
+if (mode === "icon") {
+return (
+<div ref={boxRef} style={{ position: "relative" }}>
+<button onClick={() => setOpen(o => !o)} aria-label="Search" style={{ width: "46px", height: "46px",
+borderRadius: "50%", background: CREAM, border: `1px solid ${RULE}`, cursor: "pointer",
+display: "flex", alignItems: "center", justifyContent: "center" }}>{glass}</button>
+{open && (
+<div style={{ position: "absolute", right: 0, top: "calc(100% + 14px)", width: "min(360px, 86vw)",
+background: WHITE, borderRadius: "22px", padding: "12px", boxShadow: "0 12px 36px rgba(26,22,18,0.18)" }}>
+{field}{list}
+</div>
+)}
+</div>
+);
+}
+return (
+<div ref={boxRef} style={{ position: "relative", width: "190px", flexShrink: 0 }}>
+{field}
+{list && <div style={{ position: "absolute", top: "100%", left: 0, width: "300px", zIndex: 5 }}>{list}</div>}
 </div>
 );
 }
@@ -65,18 +178,13 @@ function Nav({ page, setPage }) {
 const topLinks = ["Home", "About"];
 const pmLinks = ["Property Management", "Guest Handbooks", "Interior Design"];
 const moreLinks = ["Speaking", "Millennicast"];
-const [scrolled, setScrolled] = useState(false);
 const [menuOpen, setMenuOpen] = useState(false);
 const [moreOpen, setMoreOpen] = useState(false);
 const [pmOpen, setPmOpen] = useState(false);
 const isMobile = useIsMobile();
+const width = useWidth();
 const moreRef = useRef(null);
 const pmRef = useRef(null);
-useEffect(() => {
-const h = () => setScrolled(window.scrollY > 40);
-window.addEventListener("scroll", h);
-return () => window.removeEventListener("scroll", h);
-}, []);
 useEffect(() => {
 const h = (e) => {
 if (moreRef.current && !moreRef.current.contains(e.target)) setMoreOpen(false);
@@ -85,168 +193,111 @@ if (pmRef.current && !pmRef.current.contains(e.target)) setPmOpen(false);
 window.addEventListener("mousedown", h);
 return () => window.removeEventListener("mousedown", h);
 }, []);
-const isHome = page === "Home";
-const bg = (isHome && !scrolled && !menuOpen) ? "transparent" : WHITE;
-const borderColor = (isHome && !scrolled && !menuOpen) ? "transparent" : RULE;
-const light = isHome && !scrolled && !menuOpen;
+const font = "'Futura','Century Gothic',sans-serif";
 const isMoreActive = moreLinks.includes(page);
 const isPmActive = pmLinks.includes(page);
+const edge = "clamp(10px, 2vw, 28px)";
+const linkStyle = (active) => ({
+padding: "10px 10px", background: "transparent", border: "none", cursor: "pointer",
+fontFamily: font, fontSize: "14px", letterSpacing: "0.6px", textTransform: "uppercase",
+color: active ? TERRA : BODY, fontWeight: active ? "bold" : "normal",
+whiteSpace: "nowrap", flexShrink: 0, display: "flex", alignItems: "center", gap: "5px",
+});
+const dropStyle = {
+position: "absolute", top: "calc(100% + 14px)", background: WHITE, borderRadius: "18px",
+minWidth: "230px", boxShadow: "0 12px 36px rgba(26,22,18,0.16)", overflow: "hidden", padding: "6px",
+};
+const dropItem = (active) => ({
+display: "block", width: "100%", padding: "13px 16px", background: "transparent", border: "none",
+cursor: "pointer", textAlign: "left", fontFamily: font, fontSize: "13px", letterSpacing: "1px",
+textTransform: "uppercase", color: active ? TERRA : BODY, fontWeight: active ? "bold" : "normal",
+borderRadius: "12px",
+});
+const mobileItem = (active) => ({
+padding: "15px 4px", background: "transparent", border: "none", borderBottom: `1px solid ${SAND}`,
+cursor: "pointer", textAlign: "left", fontFamily: font, fontSize: "15px", letterSpacing: "1.5px",
+textTransform: "uppercase", color: active ? TERRA : BODY, fontWeight: active ? "bold" : "normal",
+});
+const mobileHead = { fontFamily: font, fontSize: "11px", color: WARM, letterSpacing: "2px",
+textTransform: "uppercase", margin: "18px 0 4px" };
 return (
 <>
 <nav style={{
-position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-background: bg, borderBottom: `1px solid ${borderColor}`,
-padding: isMobile ? "0 20px" : "0 48px", height: "64px",
-display: "flex", alignItems: "center", justifyContent: "space-between",
-transition: "background 0.3s, border-color 0.3s",
+position: "fixed", top: "12px", left: edge, right: edge, zIndex: 100,
+background: "rgba(255,255,255,0.97)", backdropFilter: "blur(10px)", borderRadius: "26px",
+boxShadow: "0 6px 30px rgba(26,22,18,0.12)", padding: isMobile ? "0 18px" : "0 28px",
+height: isMobile ? "68px" : "84px", display: "flex", alignItems: "center",
+justifyContent: "space-between", gap: "16px",
 }}>
-<div onClick={() => { setPage("Home"); setMenuOpen(false); }}><Logo light={light}
-/></div>
+<div onClick={() => { setPage("Home"); setMenuOpen(false); }} style={{ flexShrink: 0 }}>
+<Logo big />
+</div>
 {isMobile ? (
-<button onClick={() => setMenuOpen(o => !o)} style={{
-background: "transparent", border: "none", cursor: "pointer",
-display: "flex", flexDirection: "column", gap: "5px", padding: "8px",
-
+<button onClick={() => setMenuOpen(o => !o)} aria-label="Menu" style={{
+background: "transparent", border: "none", cursor: "pointer", display: "flex",
+flexDirection: "column", gap: "6px", padding: "10px",
 }}>
-{[0,1,2].map(i => (
-<div key={i} style={{ width: "22px", height: "2px", background: light ? WHITE : TERRA,
-borderRadius: "1px" }} />
+{[0, 1, 2].map(i => (
+<div key={i} style={{ width: "28px", height: "3px", background: TERRA, borderRadius: "2px" }} />
 ))}
 </button>
-):(
-<div style={{ display: "flex", gap: "4px", alignItems: "center", flexWrap: "nowrap" }}>
-<button onClick={() => setPage("Home")} style={{
-padding: "8px 10px", background: "transparent", border: "none",
-borderRadius: "2px", cursor: "pointer",
-fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "10px", letterSpacing: "0.5px", textTransform: "uppercase",
-color: page === "Home" ? TERRA : light ? WHITE : WARM,
-fontWeight: page === "Home" ? "bold" : "normal",
-transition: "color 0.2s", whiteSpace: "nowrap", flexShrink: 0,
-}}>Home</button>
+) : (
+<div style={{ display: "flex", gap: "2px", alignItems: "center", flexWrap: "nowrap" }}>
+<button onClick={() => setPage("Home")} style={linkStyle(page === "Home")}>Home</button>
 <div ref={pmRef} style={{ position: "relative", flexShrink: 0 }}>
-<button onClick={() => setPmOpen(o => !o)} style={{
-padding: "8px 10px", background: "transparent", border: "none",
-borderRadius: "2px", cursor: "pointer",
-fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "10px", letterSpacing: "0.5px", textTransform: "uppercase",
-color: isPmActive ? TERRA : light ? WHITE : WARM,
-fontWeight: isPmActive ? "bold" : "normal",
-whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px",
-}}>Property Management {pmOpen ? "▴" : "▾"}</button>
+<button onClick={() => setPmOpen(o => !o)} style={linkStyle(isPmActive)}>
+Property Management <span style={{ fontSize: "10px" }}>{pmOpen ? "▴" : "▾"}</span></button>
 {pmOpen && (
-<div style={{
-position: "absolute", top: "calc(100% + 8px)", left: 0,
-background: WHITE, border: `1px solid ${RULE}`, borderRadius: "2px",
-minWidth: "200px", boxShadow: "0 8px 24px rgba(0,0,0,0.1)", overflow: "hidden",
-}}>
+<div style={{ ...dropStyle, left: 0 }}>
 {pmLinks.map(l => (
-<button key={l} onClick={() => { setPage(l); setPmOpen(false); }} style={{
-display: "block", width: "100%", padding: "12px 16px", background: "transparent",
-border: "none", cursor: "pointer", textAlign: "left",
-fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "11px", letterSpacing: "1px", textTransform: "uppercase",
-color: page === l ? TERRA : BODY, fontWeight: page === l ? "bold" : "normal",
-}}>{l === "Property Management" ? "Overview" : l}</button>
+<button key={l} onClick={() => { setPage(l); setPmOpen(false); }} style={dropItem(page === l)}>
+{l === "Property Management" ? "Overview" : l}</button>
 ))}
 </div>
 )}
 </div>
-<button onClick={() => setPage("About")} style={{
-padding: "8px 10px", background: "transparent", border: "none",
-borderRadius: "2px", cursor: "pointer",
-fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "10px", letterSpacing: "0.5px", textTransform: "uppercase",
-color: page === "About" ? TERRA : light ? WHITE : WARM,
-fontWeight: page === "About" ? "bold" : "normal",
-transition: "color 0.2s", whiteSpace: "nowrap", flexShrink: 0,
-}}>About</button>
+<button onClick={() => setPage("About")} style={linkStyle(page === "About")}>About</button>
 <div ref={moreRef} style={{ position: "relative", flexShrink: 0 }}>
-<button onClick={() => setMoreOpen(o => !o)} style={{
-padding: "8px 10px", background: "transparent", border: "none",
-borderRadius: "2px", cursor: "pointer",
-fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "10px", letterSpacing: "0.5px", textTransform: "uppercase",
-color: isMoreActive ? TERRA : light ? WHITE : WARM,
-fontWeight: isMoreActive ? "bold" : "normal",
-whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px",
-}}>More {moreOpen ? "▴" : "▾"}</button>
+<button onClick={() => setMoreOpen(o => !o)} style={linkStyle(isMoreActive)}>
+More <span style={{ fontSize: "10px" }}>{moreOpen ? "▴" : "▾"}</span></button>
 {moreOpen && (
-<div style={{
-position: "absolute", top: "calc(100% + 8px)", right: 0,
-background: WHITE, border: `1px solid ${RULE}`, borderRadius: "2px",
-minWidth: "160px", boxShadow: "0 8px 24px rgba(0,0,0,0.1)", overflow: "hidden",
-}}>
+<div style={{ ...dropStyle, right: 0, minWidth: "190px" }}>
 {moreLinks.map(l => (
-<button key={l} onClick={() => { setPage(l); setMoreOpen(false); }} style={{
-display: "block", width: "100%", padding: "12px 16px", background: "transparent",
-border: "none", cursor: "pointer", textAlign: "left",
-fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "11px", letterSpacing: "1px", textTransform: "uppercase",
-color: page === l ? TERRA : BODY, fontWeight: page === l ? "bold" : "normal",
-}}>{l}</button>
+<button key={l} onClick={() => { setPage(l); setMoreOpen(false); }} style={dropItem(page === l)}>{l}</button>
 ))}
 </div>
 )}
+</div>
+<div style={{ marginLeft: "10px", marginRight: "8px" }}>
+<SearchBox setPage={setPage} mode={width >= 1200 ? "inline" : "icon"} />
 </div>
 <button onClick={() => setPage("Contact")} style={{
-padding: "9px 16px", background: TERRA, border: "none",
-borderRadius: "2px", cursor: "pointer",
-fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "10px", letterSpacing: "0.5px", textTransform: "uppercase",
-color: WHITE, fontWeight: "bold", marginLeft: "4px", whiteSpace: "nowrap",
-flexShrink: 0,
+padding: "13px 24px", background: TERRA, border: "none", borderRadius: "999px", cursor: "pointer",
+fontFamily: font, fontSize: "13px", letterSpacing: "1px", textTransform: "uppercase",
+color: WHITE, fontWeight: "bold", whiteSpace: "nowrap", flexShrink: 0,
 }}>Get In Touch</button>
 </div>
 )}
 </nav>
-{/* Mobile menu dropdown */}
 {isMobile && menuOpen && (
 <div style={{
-position: "fixed", top: "64px", left: 0, right: 0, zIndex: 99,
-background: WHITE, borderBottom: `1px solid ${RULE}`,
-padding: "16px 20px", display: "flex", flexDirection: "column", gap: "4px",
-maxHeight: "calc(100vh - 64px)", overflowY: "auto",
+position: "fixed", top: "90px", left: edge, right: edge, zIndex: 99, background: WHITE,
+borderRadius: "26px", boxShadow: "0 12px 40px rgba(26,22,18,0.18)", padding: "18px 22px 22px",
+display: "flex", flexDirection: "column", maxHeight: "calc(100vh - 110px)", overflowY: "auto",
 }}>
+<SearchBox setPage={setPage} mode="mobile" onDone={() => setMenuOpen(false)} />
 {topLinks.map(l => (
-<button key={l} onClick={() => { setPage(l); setMenuOpen(false); }} style={{
-padding: "14px 0", background: "transparent", border: "none",
-borderBottom: `1px solid ${RULE}`, cursor: "pointer", textAlign: "left",
-fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "13px", letterSpacing: "1.5px", textTransform: "uppercase",
-color: page === l ? TERRA : WARM, fontWeight: page === l ? "bold" : "normal",
-}}>{l}</button>
+<button key={l} onClick={() => { setPage(l); setMenuOpen(false); }} style={mobileItem(page === l)}>{l}</button>
 ))}
-<button onClick={() => { setPage("Contact"); setMenuOpen(false); }} style={{
-padding: "14px 0", background: "transparent", border: "none",
-borderBottom: `1px solid ${RULE}`, cursor: "pointer", textAlign: "left",
-fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "13px", letterSpacing: "1.5px", textTransform: "uppercase",
-color: page === "Contact" ? TERRA : WARM, fontWeight: page === "Contact" ? "bold" : "normal",
-}}>Contact</button>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
-color: WARM, letterSpacing: "1.5px", textTransform: "uppercase", margin: "16px 0 4px"
-}}>Property Management</div>
+<button onClick={() => { setPage("Contact"); setMenuOpen(false); }} style={mobileItem(page === "Contact")}>Contact</button>
+<div style={mobileHead}>Property Management</div>
 {pmLinks.map(l => (
-<button key={l} onClick={() => { setPage(l); setMenuOpen(false); }} style={{
-padding: "14px 0", background: "transparent", border: "none",
-borderBottom: `1px solid ${RULE}`, cursor: "pointer", textAlign: "left",
-fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "13px", letterSpacing: "1.5px", textTransform: "uppercase",
-color: page === l ? TERRA : WARM, fontWeight: page === l ? "bold" : "normal",
-}}>{l === "Property Management" ? "Overview" : l}</button>
+<button key={l} onClick={() => { setPage(l); setMenuOpen(false); }} style={mobileItem(page === l)}>
+{l === "Property Management" ? "Overview" : l}</button>
 ))}
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "10px",
-color: WARM, letterSpacing: "1.5px", textTransform: "uppercase", margin: "16px 0 4px"
-}}>More</div>
+<div style={mobileHead}>More</div>
 {moreLinks.map(l => (
-<button key={l} onClick={() => { setPage(l); setMenuOpen(false); }} style={{
-padding: "14px 0", background: "transparent", border: "none",
-borderBottom: `1px solid ${RULE}`, cursor: "pointer", textAlign: "left",
-fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "13px", letterSpacing: "1.5px", textTransform: "uppercase",
-color: page === l ? TERRA : WARM, fontWeight: page === l ? "bold" : "normal",
-}}>{l}</button>
+<button key={l} onClick={() => { setPage(l); setMenuOpen(false); }} style={mobileItem(page === l)}>{l}</button>
 ))}
 </div>
 )}
@@ -513,18 +564,16 @@ fontSize="13" letterSpacing="3" fill="rgba(255,255,255,0.5)">PROPERTY MANAGEMENT
 // ── HOME PAGE─────────────────────────────────────────────────────────────────
 function HomePage({ setPage }) {
 return (
-<div>
+<div className="tch-page">
 {/* Thin location banner — first thing visible on load */}
 <div style={{ position: "relative", width: "100%", height: "clamp(140px, 20vw, 220px)",
 overflow: "hidden" }}>
 <img src={IMG_BOURNEMOUTH_HUTS_BANNER} alt="Beach huts on the UK coast"
 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-<div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "64px",
-background: "linear-gradient(to bottom, rgba(26,22,18,0.55) 0%, rgba(26,22,18,0) 100%)" }} />
 </div>
 {/* Hero */}
 <div style={{
-minHeight: "calc(100vh - 64px - clamp(140px, 20vw, 220px))", background: DARK,
+minHeight: "calc(100vh - 130px - clamp(140px, 20vw, 220px))", background: DARK,
 display: "flex", alignItems: "center",
 padding: "80px 10% 80px", position: "relative", overflow: "hidden",
 }}>
@@ -590,34 +639,40 @@ marginTop: "4px" }}>Airbnb Status</div>
 </div>
 
 {/* Services */}
-<div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: WHITE }}>
-<div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+<div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: CREAM }}>
+<div style={{ maxWidth: "900px", margin: "0 auto" }}>
 <SectionLabel text="Property Management" />
 <Heading>Everything hosting requires — handled.</Heading>
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
-WARM, lineHeight: "1.8", marginBottom: "48px", maxWidth: "640px" }}>
+WARM, lineHeight: "1.8", marginBottom: "40px", maxWidth: "640px" }}>
 We take over the day-to-day of running a short or long-term rental, so you get the
 income without the admin.
 </p>
-<div style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}>
+<div style={{ display: "flex", gap: "20px", flexWrap: "wrap", justifyContent: "center" }}>
 {[
-{ icon: "◆", title: "Guest Messaging", desc: "Enquiries, booking questions and in-stay support handled promptly and warmly — day or night." },
-{ icon: "✦", title: "Pricing & Revenue", desc: "Dynamic pricing that responds to demand, seasonality and local events to keep occupancy and revenue optimised." },
-{ icon: "⬡", title: "Cleaning & Turnover", desc: "Reliable turnover coordination between guests, so every arrival is spotless and on time." },
-{ icon: "◆", title: "Maintenance Coordination", desc: "Repairs and upkeep organised and followed through, so small issues get handled before they become guest complaints." },
+{ title: "Guest Messaging", desc: "Enquiries and in-stay support, handled promptly day or night.",
+icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> },
+{ title: "Pricing & Revenue", desc: "Dynamic pricing that keeps occupancy and revenue optimised.",
+icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.8"><path d="M3 3v18h18"/><path d="M18 9l-5 5-3-3-5 5"/></svg> },
+{ title: "Cleaning & Turnover", desc: "Every arrival spotless and on time, guest after guest.",
+icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.8"><path d="M20 6L9 17l-5-5"/></svg> },
+{ title: "Maintenance", desc: "Repairs organised and followed through before they become complaints.",
+icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> },
 ].map((item, i) => (
-<div key={i} style={{ flex: "1 1 300px", padding: "32px 28px", background: CREAM,
-borderRadius: "2px", border: `1px solid ${RULE}` }}>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "26px", color:
-TERRA, marginBottom: "16px" }}>{item.icon}</div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "16px",
-fontWeight: "bold", color: BODY, marginBottom: "10px" }}>{item.title}</div>
+<div key={i} style={{ flex: "0 1 380px", padding: "36px 32px", background: WHITE,
+borderRadius: "16px", boxShadow: "0 2px 20px rgba(0,0,0,0.05)" }}>
+<div style={{ width: "56px", height: "56px", borderRadius: "14px",
+background: "rgba(160,120,42,0.1)", display: "flex", alignItems: "center",
+justifyContent: "center", marginBottom: "20px" }}>{item.icon}</div>
+<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px",
+fontWeight: "bold", color: BODY, marginBottom: "10px", letterSpacing: "0.5px",
+textTransform: "uppercase" }}>{item.title}</div>
 <div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
-WARM, lineHeight: "1.7" }}>{item.desc}</div>
+WARM, lineHeight: "1.6" }}>{item.desc}</div>
 </div>
 ))}
 </div>
-<div style={{ marginTop: "32px" }}>
+<div style={{ marginTop: "40px", textAlign: "center" }}>
 <button onClick={() => setPage("Property Management")} style={{
 padding: "12px 28px", background: TERRA, border: "none", borderRadius: "2px",
 cursor: "pointer",
@@ -647,51 +702,63 @@ color: WHITE, whiteSpace: "nowrap",
 </div>
 
 {/* Values */}
-<div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: WHITE }}>
-<div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-<SectionLabel text="Why The Curated Host" />
-<Heading>The values behind every property we manage.</Heading>
-<div style={{ display: "flex", gap: "24px", flexWrap: "wrap", marginTop: "40px" }}>
+<div style={{ padding: "clamp(56px, 9vw, 112px) clamp(18px, 4vw, 48px)", background: CREAM }}>
+<h2 style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(30px, 5.2vw, 58px)",
+fontWeight: "bold", color: DARK, textAlign: "center", textTransform: "uppercase",
+letterSpacing: "-0.5px", lineHeight: "1.1", margin: "0 0 18px" }}>
+The <span style={{ color: TERRA }}>Curated Host</span> Values</h2>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(15px, 2vw, 19px)",
+color: "#6F644E", textAlign: "center", margin: 0 }}>
+Why choose The Curated Host? Let us show you.</p>
+<div className="tch-values">
 {[
-{ icon: "◆", title: "Guest First", desc: "Every decision — pricing, messaging, turnover — is made with the guest experience in mind, because happy guests are what drive repeat bookings and reviews." },
-{ icon: "✦", title: "Integrity", desc: "Transparent pricing, honest performance summaries, no hidden fees. You always know exactly how your property is doing." },
-{ icon: "⬡", title: "Ownership", desc: "We treat every property we manage — client or family — the same way: like it's our own." },
-{ icon: "◆", title: "Attention to Detail", desc: "The small things — a spotless turnover, a prompt reply, a well-stocked welcome — are what earn Superhost status and keep it." },
+{ title: "Guest First", desc: "Every decision is made with the guest experience in mind.",
+icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg> },
+{ title: "Integrity", desc: "Transparent pricing and honest reporting, always.",
+icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg> },
+{ title: "Ownership", desc: "We treat every property we manage like our own.",
+icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><circle cx="8" cy="8" r="4"/><path d="M10.8 10.8L21 21m-5 0v-4m0 4h4"/></svg> },
+{ title: "Attention to Detail", desc: "The small things earn Superhost status — and keep it.",
+icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><path d="M12 3l2.2 5.5L20 10l-4.5 3.6L17 19l-5-3.2L7 19l1.5-5.4L4 10l5.8-1.5z"/></svg> },
+{ title: "Responsiveness", desc: "Quick, clear communication with owners and guests alike.",
+icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> },
 ].map((item, i) => (
-<div key={i} style={{ flex: "1 1 240px", padding: "28px 24px", background: CREAM,
-borderRadius: "2px", border: `1px solid ${RULE}` }}>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "24px", color:
-TERRA, marginBottom: "14px" }}>{item.icon}</div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px",
-fontWeight: "bold", color: BODY, marginBottom: "8px", letterSpacing: "0.5px",
-textTransform: "uppercase" }}>{item.title}</div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12.5px", color:
-WARM, lineHeight: "1.7" }}>{item.desc}</div>
+<div key={i} data-reveal style={{ padding: "44px 38px 46px", background: WHITE, borderRadius: "28px",
+boxShadow: "0 4px 28px rgba(26,22,18,0.06)" }}>
+<div style={{ width: "68px", height: "68px", borderRadius: "18px", background: "rgba(160,120,42,0.12)",
+display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "30px" }}>{item.icon}</div>
+<h3 style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "20px", fontWeight: "bold",
+color: DARK, margin: "0 0 12px", letterSpacing: "0.3px", textTransform: "uppercase" }}>{item.title}</h3>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15.5px", color: "#6F644E",
+lineHeight: "1.7", margin: 0 }}>{item.desc}</p>
 </div>
 ))}
 </div>
 </div>
-</div>
 
 {/* CTA */}
-<div style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 8%, 10%)", background: SAND,
-textAlign: "center" }}>
-<SectionLabel text="Let's talk" />
-<h2 style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight:
-"bold", color: TERRA, margin: "0 0 16px" }}>
-Ready to hand over the hosting admin?
-</h2>
-<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
-WARM, marginBottom: "40px" }}>
-Message on WhatsApp or fill in the contact form to get a free property assessment.
-</p>
-<div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap",
+<div style={{ position: "relative", background: DARK, textAlign: "center",
+padding: "clamp(80px, 13vw, 160px) clamp(20px, 8%, 10%)" }}>
+<img src={IMG_BOURNEMOUTH_BEACH} alt="" style={{ position: "absolute", inset: 0, width: "100%",
+height: "100%", objectFit: "cover", opacity: 0.4 }} />
+<div style={{ position: "absolute", inset: 0,
+background: "linear-gradient(180deg, rgba(26,22,18,0.5) 0%, rgba(26,22,18,0.82) 100%)" }} />
+<div style={{ position: "relative" }}>
+<h2 style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(28px, 5vw, 56px)",
+fontWeight: "bold", color: WHITE, textTransform: "uppercase", letterSpacing: "-0.5px",
+lineHeight: "1.1", margin: "0 0 20px" }}>
+Ready to hand over <span style={{ color: TERRA }}>the hosting admin?</span></h2>
+<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(14px, 2vw, 18px)",
+color: "rgba(255,255,255,0.75)", margin: "0 auto 40px", maxWidth: "640px", lineHeight: "1.7" }}>
+Message on WhatsApp or fill in the contact form to get a free property assessment.</p>
+<div style={{ display: "flex", gap: "18px", justifyContent: "center", flexWrap: "wrap",
 alignItems: "center", flexDirection: "column" }}>
 <FormBtn text="Get a Free Property Assessment" setPage={setPage} trackConversion />
 <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-<span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "11px", color:
-WARM }}>prefer to chat first?</span>
+<span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px",
+color: "rgba(255,255,255,0.6)" }}>prefer to chat first?</span>
 <WhatsAppBtn />
+</div>
 </div>
 </div>
 </div>
@@ -701,7 +768,7 @@ WARM }}>prefer to chat first?</span>
 // ── ABOUT PAGE────────────────────────────────────────────────────────────────
 function AboutPage({ setPage }) {
 return (
-<div style={{ paddingTop: "64px" }}>
+<div className="tch-page">
 <div style={{ padding: "80px 10% 64px", background: DARK }}>
 <div style={{ maxWidth: "760px", margin: "0 auto" }}>
 <SectionLabel text="About" />
@@ -788,7 +855,7 @@ instagramUrl: "https://www.instagram.com/p/DUX9j3MjoJK/",
 },
 ];
 return (
-<div style={{ paddingTop: "64px" }}>
+<div className="tch-page">
 <div style={{ padding: "80px 10% 64px", background: CREAM, borderBottom: `1px solid ${RULE}` }}>
 <div style={{ maxWidth: "1000px", margin: "0 auto", display: "flex", gap: "48px",
 alignItems: "center", flexWrap: "wrap-reverse" }}>
@@ -971,7 +1038,7 @@ slug: "building-your-professional-toolkit-and-adapting-to-dynamic-industries",
 },
 ];
 return (
-<div style={{ paddingTop: "64px" }}>
+<div className="tch-page">
 <div style={{ padding: "80px 10% 64px", background: CREAM, borderBottom: `1px solid ${RULE}` }}>
 <div style={{ maxWidth: "1000px", margin: "0 auto", display: "flex", gap: "40px",
 alignItems: "center", flexWrap: "wrap-reverse" }}>
@@ -1062,7 +1129,7 @@ Get in touch about being a guest on The Millennicast.
 function PropertyManagementPage({ setPage }) {
 const isMobileHero = useIsMobile();
 return (
-<div style={{ paddingTop: "64px" }}>
+<div className="tch-page">
 {/* Hero */}
 <div style={{ padding: "56px 10% 0", background: CREAM }}>
 <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
@@ -1361,7 +1428,7 @@ alignItems: "center", flexDirection: "column" }}>
 // ── GUEST HANDBOOKS PAGE──────────────────────────────────────────────────────
 function GuestHandbooksPage({ setPage }) {
 return (
-<div style={{ paddingTop: "64px" }}>
+<div className="tch-page">
 {/* Header */}
 <div style={{ padding: "80px 10% 64px", background: DARK }}>
 <div style={{ maxWidth: "min(700px, 100%)" }}>
@@ -1483,7 +1550,7 @@ alignItems: "center", flexDirection: "column" }}>
 // ── INTERIOR DESIGN PAGE──────────────────────────────────────────────────────
 function InteriorDesignPage({ setPage }) {
 return (
-<div style={{ paddingTop: "64px" }}>
+<div className="tch-page">
 {/* Header */}
 <div style={{ padding: "80px 10% 64px", background: DARK }}>
 <div style={{ maxWidth: "min(700px, 100%)" }}>
@@ -1564,7 +1631,7 @@ alignItems: "center", flexDirection: "column" }}>
 // ── CONTACT PAGE──────────────────────────────────────────────────────────────
 function ContactPage() {
 return (
-<div style={{ paddingTop: "64px" }}>
+<div className="tch-page">
 <div style={{ padding: "80px 10% 64px", background: CREAM, borderBottom: `1px solid
 ${RULE}` }}>
 <div style={{ maxWidth: "min(600px, 100%)" }}>
@@ -1643,15 +1710,15 @@ style={{ border: "none", minHeight: "600px" }}
 // ── FOOTER────────────────────────────────────────────────────────────────────
 function Footer({ setPage }) {
 return (
-<footer style={{ background: DARK, padding: "64px 10% 32px" }}>
+<footer className="tch-footer" style={{ background: DARK, padding: "64px 10% 32px" }}>
 <div style={{ display: "flex", gap: "48px", flexWrap: "wrap", marginBottom: "48px",
 paddingBottom: "48px", borderBottom: `1px solid rgba(255,255,255,0.1)` }}>
 <div style={{ flex: "1 1 240px" }}>
 <Logo light />
 <p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
 "rgba(255,255,255,0.4)", lineHeight: "1.8", marginTop: "16px", maxWidth: "280px" }}>
-Property management for Airbnb hosts, plus public speaking and communications — built
-on one belief: how you host people defines the experience they take away.
+Property management for Airbnb hosts, built on one belief: how you host people
+defines the experience they take away.
 </p>
 </div>
 <div style={{ flex: "0 1 160px" }}>
@@ -1725,15 +1792,67 @@ England and Wales, company number 17431364.</div>
 </footer>
 );
 }
+const GLOBAL_CSS = `
+.tch-page{padding-top:112px}
+.tch-page > div{width:auto !important;margin:0 clamp(10px,2vw,28px) clamp(12px,1.6vw,20px);border-radius:clamp(22px,3vw,40px);overflow:hidden;border-bottom:none !important}
+.tch-footer{margin:0 clamp(10px,2vw,28px) clamp(10px,2vw,28px);border-radius:clamp(22px,3vw,40px)}
+@media (max-width:900px){.tch-page{padding-top:92px}}
+.tch-page [style*="border-radius: 2px"],.tch-footer [style*="border-radius: 2px"]{border-radius:18px !important}
+.tch-page button[style*="border-radius: 2px"],.tch-footer button[style*="border-radius: 2px"]{border-radius:999px !important}
+.tch-values{display:grid;grid-template-columns:repeat(6,1fr);gap:24px;max-width:1180px;margin:56px auto 0}
+.tch-values > div{grid-column:span 2}
+.tch-values > div:nth-child(4){grid-column:2 / span 2}
+.tch-values > div:nth-child(5){grid-column:4 / span 2}
+@media (max-width:900px){
+.tch-values{grid-template-columns:repeat(2,1fr)}
+.tch-values > div,.tch-values > div:nth-child(4){grid-column:auto}
+.tch-values > div:nth-child(5){grid-column:1 / -1;justify-self:center;width:calc(50% - 12px)}
+}
+@media (max-width:600px){
+.tch-values{grid-template-columns:1fr}
+.tch-values > div:nth-child(5){width:auto}
+}
+.tch-reveal{opacity:0;translate:0 28px;transition:opacity 1.2s ease var(--rd,0s),translate 1.2s cubic-bezier(.2,.7,.2,1) var(--rd,0s)}
+.tch-reveal.tch-in{opacity:1;translate:0 0}
+@media (prefers-reduced-motion:reduce){.tch-reveal{opacity:1;translate:none;transition:none}}
+`;
+function useScrollReveal(page) {
+useLayoutEffect(() => {
+const root = document.querySelector(".tch-page");
+if (!root || typeof IntersectionObserver === "undefined") return;
+if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+const io = new IntersectionObserver((entries) => {
+entries.forEach(en => {
+if (en.isIntersecting) { en.target.classList.add("tch-in"); io.unobserve(en.target); }
+});
+}, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+const tag = () => {
+root.querySelectorAll("h1,h2,h3,h4,p,[data-reveal]").forEach(el => {
+if (el.dataset.tchSeen) return;
+el.dataset.tchSeen = "1";
+const idx = Array.prototype.indexOf.call(el.parentElement.children, el);
+el.style.setProperty("--rd", Math.min(idx, 5) * 0.1 + "s");
+el.classList.add("tch-reveal");
+io.observe(el);
+});
+};
+tag();
+const mo = new MutationObserver(tag);
+mo.observe(root, { childList: true, subtree: true });
+return () => { io.disconnect(); mo.disconnect(); };
+}, [page]);
+}
 // ── APP───────────────────────────────────────────────────────────────────────
 export default function App() {
 const [page, setPage] = useState("Home");
+useScrollReveal(page);
 const changePage = (p) => {
 setPage(p);
 window.scrollTo({ top: 0, behavior: "smooth" });
 };
 return (
-<div style={{ background: CREAM, minHeight: "100vh" }}>
+<div style={{ background: "#E9E1CE", minHeight: "100vh" }}>
+<style>{GLOBAL_CSS}</style>
 <Nav page={page} setPage={changePage} />
 {page === "Home"
 && <HomePage setPage={changePage} />}
