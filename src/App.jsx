@@ -814,41 +814,6 @@ letterSpacing: "1.5px", textTransform: "uppercase", color: WHITE,
 </div>
 </div>
 
-{/* Values */}
-<div style={{ padding: "clamp(56px, 9vw, 112px) clamp(18px, 4vw, 48px)", background: CREAM }}>
-<h2 style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(30px, 5.2vw, 58px)",
-fontWeight: "bold", color: DARK, textAlign: "center", textTransform: "uppercase",
-letterSpacing: "-0.5px", lineHeight: "1.1", margin: "0 0 18px" }}>
-The <span style={{ color: TERRA }}>Curated Host</span> Values</h2>
-<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(15px, 2vw, 19px)",
-color: "#6F644E", textAlign: "center", margin: 0 }}>
-Why choose The Curated Host? Let us show you.</p>
-<div className="tch-values">
-{[
-{ title: "Guest First", desc: "Every decision is made with the guest experience in mind.",
-icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg> },
-{ title: "Integrity", desc: "Transparent pricing and honest reporting, always.",
-icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg> },
-{ title: "Ownership", desc: "We treat every property we manage like our own.",
-icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><circle cx="8" cy="8" r="4"/><path d="M10.8 10.8L21 21m-5 0v-4m0 4h4"/></svg> },
-{ title: "Attention to Detail", desc: "The small things earn Superhost status — and keep it.",
-icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><path d="M12 3l2.2 5.5L20 10l-4.5 3.6L17 19l-5-3.2L7 19l1.5-5.4L4 10l5.8-1.5z"/></svg> },
-{ title: "Responsiveness", desc: "Quick, clear communication with owners and guests alike.",
-icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> },
-].map((item, i) => (
-<div key={i} data-reveal style={{ padding: "44px 38px 46px", background: WHITE, borderRadius: "28px",
-boxShadow: "0 4px 28px rgba(26,22,18,0.06)" }}>
-<div style={{ width: "68px", height: "68px", borderRadius: "18px", background: "rgba(160,120,42,0.12)",
-display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "30px" }}>{item.icon}</div>
-<h3 style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "20px", fontWeight: "bold",
-color: DARK, margin: "0 0 12px", letterSpacing: "0.3px", textTransform: "uppercase" }}>{item.title}</h3>
-<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "15.5px", color: "#6F644E",
-lineHeight: "1.7", margin: 0 }}>{item.desc}</p>
-</div>
-))}
-</div>
-</div>
-
 {/* CTA */}
 <div style={{ position: "relative", background: DARK, textAlign: "center",
 padding: "clamp(80px, 13vw, 160px) clamp(20px, 8%, 10%)" }}>
@@ -908,8 +873,6 @@ Property Management &amp; Guest Experience
 icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.8"><path d="M12 3v18M5 8l-3 6a3 3 0 0 0 6 0zM19 8l-3 6a3 3 0 0 0 6 0zM5 8h14M8 8l4-3 4 3"/></svg> },
 { title: "Anglo-Dutch, By Background", desc: "British and Dutch, personally as well as professionally — hence the two markets.",
 icon: <FlagPair size={26} /> },
-{ title: "Hands-On Standard", desc: "Every property managed the way we manage our own Superhost listing.",
-icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.8"><path d="M3 9l9-6 9 6v11a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg> },
 ].map((item, i) => (
 <div key={i} data-reveal style={{ flex: "0 1 280px", padding: "30px 26px", background: WHITE,
 borderRadius: "16px", boxShadow: "0 2px 20px rgba(0,0,0,0.05)" }}>
@@ -921,6 +884,42 @@ fontWeight: "bold", color: BODY, marginBottom: "8px", letterSpacing: "0.3px",
 textTransform: "uppercase" }}>{item.title}</div>
 <div style={{ fontFamily: svgFont, fontSize: "12.5px", color:
 WARM, lineHeight: "1.6" }}>{item.desc}</div>
+</div>
+))}
+</div>
+</div>
+</div>
+{/* Values */}
+<div style={{ padding: "clamp(48px, 8vw, 96px) clamp(18px, 4vw, 48px)", background: SAND }}>
+<div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+<h2 style={{ fontFamily: svgFont, fontSize: "clamp(28px, 4.5vw, 46px)",
+fontWeight: "bold", color: DARK, textAlign: "center", textTransform: "uppercase",
+letterSpacing: "-0.5px", lineHeight: "1.1", margin: "0 0 14px" }}>
+The <span style={{ color: TERRA }}>Curated Host</span> Values</h2>
+<p style={{ fontFamily: svgFont, fontSize: "clamp(14px, 1.8vw, 17px)",
+color: "#6F644E", textAlign: "center", margin: 0 }}>
+Why choose The Curated Host? Let us show you.</p>
+<div className="tch-values">
+{[
+{ title: "Guest First", desc: "Every decision is made with the guest experience in mind.",
+icon: <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg> },
+{ title: "Integrity", desc: "Transparent pricing and honest reporting, always.",
+icon: <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg> },
+{ title: "Ownership", desc: "We treat every property we manage like our own.",
+icon: <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><circle cx="8" cy="8" r="4"/><path d="M10.8 10.8L21 21m-5 0v-4m0 4h4"/></svg> },
+{ title: "Attention to Detail", desc: "The small things earn Superhost status — and keep it.",
+icon: <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><path d="M12 3l2.2 5.5L20 10l-4.5 3.6L17 19l-5-3.2L7 19l1.5-5.4L4 10l5.8-1.5z"/></svg> },
+{ title: "Responsiveness", desc: "Quick, clear communication with owners and guests alike.",
+icon: <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> },
+].map((item, i) => (
+<div key={i} data-reveal style={{ padding: "36px 30px 38px", background: WHITE, borderRadius: "24px",
+boxShadow: "0 4px 28px rgba(26,22,18,0.06)" }}>
+<div style={{ width: "56px", height: "56px", borderRadius: "15px", background: "rgba(160,120,42,0.12)",
+display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "22px" }}>{item.icon}</div>
+<h3 style={{ fontFamily: svgFont, fontSize: "16px", fontWeight: "bold",
+color: DARK, margin: "0 0 10px", letterSpacing: "0.3px", textTransform: "uppercase" }}>{item.title}</h3>
+<p style={{ fontFamily: svgFont, fontSize: "13.5px", color: "#6F644E",
+lineHeight: "1.65", margin: 0 }}>{item.desc}</p>
 </div>
 ))}
 </div>
