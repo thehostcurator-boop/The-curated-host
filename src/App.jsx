@@ -1351,7 +1351,7 @@ color: TERRA, letterSpacing: "1.5px", textTransform: "uppercase", fontWeight: "b
 <div style={{ fontFamily: svgFont, fontSize: "20px",
 color: WHITE, fontWeight: "bold", marginBottom: "10px" }}>Netherlands &amp; UK</div>
 <div style={{ fontFamily: svgFont, fontSize: "13.5px",
-color: "rgba(255,255,255,0.65)", lineHeight: "1.65" }}>Hands-on, in person — not spread thin across a continent.</div>
+color: "rgba(255,255,255,0.65)", lineHeight: "1.65" }}>Hands-on, in person, in both markets.</div>
 </div>
 </div>
 {/* Services detail */}
@@ -1390,21 +1390,21 @@ WARM, lineHeight: "1.6" }}>{item.desc}</div>
 <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
 <SectionLabel text="How it works" />
 <Heading light>From first message to first guest.</Heading>
-<div style={{ display: "flex", gap: "16px", flexWrap: "wrap", marginTop: "40px" }}>
+<div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginTop: "40px" }}>
 {[
-{ step: "01", title: "Free Assessment", desc: "We look and tell you honestly what's possible." },
-{ step: "02", title: "Agreement", desc: "Clear terms — no hidden fees, no long tie-in." },
-{ step: "03", title: "Onboarding", desc: "We take over messaging and pricing — live in days." },
-{ step: "04", title: "Monthly Reporting", desc: "A clear summary of performance and revenue." },
+{ step: "01", title: "Free Assessment", desc: "What's possible, honestly." },
+{ step: "02", title: "Agreement", desc: "Clear terms, no small print." },
+{ step: "03", title: "Onboarding", desc: "Live within days." },
+{ step: "04", title: "Monthly Reporting", desc: "Performance, at a glance." },
 ].map((s, i) => (
-<div key={i} data-reveal style={{ flex: "1 1 220px", padding: "26px 22px", background:
-"rgba(255,255,255,0.05)", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.08)" }}>
-<div style={{ width: "34px", height: "34px", borderRadius: "10px", background: TERRA,
-display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "16px",
-fontFamily: svgFont, fontSize: "13px", fontWeight: "bold", color: WHITE }}>{s.step}</div>
-<div style={{ fontFamily: svgFont, fontSize: "13.5px",
+<div key={i} data-reveal style={{ flex: "1 1 240px", padding: "32px 28px", background:
+"rgba(255,255,255,0.05)", borderRadius: "18px", border: "1px solid rgba(255,255,255,0.08)" }}>
+<div style={{ width: "52px", height: "52px", borderRadius: "50%", background: TERRA,
+display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "20px",
+fontFamily: svgFont, fontSize: "18px", fontWeight: "bold", color: WHITE }}>{s.step}</div>
+<div style={{ fontFamily: svgFont, fontSize: "16px",
 fontWeight: "bold", color: WHITE, marginBottom: "8px" }}>{s.title}</div>
-<div style={{ fontFamily: svgFont, fontSize: "11.5px", color:
+<div style={{ fontFamily: svgFont, fontSize: "13px", color:
 "rgba(255,255,255,0.55)", lineHeight: "1.6" }}>{s.desc}</div>
 </div>
 ))}
@@ -1848,35 +1848,29 @@ alignItems: "center", flexDirection: "column" }}>
 );
 }
 function ContactPage() {
+const svgFont = "'Futura','Century Gothic',sans-serif";
 return (
 <div className="tch-page">
-<div style={{ padding: "80px 10% 64px", background: CREAM, borderBottom: `1px solid
-${RULE}` }}>
+<div style={{ padding: "80px 10% 56px", background: CREAM }}>
 <div style={{ maxWidth: "min(600px, 100%)" }}>
 <SectionLabel text="Get In Touch" />
 <Heading>Let's talk.</Heading>
-<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "14px", color:
+<p style={{ fontFamily: svgFont, fontSize: "14px", color:
 WARM, lineHeight: "1.8" }}>
-Whatever you're reaching out about, we'll be in touch within 24 hours. Pick the section
-below that matches what you need.
+We reply within 24 hours.
 </p>
 </div>
 </div>
 {/* Property Management — primary */}
-<div style={{ padding: "clamp(40px, 6vw, 64px) clamp(20px, 8%, 10%)", background: WHITE }}>
+<div style={{ padding: "clamp(20px, 3vw, 32px) clamp(20px, 8%, 10%) clamp(32px, 5vw, 48px)", background: CREAM }}>
 <div style={{ maxWidth: "min(860px, 100%)", margin: "0 auto" }}>
-<SectionLabel text="Property management enquiries" />
-<div style={{ padding: "32px", background: TERRA, borderRadius: "2px",
-display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap", marginTop: "16px" }}>
-<div style={{ flex: 1, minWidth: "220px" }}>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "16px",
-fontWeight: "bold", color: WHITE, marginBottom: "8px" }}>Want us to manage your property?</div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
-"rgba(255,255,255,0.85)", lineHeight: "1.7" }}>Message on WhatsApp or email
-hello@thecuratedhost.com for a free property assessment. No form to fill in — just get
-in touch directly and we'll take it from there.</div>
-</div>
-<div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+<div data-reveal style={{ padding: "clamp(36px, 5vw, 48px)", background: TERRA, borderRadius: "24px",
+textAlign: "center", boxShadow: "0 8px 34px rgba(160,120,42,0.25)" }}>
+<div style={{ fontFamily: svgFont, fontSize: "clamp(20px, 3vw, 26px)",
+fontWeight: "bold", color: WHITE, marginBottom: "10px" }}>Want us to manage your property?</div>
+<div style={{ fontFamily: svgFont, fontSize: "13.5px", color:
+"rgba(255,255,255,0.8)", marginBottom: "28px" }}>Message us directly — no form needed.</div>
+<div style={{ display: "flex", gap: "14px", justifyContent: "center", flexWrap: "wrap" }}>
 <WhatsAppBtn text="Message on WhatsApp" wide />
 <EmailBtn text="Send an email" wide />
 </div>
@@ -1884,19 +1878,17 @@ in touch directly and we'll take it from there.</div>
 </div>
 </div>
 {/* Speaking & Communications */}
-<div style={{ padding: "clamp(32px, 5vw, 48px) clamp(20px, 8%, 10%)", background: SAND }}>
+<div style={{ padding: "0 clamp(20px, 8%, 10%) clamp(48px, 7vw, 72px)", background: CREAM }}>
 <div style={{ maxWidth: "min(860px, 100%)", margin: "0 auto" }}>
-<SectionLabel text="Speaking & communications enquiries" />
-<div style={{ padding: "24px 32px", background: WHITE, border: `1px solid ${RULE}`,
-borderRadius: "2px", display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap",
-marginTop: "16px" }}>
-<div style={{ flex: 1, minWidth: "220px" }}>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px",
-fontWeight: "bold", color: BODY, marginBottom: "6px" }}>Speaking or communications enquiry?</div>
-<div style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "12px", color:
-WARM, lineHeight: "1.6" }}>Same channels — WhatsApp or hello@thecuratedhost.com works
-for these too. No form required here either.</div>
-</div>
+<div data-reveal style={{ padding: "26px 32px", background: WHITE, borderRadius: "20px",
+boxShadow: "0 2px 20px rgba(0,0,0,0.05)", display: "flex", alignItems: "center",
+gap: "16px", flexWrap: "wrap" }}>
+<span style={{ width: "44px", height: "44px", borderRadius: "12px", flexShrink: 0,
+background: "rgba(160,120,42,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+</span>
+<div style={{ fontFamily: svgFont, fontSize: "15px",
+color: BODY, fontWeight: "bold" }}>Speaking or communications? Same channels work.</div>
 </div>
 </div>
 </div>
@@ -1905,13 +1897,12 @@ for these too. No form required here either.</div>
 <div style={{ maxWidth: "min(860px, 100%)", margin: "0 auto" }}>
 <SectionLabel text="Ordering a guest handbook" />
 <Heading light>This form is for handbook orders only.</Heading>
-<p style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
+<p style={{ fontFamily: svgFont, fontSize: "13px", color:
 "rgba(255,255,255,0.6)", lineHeight: "1.8", marginBottom: "32px", maxWidth: "600px" }}>
-If you're after property management, use the section above instead — no need to fill
-this in. This questionnaire is only for ordering a standalone signature guest handbook,
-and walks through the details we need to design yours.
+Ordering a standalone handbook? This short form walks through the details we need.
+For property management, use the section above instead.
 </p>
-<div style={{ background: WHITE, borderRadius: "2px", padding: "8px", overflow: "hidden" }}>
+<div style={{ background: WHITE, borderRadius: "20px", padding: "8px", overflow: "hidden" }}>
 <iframe
 src="https://tally.so/embed/b5vkAe?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
 width="100%"
