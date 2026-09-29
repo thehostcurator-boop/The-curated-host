@@ -1868,19 +1868,18 @@ fontWeight: "bold", color: WHITE, marginBottom: "10px" }}>Let's talk.</div>
 </div>
 <div style={{ height: "1px", background: "rgba(255,255,255,0.2)", margin: "32px auto 20px",
 maxWidth: "360px" }} />
-<div style={{ fontFamily: svgFont, fontSize: "12.5px",
-color: "rgba(255,255,255,0.65)" }}>Speaking or communications enquiry? Same channels work.</div>
+<div style={{ fontFamily: svgFont, fontSize: "14.5px",
+color: "rgba(255,255,255,0.75)" }}>Speaking or communications enquiry? Same channels work.</div>
 </div>
 </div>
 </div>
 {/* Guest Handbook orders — fully separate */}
-<div style={{ padding: "0 clamp(20px, 8%, 10%) clamp(56px, 8vw, 88px)", background: CREAM }}>
+<div style={{ padding: "clamp(48px, 7vw, 80px) clamp(20px, 8%, 10%)", background: "#3A2F22" }}>
 <div style={{ maxWidth: "min(860px, 100%)", margin: "0 auto" }}>
-<div data-reveal style={{ background: DARK, borderRadius: "28px", padding: "clamp(36px, 5vw, 56px)" }}>
 <SectionLabel text="Ordering a guest handbook" />
 <Heading light>This form is for handbook orders only.</Heading>
 <p style={{ fontFamily: svgFont, fontSize: "13px", color:
-"rgba(255,255,255,0.6)", lineHeight: "1.8", marginBottom: "32px", maxWidth: "600px" }}>
+"rgba(255,255,255,0.65)", lineHeight: "1.8", marginBottom: "32px", maxWidth: "600px" }}>
 Ordering a standalone handbook? This short form walks through the details we need.
 For property management, use the section above instead.
 </p>
@@ -1895,7 +1894,6 @@ marginWidth="0"
 title="Order a Guest Handbook"
 style={{ border: "none", minHeight: "600px" }}
 />
-</div>
 </div>
 </div>
 </div>
