@@ -1339,18 +1339,19 @@ overflow: "hidden" }}>
 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
 <div style={{ position: "absolute", inset: 0,
 background: "linear-gradient(180deg, rgba(26,22,18,0) 55%, rgba(26,22,18,0.55) 100%)" }} />
-<div style={{ position: "absolute", top: "24px", right: "24px", maxWidth: "250px",
-background: "rgba(26,22,18,0.9)", borderRadius: "16px", padding: "22px" }}>
-<div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-<FlagPair size={20} />
-<span style={{ fontFamily: svgFont, fontSize: "11px",
+<div style={{ position: "absolute", top: "clamp(20px, 3vw, 36px)", right: "clamp(20px, 3vw, 36px)",
+maxWidth: "340px",
+background: "rgba(26,22,18,0.9)", borderRadius: "20px", padding: "30px" }}>
+<div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+<FlagPair size={28} />
+<span style={{ fontFamily: svgFont, fontSize: "13px",
 color: TERRA, letterSpacing: "1.5px", textTransform: "uppercase", fontWeight: "bold"
 }}>Operational Expertise</span>
 </div>
-<div style={{ fontFamily: svgFont, fontSize: "15px",
-color: WHITE, fontWeight: "bold", marginBottom: "8px" }}>Netherlands &amp; UK</div>
-<div style={{ fontFamily: svgFont, fontSize: "11px",
-color: "rgba(255,255,255,0.6)", lineHeight: "1.6" }}>Hands-on, in person — not spread thin across a continent.</div>
+<div style={{ fontFamily: svgFont, fontSize: "20px",
+color: WHITE, fontWeight: "bold", marginBottom: "10px" }}>Netherlands &amp; UK</div>
+<div style={{ fontFamily: svgFont, fontSize: "13.5px",
+color: "rgba(255,255,255,0.65)", lineHeight: "1.65" }}>Hands-on, in person — not spread thin across a continent.</div>
 </div>
 </div>
 {/* Services detail */}
