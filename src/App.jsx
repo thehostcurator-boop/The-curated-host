@@ -814,24 +814,6 @@ letterSpacing: "1.5px", textTransform: "uppercase", color: WHITE,
 </div>
 </div>
 
-{/* Signature differentiator strip */}
-<div style={{ background: TERRA, padding: "20px clamp(20px, 8%, 10%)", display: "flex",
-alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
-<div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-<div style={{ width: "8px", height: "8px", borderRadius: "50%", background:
-"rgba(255,255,255,0.5)" }} />
-<span style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "13px", color:
-WHITE }}>Every property we manage comes with a professionally designed guest handbook.</span>
-</div>
-<button onClick={() => setPage("Guest Handbooks")} style={{
-padding: "10px 24px", background: "transparent",
-border: "1px solid rgba(255,255,255,0.6)", borderRadius: "2px", cursor: "pointer",
-fontFamily: "'Futura','Century Gothic',sans-serif",
-fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase",
-color: WHITE, whiteSpace: "nowrap",
-}}>See a Sample →</button>
-</div>
-
 {/* Values */}
 <div style={{ padding: "clamp(56px, 9vw, 112px) clamp(18px, 4vw, 48px)", background: CREAM }}>
 <h2 style={{ fontFamily: "'Futura','Century Gothic',sans-serif", fontSize: "clamp(30px, 5.2vw, 58px)",
