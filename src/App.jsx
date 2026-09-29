@@ -1851,50 +1851,32 @@ function ContactPage() {
 const svgFont = "'Futura','Century Gothic',sans-serif";
 return (
 <div className="tch-page">
-<div style={{ padding: "80px 10% 56px", background: CREAM }}>
-<div style={{ maxWidth: "min(600px, 100%)" }}>
-<SectionLabel text="Get In Touch" />
-<Heading>Let's talk.</Heading>
-<p style={{ fontFamily: svgFont, fontSize: "14px", color:
-WARM, lineHeight: "1.8" }}>
-We reply within 24 hours.
-</p>
-</div>
-</div>
-{/* Property Management — primary */}
-<div style={{ padding: "clamp(20px, 3vw, 32px) clamp(20px, 8%, 10%) clamp(32px, 5vw, 48px)", background: CREAM }}>
+{/* Let's talk — primary CTA */}
+<div style={{ padding: "clamp(56px, 8vw, 88px) clamp(20px, 8%, 10%)", background: CREAM }}>
 <div style={{ maxWidth: "min(860px, 100%)", margin: "0 auto" }}>
-<div data-reveal style={{ padding: "clamp(36px, 5vw, 48px)", background: TERRA, borderRadius: "24px",
-textAlign: "center", boxShadow: "0 8px 34px rgba(160,120,42,0.25)" }}>
-<div style={{ fontFamily: svgFont, fontSize: "clamp(20px, 3vw, 26px)",
-fontWeight: "bold", color: WHITE, marginBottom: "10px" }}>Want us to manage your property?</div>
-<div style={{ fontFamily: svgFont, fontSize: "13.5px", color:
-"rgba(255,255,255,0.8)", marginBottom: "28px" }}>Message us directly — no form needed.</div>
+<div data-reveal style={{ padding: "clamp(44px, 6vw, 64px) clamp(32px, 6vw, 56px)", background: TERRA,
+borderRadius: "28px", textAlign: "center", boxShadow: "0 10px 40px rgba(160,120,42,0.25)" }}>
+<div style={{ fontFamily: svgFont, fontSize: "11px", letterSpacing: "2.5px",
+textTransform: "uppercase", color: "rgba(255,255,255,0.7)", marginBottom: "14px" }}>Get In Touch</div>
+<div style={{ fontFamily: svgFont, fontSize: "clamp(30px, 4.5vw, 44px)",
+fontWeight: "bold", color: WHITE, marginBottom: "10px" }}>Let's talk.</div>
+<div style={{ fontFamily: svgFont, fontSize: "14px", color:
+"rgba(255,255,255,0.8)", marginBottom: "32px" }}>We reply within 24 hours — no form needed.</div>
 <div style={{ display: "flex", gap: "14px", justifyContent: "center", flexWrap: "wrap" }}>
 <WhatsAppBtn text="Message on WhatsApp" wide />
 <EmailBtn text="Send an email" wide />
 </div>
-</div>
-</div>
-</div>
-{/* Speaking & Communications */}
-<div style={{ padding: "0 clamp(20px, 8%, 10%) clamp(48px, 7vw, 72px)", background: CREAM }}>
-<div style={{ maxWidth: "min(860px, 100%)", margin: "0 auto" }}>
-<div data-reveal style={{ padding: "26px 32px", background: WHITE, borderRadius: "20px",
-boxShadow: "0 2px 20px rgba(0,0,0,0.05)", display: "flex", alignItems: "center",
-gap: "16px", flexWrap: "wrap" }}>
-<span style={{ width: "44px", height: "44px", borderRadius: "12px", flexShrink: 0,
-background: "rgba(160,120,42,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-</span>
-<div style={{ fontFamily: svgFont, fontSize: "15px",
-color: BODY, fontWeight: "bold" }}>Speaking or communications? Same channels work.</div>
+<div style={{ height: "1px", background: "rgba(255,255,255,0.2)", margin: "32px auto 20px",
+maxWidth: "360px" }} />
+<div style={{ fontFamily: svgFont, fontSize: "12.5px",
+color: "rgba(255,255,255,0.65)" }}>Speaking or communications enquiry? Same channels work.</div>
 </div>
 </div>
 </div>
 {/* Guest Handbook orders — fully separate */}
-<div style={{ padding: "clamp(48px, 7vw, 80px) clamp(20px, 8%, 10%)", background: DARK }}>
+<div style={{ padding: "0 clamp(20px, 8%, 10%) clamp(56px, 8vw, 88px)", background: CREAM }}>
 <div style={{ maxWidth: "min(860px, 100%)", margin: "0 auto" }}>
+<div data-reveal style={{ background: DARK, borderRadius: "28px", padding: "clamp(36px, 5vw, 56px)" }}>
 <SectionLabel text="Ordering a guest handbook" />
 <Heading light>This form is for handbook orders only.</Heading>
 <p style={{ fontFamily: svgFont, fontSize: "13px", color:
@@ -1913,6 +1895,7 @@ marginWidth="0"
 title="Order a Guest Handbook"
 style={{ border: "none", minHeight: "600px" }}
 />
+</div>
 </div>
 </div>
 </div>
